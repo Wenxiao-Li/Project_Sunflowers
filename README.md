@@ -4,11 +4,12 @@ CSE110 Project: Project Sunflowers
 
 
 
-## 1.	Download Node.js
+## 1.	Download Node.js [link](https://nodejs.org/en/download/)
 
 ## 2.	To test that you have Node.js and npm correctly installed on your machine
 
-you can type node --version and npm --version in a terminal or command prompt. You should be able to check your version.
+you can type 
+``` node --version ``` and ```npm --version``` in a terminal or command prompt. You should be able to check your version.
 
 <br>
 <img src="./assets/Instruction_0.png" style="width:200px;" >
