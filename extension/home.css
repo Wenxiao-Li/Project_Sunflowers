@@ -73,9 +73,9 @@ ul li img:nth-child(2) {
     -webkit-text-stroke: 1px #472E15;
     -moz-text-stroke: 1px #472E15;
     -o-text-stroke: 1px #472E15;
-    /*text-shadow: 2px 2px #472E15;*/
-    font-size: 17px;
-    width: 61px;
+    /* text-shadow: 2px 2px #472E15; */
+    font-size: 16px;
+    width: 80px;
     height: 46px;
     line-height: 86px;
 }
