@@ -8,8 +8,8 @@
         <title>Sunflower Homepage</title>
         <!-- import css -->
         <link rel="stylesheet" type="text/css" href="./home.css">
-        <!-- this is html fontawesome -->
         <script src="https://kit.fontawesome.com/0fb0fe912e.js" crossorigin="anonymous"></script>
+
     </head>
 
     <body>
@@ -17,25 +17,38 @@
 
         <h1 id="welcome">Welcome to our home page!</h1>
         
-        
+        <div id="clockdiv">
+            <div>
+              <span class="hours"></span>
+              <div class="smalltext">Hours</div>
+            </div>
+            <div>
+              <span class="minutes"></span>
+              <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+              <span class="seconds"></span>
+              <div class="smalltext">Seconds</div>
+            </div>
+          </div>
 
         <div class="wrap parent">
            
             <div class="child"><img src="img/none.png" alt="" style="width: 250px;">  </div>
 
-
             <div class="container">
+
                 <div class="operate">
-                    <button value="start"><i class="fas fa-hourglass-start"></i></button>
-                    <button value="pause"><i class="fas fa-pause"></i></button>
+                    <button value="start"><i class="fas fa-hourglass-start">start</i></button>
+                    <button value="pause"><i class="fas fa-pause">pause</i></button>
                     <a href="./options.html">
-                        <button id="sign_out"><i class="fas fa-sign-out-alt"></i></button>
+                        <button id="sign_out"><i class="fas fa-sign-out-alt"></i>sign out</button>
                     </a>
                 </div>
             </div>
         </div>
         
-
+        <script src="countdown.js"></script>
         <script src="./main.js"></script>
     </body>
 </html>
