@@ -1,40 +1,53 @@
-  function getTimeRemaining(endtime) {
-    const total = Date.parse(endtime) - Date.parse(new Date());
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-    
-    return {
-      total,
-      hours,
-      minutes,
-      seconds
-    };
-  }
+
+
+  // this can be anything based on user's design
+  let countMinutes = 60;
   
-  function initializeClock(id, endtime) {
-    const clock = document.getElementById(id);
-    const hoursSpan = clock.querySelector('.hours');
-    const minutesSpan = clock.querySelector('.minutes');
-    const secondsSpan = clock.querySelector('.seconds');
+  var Clock = {
+    endSeconds: countMinutes * 60,
+    totalSeconds: 0,
   
-    function updateClock() {
-      const t = getTimeRemaining(endtime);
+    start: function () {
+      var self = this;
+      
+
+      this.interval = setInterval(function () {
+        
+        self.totalSeconds += 1;
+        displaySeconds = self.endSeconds - self.totalSeconds;
+
+        $("#hours").text(Math.floor(displaySeconds / 3600));
+        $("#minutes").text(Math.floor(displaySeconds / 60 % 60));
+        $("#seconds").text(parseInt(displaySeconds % 60));
+      }, 1000);
+    },
   
-      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+    pause: function () {
+      clearInterval(this.interval);
+      delete this.interval;
+    },
   
-      if (t.total <= 0) {
-        clearInterval(timeinterval);
-      }
+    resume: function () {
+      if (!this.interval) this.start();
     }
+  };
   
-    updateClock();
-    const timeinterval = setInterval(updateClock, 1000);
-  }
   
-  // TODO: deadline should change based on user input
-  const deadline = new Date(Date.parse(new Date()) + 30 * 60 * 1000);
+  let isRunning = true;
+  let hasStarted = false;
+  $('#pause').click(function () { 
+    if(isRunning){
+      Clock.pause(); 
+    }
+    else{
+      Clock.resume();
+    }
+    isRunning = !isRunning;
   
-  initializeClock('clockdiv', deadline);
+  });
+  $('#start').click(function () { 
+    if(hasStarted == false){
+      Clock.start(); 
+      hasStarted = true;
+    }
+  });
