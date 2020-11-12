@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log In</title>
+        <script src="script/init.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    </head>
+
+    <body>
+        <h1 id="page-name">User Log In</h1>
+        <div id="#sign_in">
+            <button id="sign_in">Sign In</button>
+        </div>
+        <div id="firebaseui-auth-container"></div>
+        <script type="module" src="./signin.js"></script>
+        <script type="module" src="./background.js"></script>
+        <script src="./firebase.js"></script>
+    </body>
+</html>
