@@ -2,53 +2,22 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title>Sunflower Homepage</title>
-        <!-- import css -->
-        <link rel="stylesheet" type="text/css" href="./home.css">
-        <script src="https://kit.fontawesome.com/0fb0fe912e.js" crossorigin="anonymous"></script>
-
+        <title>Log In</title>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
     </head>
 
     <body>
-
-
-        <h1 id="welcome">Welcome to our home page!</h1>
-        
-        <div id="clockdiv">
-            <div>
-              <span class="hours"></span>
-              <div class="smalltext">Hours</div>
-            </div>
-            <div>
-              <span class="minutes"></span>
-              <div class="smalltext">Minutes</div>
-            </div>
-            <div>
-              <span class="seconds"></span>
-              <div class="smalltext">Seconds</div>
-            </div>
-          </div>
-
-        <div class="wrap parent">
-           
-            <div class="child"><img src="img/none.png" alt="" style="width: 250px;">  </div>
-
-            <div class="container">
-
-                <div class="operate">
-                    <button value="start"><i class="fas fa-hourglass-start">Start</i></button>
-                    <button value="pause"><i class="fas fa-pause">Pause</i></button>
-                    <a href="./options.html">
-                        <button id="sign_out"><i class="fas fa-sign-out-alt"></i>SignOut</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <script src="countdown.js"></script>
-        <script src="./main.js"></script>
+        <img src="IMG_1277.JPG">
+        <h1>This is the home page!</h1>
+        <h2 id="display-username"></h2>
+        <a href="./setting.html">
+            <button id="set_username">Setting</button>
+        </a> 
+        <a href="./options.html">
+            <button id="sign_out">Sign Out</button>
+        </a>
+        <script type="module" src="./main.js"></script>
     </body>
 </html>

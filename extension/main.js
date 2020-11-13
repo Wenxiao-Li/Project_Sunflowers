@@ -5,7 +5,3 @@ document.getElementById('sign_out').addEventListener('click', () => {
         }
     });
 });
-
-
-
-

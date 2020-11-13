@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Setting</title>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    </head>
+        
+    <body>
+        <img src="icon128.png">
+        <h1>Change Username</h1>
+        <form action="main.js" method="POST" id="change_username">
+            <label>First Name</label>
+            <input type="text" name="user_firstname" id="user_firstname" required>
+            <label>Last Name</label>
+            <input type="text" name="user_lastname" id="user_lastname" required>
+            <input type="button" value="submit" id="changeUsername">
+        </form>
+        <form action="main.js" method="POST" id="add_blacklist">
+            <label>Add Blacklist Website</label>
+            <input type="url" name="addblacklist" id="addblacklist" required>
+            <input type="button" value="Add" id="addBlacklist">
+            <label>Add Whitelist Website</label>
+            <input type="url" name="addwhitelist" id="addwhitelist" required>
+            <input type="button" value="Add" id="addWhitelist">
+        </form>
+        <a href="./home.html">
+            <button>Back Home</button>
+        </a>
+        <script src="./firebase.js"></script>
+        <script type="module" src="./setting.js"></script>
+        <script type="module" src="./firestore.js"></script>
+    </body>
+</html>
