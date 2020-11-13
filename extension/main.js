@@ -12,7 +12,7 @@ document.getElementById('sign_out').addEventListener('click', () => {
 chrome.windows.getAll({ populate: true }, function (windows) {
     windows.forEach(function (window) {
         window.tabs.forEach(function (tab) {
-            //collect all of the urls here, I will just log them instead
+            //collect all of the urls here, currently log them
             console.log(tab.url);
         });
     });
