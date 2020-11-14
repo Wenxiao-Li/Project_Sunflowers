@@ -90,6 +90,12 @@ ul li img:nth-child(2) {
     background-size: cover;
 }
 
+.operate button:nth-child(4) {
+    
+    background: url() no-repeat;
+    background-size: cover;
+}
+
 .parent {
     display: grid;
     place-items: center;
