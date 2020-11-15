@@ -1,5 +1,5 @@
 let user_signedin = false;
-
+const db = firebase.firestore();
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === "user_signed_in") {
         sendResponse ({
@@ -11,8 +11,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse ({ message : "success" });
     } else if (request.message === "sign_in") {
         user_signedin = true;
-        sendResponse ({message : "success"});
+        sendResponse ({message : "success"});     
     }
-
     return true;
 });
