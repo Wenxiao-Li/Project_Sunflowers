@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import Countdown from './modules/Countdown';
-import Options from '../Options/Options';
+import SunflowerBg from '../../assets/img/IMG_1277.jpg';
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,7 +23,7 @@ const Popup = () => {
   return (
     <div className="App">
         <h1>Project Sunflower!</h1>
-        <img src="IMG_1277.JPG" />
+        <img src={SunflowerBg} />
         <Countdown/>
         <a href="options.html" target="_blank">
             <button>Log In</button>

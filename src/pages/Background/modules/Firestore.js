@@ -4,7 +4,7 @@ var firebase = require('firebase').default;
 export let dbHandle = () => { 
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log(request.message)
-        if (request.command == "set_name"){
+        if (request.command === "set_name"){
             db.collection("user").doc(request.useremail).update({
                 first_name : request.firstname,
                 last_name : request.lastname
@@ -15,7 +15,7 @@ export let dbHandle = () => {
             .catch((error) => {
                 console.error("Error writing document: ", error);
             });    
-        }else if (request.message == "sign_in"){
+        }else if (request.message === "sign_in"){
             var user = request.user;
             var name = user.displayName.split(" ");
 
@@ -37,7 +37,7 @@ export let dbHandle = () => {
                     });
                 }
             });    
-        }else if (request.command == "add_blacklist"){
+        }else if (request.command === "add_blacklist"){
             db.collection("user").doc(request.useremail).update({
                 blacklist : firebase.firestore.FieldValue.arrayUnion(request.blacklist),
             })
@@ -47,7 +47,7 @@ export let dbHandle = () => {
             .catch((error) => {
                 console.error("Error writing document: ", error);
             });    
-        }else if (request.command == "add_whitelist"){
+        }else if (request.command === "add_whitelist"){
             db.collection("user").doc(request.useremail).update({
                 whitelist : firebase.firestore.FieldValue.arrayUnion(request.whitelist),
             })

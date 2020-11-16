@@ -1,20 +1,23 @@
 # Project_Sunflowers
+
 CSE110 Project: Project Sunflowers
 
-* This is a reworked project that use React.js as the framework
+- This is a reworked project that use React.js as the framework
 
-* This react reworked version is built from this 
+- Currently has sign in, clock on popup page, and actively block youtube.
+
+- This react reworked version is built from this
 
   [boilerplate]: https://github.com/lxieyang/chrome-extension-boilerplate-react
 
-## 1.	Download Node.js [link](https://nodejs.org/en/download/)
+## 1. Download Node.js [link](https://nodejs.org/en/download/)
 
 Ensure your Node.js version is >= **10.13**.
 
-## 2.	To test that you have Node.js and npm correctly installed on your machine
+## 2. To test that you have Node.js and npm correctly installed on your machine
 
-you can type 
-``` node --version ``` and ```npm --version``` in a terminal or command prompt. You should be able to check your version.
+you can type
+`node --version` and `npm --version` in a terminal or command prompt. You should be able to check your version.
 
 <br>
 <img src="./assets/Instruction_0.png" style="width:200px;" >
@@ -22,27 +25,27 @@ you can type
 
 ## 3. To Download the files from GitHub
 
-```git clone https://github.com/Wenxiao-Li/Project_Sunflowers```
+`git clone https://github.com/Wenxiao-Li/Project_Sunflowers`
 
 ## 4. Install npm packages for project dependencies
 
 Open command prompt in the project directory, and type
 
-```npm install```
+`npm install`
 
 To install the dependencies for the project
 
-* Note: you need to make sure **python2** is installed in your computer in order to install all the dependencies
+- Note: you need to make sure **python2** is installed in your computer in order to install all the dependencies
 
 ## 5. How to run the project
 
 Open command prompt in the project directory, and type
 
-```npm start```
+`npm start`
 
-* Note: this project support **auto reload** feature that reloads the build automatically every time you save some file in your editor.
+- Note: this project support **auto reload** feature that reloads the build automatically every time you save some file in your editor.
 
-* Load your extension on Chrome following:
+- Load your extension on Chrome following:
 
   1. Access `chrome://extensions/`
   2. Check `Developer mode`
@@ -51,15 +54,13 @@ Open command prompt in the project directory, and type
   5. Select the `build` folder.
   6. <img src="./assets/Instruction_3.png" style="width:200px;" >
 
-* In order to see changes in content scripts or background.html, you need to **refresh the extension**.
+- In order to see changes in content scripts or background.html, you need to **refresh the extension**.
 
-* Note: you can run the dev mode on other port as well. Just specify the env var `port` like this:
+- Note: you can run the dev mode on other port as well. Just specify the env var `port` like this:
 
   ```
   $ PORT=6002 npm run start
   ```
-
-
 
 ## 6. Structure
 
@@ -67,11 +68,11 @@ All your extension's code must be placed in the `src` folder.
 
 The boilerplate is already prepared to have
 
-* a popup, 
-* an options page, 
-* a background page, and 
-* a new tab page (which replaces the new tab page of your browser). 
-* home page (Note: this is something I added myself, and is **not part of the standard chrome extension layout, please check 7.2**)
+- a popup,
+- an options page,
+- a background page, and
+- a new tab page (which replaces the new tab page of your browser).
+- home page (Note: this is something I added myself, and is **not part of the standard chrome extension layout, please check 7.2**)
 
 Free free to customize these.
 
@@ -79,7 +80,7 @@ Free free to customize these.
 
 ### 7.1. Add assets/resources to the project
 
-It seems like only the assets that been specified in the code will be copied to the ```build``` directory. Therefore, to ensure those files got successfully copied, you should include them in the background scripts: ```index.js``` under the Background directory (or maybe html I am not sure) like this:
+It seems like only the assets that been specified in the code will be copied to the `build` directory. Therefore, to ensure those files got successfully copied, you should include them in the background scripts: `index.js` under the Background directory (or maybe html I am not sure) like this:
 
 ```
 import '../../assets/img/icon16.png';
@@ -89,17 +90,17 @@ import '../../assets/img/icon128.png';
 import '../../assets/img/IMG_1277.jpg';
 ```
 
-After running ```npm start```, you should confirm that those files are present under the ```build``` folder.
+After running `npm start`, you should confirm that those files are present under the `build` folder.
 
 ### 7.2. Add additional entries to the project (ie. home.html)
 
-***Background information:*** A chrome extension generally has maximum five **entries**: ```popup.html```, ```options.html```, ```background.html```,```newtab.html ```,```content-scripts.js```, which **the original boilerplate has already included**. The React.js use webpack to convert its code into standard JavaScript to allow chrome extension to run the extension, however, by default, ```create-react-app``` only support one entry which is the ```index.html```, so to freshly build the project with React, you need to eject the dependencies out, config the webpack under ```webpack.config.js``` , which is done by the original boilerplate. The original boilerplate also does **custom directory parsing** in ```webpack.config.js``` , basically instructions on how to convert the project into the ```build``` directory. These are something that we need to do if we want to add additional entries (basically adding more html page in the build directory, if that's something we want).
+**_Background information:_** A chrome extension generally has maximum five **entries**: `popup.html`, `options.html`, `background.html`,`newtab.html `,`content-scripts.js`, which **the original boilerplate has already included**. The React.js use webpack to convert its code into standard JavaScript to allow chrome extension to run the extension, however, by default, `create-react-app` only support one entry which is the `index.html`, so to freshly build the project with React, you need to eject the dependencies out, config the webpack under `webpack.config.js` , which is done by the original boilerplate. The original boilerplate also does **custom directory parsing** in `webpack.config.js` , basically instructions on how to convert the project into the `build` directory. These are something that we need to do if we want to add additional entries (basically adding more html page in the build directory, if that's something we want).
 
-To add ```home.html```:
+To add `home.html`:
 
-1. create directory ```src/pages/Home```, and add ```home.html```, ```index.jsx``` under this directory
+1. create directory `src/pages/Home`, and add `home.html`, `index.jsx` under this directory
 
-2. inside ```webpack.config.js``` add the script for home to entry like this:
+2. inside `webpack.config.js` add the script for home to entry like this:
 
    ```js
    {
@@ -125,15 +126,14 @@ To add ```home.html```:
          chunks: ['home'],
          cache: false,
        }),
-       … 
+       …
      ]
    }
    ```
 
-   **Caution: Although the home.html can be successfully redirected to and can be loaded in chrome under dev mode, I am not sure whether this will be successfully loaded after deployment** 
+   **Caution: Although the home.html can be successfully redirected to and can be loaded in chrome under dev mode, I am not sure whether this will be successfully loaded after deployment**
 
-   **Caution: currently I have only used ```window.location.replace('./home.html');``` as well as ```<a href="home.html"></a>``` to redirect pages, only a few attempts using the Router in ```'react-router-dom'``` is successful, partially due to my inexperience with them. There are suggestions online about how to use them in chrome-extension, can could be tried out in the future.
-
+   **Caution: currently I have only used `window.location.replace('./home.html');` as well as `<a href="home.html"></a>` to redirect pages, only a few attempts using the Router in `'react-router-dom'` is successful, partially due to my inexperience with them. There are suggestions online about how to use them in chrome-extension, can could be tried out in the future.**
 
 ### 7.3. Add Content Scripts
 
@@ -202,4 +202,3 @@ ApiCall({ key: secrets.key });
 
 - [Webpack documentation](https://webpack.js.org/concepts/)
 - [Chrome Extension documentation](https://developer.chrome.com/extensions/getstarted)
-

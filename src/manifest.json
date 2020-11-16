@@ -1,5 +1,6 @@
 {
-  "name": "Chrome Extension with React & Webpack",
+  "name": "Sunflower",
+  "description" : "Chrome Extension reworked with React",
   "options_page": "options.html",
   "background": {
     "page": "background.html"
@@ -17,11 +18,12 @@
     "48" : "icon48.png",
     "128" : "icon128.png"
   },
-  "content_scripts": [{
-    "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-    "js": ["contentScript.bundle.js"],
-    "css": ["content.styles.css"]
-  }],
+  "permissions" : [
+    "tabs", 
+    "webNavigation",
+    "<all_urls>",
+    "storage"
+  ],
   "web_accessible_resources": [
     "content.styles.css",
     "IMG_1277.JPG",

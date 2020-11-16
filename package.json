@@ -1,6 +1,6 @@
 {
-  "name": "Project Sunflower React",
-  "version": "3.1.2",
+  "name": "project-sunflower-react",
+  "version": "0.0.1",
   "description": "A chrome extension rework with React",
   "license": "MIT",
   "repository": {

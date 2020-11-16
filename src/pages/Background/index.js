@@ -2,7 +2,6 @@ import '../../assets/img/icon16.png';
 import '../../assets/img/icon32.png';
 import '../../assets/img/icon48.png';
 import '../../assets/img/icon128.png';
-import '../../assets/img/IMG_1277.jpg';
 import './modules/FirebaseConfig';
 import { dbHandle } from './modules/Firestore';
 import {user_signedin, signInListener} from './modules/UserStatus';
@@ -35,6 +34,19 @@ chrome.runtime.onMessage.addListener(
                 Countdown.updateUnStartedTime();
             }
             
+        }
+    }
+);
+
+chrome.webNavigation.onCommitted.addListener(
+    function (details) {
+        if (details.url === "https://www.youtube.com/"){
+            chrome.tabs.insertCSS({
+                file: 'content.styles.css'
+            });
+            chrome.tabs.executeScript({
+                file: 'contentScript.bundle.js'
+            });
         }
     }
 );
