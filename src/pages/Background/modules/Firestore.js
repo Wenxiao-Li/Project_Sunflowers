@@ -1,4 +1,4 @@
-import {db} from './FirebaseConfig';
+import {db} from './firebaseconfig';
 var firebase = require('firebase').default;
 
 export let dbHandle = () => { 

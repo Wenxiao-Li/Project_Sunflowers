@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-class Countdown extends Component {
+class SessionCountdown extends Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -13,7 +14,10 @@ class Countdown extends Component {
         this.backDecreaseTime = this.backDecreaseTime.bind(this);
         this.backStartTimer = this.backStartTimer.bind(this);
         this.backToggleTimer = this.backToggleTimer.bind(this);
-    
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
         var self = this;
         chrome.runtime.sendMessage({
             msg: "popupInit",
@@ -24,17 +28,22 @@ class Countdown extends Component {
                 if (request.msg === "updateDisplayedTime") {
                     //  To do something
                     console.log('popup receive');
-                    self.setState({backMinutes: request.data.minutes});
-                    self.setState({backSeconds: request.data.seconds});
+                    if(self._isMounted){
+                        self.setState({backMinutes: request.data.minutes});
+                        self.setState({backSeconds: request.data.seconds});
+                    }
                 }
             }
         );
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
 
     backDecreaseTime(){
         console.log('d sent');
-        this.setState({backMinutes: this.state.backMinutes - 15});
         chrome.runtime.sendMessage({
             msg: "decreaseTime",
             data: {}
@@ -61,15 +70,11 @@ class Countdown extends Component {
             <div>
                 <div>
                     <div>
-                        <span>{this.state.backMinutes}</span>
-                        <div className="smalltext">Minutes</div>
-                    </div>
-                    <div>
-                        <span>{this.state.backSeconds}</span>
-                        <div className="smalltext">Seconds</div>
+                        <span>{this.state.backMinutes} Minutes</span>
+                        <span> {this.state.backSeconds} Seconds</span>
                     </div>
                 </div>
-                <button onClick={this.backDecreaseTime}> decrease </button>
+                <button onClick={this.backDecreaseTime}>Decrease </button>
                 <button onClick={this.backStartTimer}>Start </button>
                 <button onClick={this.backToggleTimer}>Toggle</button>
             </div>
@@ -77,4 +82,4 @@ class Countdown extends Component {
     }
 }
 
-export default Countdown
+export default SessionCountdown

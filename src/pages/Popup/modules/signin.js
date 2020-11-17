@@ -1,4 +1,4 @@
-import firebase from '../../Background/modules/FirebaseConfig';
+import firebase from '../../Background/modules/firebaseconfig';
 var firebaseui = require('firebaseui');
 
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -8,13 +8,13 @@ const uiConfig = {
       signInSuccessWithAuthResult: function(authResult, redirectUrl) {
         chrome.runtime.sendMessage({message : "sign_in", user : firebase.auth().currentUser}, (response) => {
             if (response.message == "success") {
-                window.location.replace('./home.html');
+                window.location.replace('./popup.html');
             }
         });
         return false;
       },
       uiShown: function() {
-        //document.getElementById('page-name').style.display = 'none';
+        document.getElementById('page-name').style.display = 'none';
         document.getElementById('sign_in').style.display = 'none';
       }
     },
@@ -33,4 +33,8 @@ const uiConfig = {
 
 export const signInHandle = () => {
     ui.start('#firebaseui-auth-container', uiConfig);
+}
+
+export const signOutHandle = () => {
+  firebase.auth().signOut(); 
 }
