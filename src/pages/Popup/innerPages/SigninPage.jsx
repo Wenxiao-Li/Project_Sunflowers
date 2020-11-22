@@ -3,7 +3,7 @@ import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import { signInHandle, signOutHandle } from '../modules/signin.js';
 import firebase from '../../Background/modules/firebaseconfig';
 
-class ProfilePage extends Component {
+class SigininPage extends Component {
   _isMounted = false;
 
   constructor(props) {
@@ -12,6 +12,7 @@ class ProfilePage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    signInHandle();
   }
 
   componentWillUnmount() {
@@ -19,20 +20,13 @@ class ProfilePage extends Component {
   }
 
   render() {
-    var email = 'null';
-    if (this.props.user) {
-      email = this.props.user.email;
-    }
     return (
       <div>
-        <h1 id="page-name">You are signed in</h1>
-        <span>Email: {email}</span>
-        <button id="sign_out" onClick={signOutHandle}>
-          Sign Out
-        </button>
+        <h1>This is the sign in page</h1>
+        <div id="firebaseui-auth-container"></div>
       </div>
     );
   }
 }
 
-export default ProfilePage;
+export default SigininPage;

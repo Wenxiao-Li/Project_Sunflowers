@@ -4,33 +4,31 @@ import '../../assets/img/icon48.png';
 import '../../assets/img/icon128.png';
 import './modules/firebaseconfig';
 import { dbHandle } from './modules/firestore';
-import {runSession} from './modules/session';
+import { runSession } from './modules/session';
 
 dbHandle();
 
 let isblocking = false;
 
 const startCallback = function () {
-    isblocking = true;
-}
+  isblocking = true;
+};
 
-const pauseCallback = function ()  {
-    isblocking = false;
-}
+const pauseCallback = function () {
+  isblocking = false;
+};
 
 const resumeCallback = function () {
-    isblocking = true;
-}
+  isblocking = true;
+};
 
-const stopCallback = function ()  {
-    isblocking = false;
-}
-
+const stopCallback = function () {
+  isblocking = false;
+};
 
 runSession(startCallback, stopCallback, pauseCallback, resumeCallback);
 console.log('This is the background page.');
 console.log('Put the background scripts here.');
-
 
 // chrome.windows.getAll({ populate: true }, function (windows) {
 //     windows.forEach(function (window) {
@@ -48,6 +46,11 @@ console.log('Put the background scripts here.');
 //     });
 // });
 
+//chrome.tabs.onActivated.addListener
+//chrome.runtime.sendMessage -> not working for content scripts
+//chrome.tabs.sendMessage for content scripts which also require tab id
+
+// having blacklists, modify strings (check the end to see if /* is included, if not append)
 
 // // Fires when create or navigate to a new tab, won't activate when switching tabs
 // chrome.webNavigation.onCommitted.addListener( details => {
@@ -59,14 +62,13 @@ console.log('Put the background scripts here.');
 //         });
 //         chrome.tabs.executeScript({
 //             file: 'contentScript.bundle.js'
-//         }); 
+//         });
 //     }
 // });
 
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log(request.msg);
-    if (request.msg === "home-comm"){
-        console.log('test home comm success');
-    }
+  console.log(request.msg);
+  if (request.msg === 'home-comm') {
+    console.log('test home comm success');
+  }
 });
