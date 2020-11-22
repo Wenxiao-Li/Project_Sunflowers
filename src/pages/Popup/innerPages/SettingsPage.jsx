@@ -23,6 +23,8 @@ class SettingsPage extends Component {
         if (currentUser){
             self.setState({user: currentUser});
             self.setState({userEmail: currentUser.email})
+            // TODO: Retrieve lists from local storage
+
         } else {
             self.setState({user: null});
             self.setState({userEmail: ""});

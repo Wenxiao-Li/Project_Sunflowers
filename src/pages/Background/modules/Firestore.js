@@ -3,7 +3,6 @@ var firebase = require('firebase').default;
 
 export let dbHandle = () => { 
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        console.log(request.message)
         if (request.command === "set_name"){
             db.collection("user").doc(request.useremail).update({
                 first_name : request.firstname,

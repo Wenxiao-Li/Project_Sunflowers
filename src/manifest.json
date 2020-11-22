@@ -3,7 +3,8 @@
   "description" : "Chrome Extension reworked with React",
   "options_page": "options.html",
   "background": {
-    "page": "background.html"
+    "page": "background.html",
+    "persistent": true
   },
   "browser_action": {
     "default_popup": "popup.html",
@@ -22,7 +23,8 @@
     "tabs", 
     "webNavigation",
     "<all_urls>",
-    "storage"
+    "storage",
+    "background"
   ],
   "web_accessible_resources": [
     "content.styles.css",

@@ -7,6 +7,7 @@ const Options = () => {
   return (
     <div className="OptionsContainer">
       Option Page
+      <a href='home.html'> To home</a>
     </div>
   );
 };
