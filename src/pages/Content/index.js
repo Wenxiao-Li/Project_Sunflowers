@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import DisplaySession from '../Popup/modules/DisplaySession.jsx';
+import DisplaySession from '../Popup/HomePage/DisplaySession.jsx';
 import { printLine } from './modules/print';
 
 console.log('Content script works!');

@@ -1,6 +1,6 @@
 import React from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
-import DisplaySession from '../modules/DisplaySession.jsx';
+import DisplaySession from './DisplaySession.jsx';
 
 const HomePage = () => {
   return (

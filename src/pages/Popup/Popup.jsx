@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import firebase from '../Background/modules/firebaseconfig';
-import HomePage from './innerPages/HomePage.jsx';
-import ProfilePage from './innerPages/ProfilePage.jsx';
-import SettingsPage from './innerPages/SettingsPage.jsx';
-import SocialPage from './innerPages/SocialPage.jsx';
-import SigninPage from './innerPages/SigninPage.jsx';
+import HomePage from './HomePage/HomePage.jsx';
+import ProfilePage from './ProfilePage/ProfilePage.jsx';
+import SettingsPage from './SettingsPage/SettingsPage.jsx';
+import SocialPage from './SocialPage/SocialPage.jsx';
+import SigninPage from './ProfilePage/SigninPage.jsx';
+import UnauthPage from './SocialPage/UnauthPage.jsx';
 import './Popup.css';
 
 class Popup extends Component {
@@ -46,6 +47,9 @@ class Popup extends Component {
       if (componentName === 'ProfilePage') {
         componentName = 'SigninPage';
       }
+      if (componentName === 'SocialPage') {
+        componentName = 'UnauthPage';
+      }
     }
     this.setState({ displayedPageName: componentName });
   }
@@ -57,6 +61,7 @@ class Popup extends Component {
       SocialPage: <SocialPage user={this.state.user} />,
       ProfilePage: <ProfilePage user={this.state.user} />,
       SigninPage: <SigninPage user={this.state.user} />,
+      UnauthPage: <UnauthPage user={this.state.user} />,
     };
 
     return (

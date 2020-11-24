@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
-import { signInHandle, signOutHandle } from '../modules/signin.js';
-import firebase from '../../Background/modules/firebaseconfig';
 
-class SigininPage extends Component {
+class UnauthPage extends Component {
   _isMounted = false;
 
   constructor(props) {
@@ -12,7 +10,6 @@ class SigininPage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    signInHandle();
   }
 
   componentWillUnmount() {
@@ -22,11 +19,14 @@ class SigininPage extends Component {
   render() {
     return (
       <div>
-        <h1>This is the sign in page</h1>
-        <div id="firebaseui-auth-container"></div>
+        <div className="unsignedSocial">
+          <h1>You are not signed in</h1>
+          <img src={SunflowerBg} />
+          <span> Please sign in at profile page</span>
+        </div>
       </div>
     );
   }
 }
 
-export default SigininPage;
+export default UnauthPage;
