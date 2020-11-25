@@ -1,59 +1,45 @@
 import React, { Component } from 'react';
+import { useEffect } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import firebase from '../../Background/modules/firebaseconfig';
 
-class SettingsPage extends Component {
-  _isMounted = false;
+// The 2020 way of using react: use functional components
+export default function SettingsPage() {
+  // Set States goes here
 
-  constructor(props) {
-    super(props);
+  /**
+   * Description: Initializing States, do not pass function into useState
+   * isBlockList: state
+   * setBlockListBoolean: setState for isBlockList, this is async so be careful
+   * param: initial value
+   */
+  const [isBlockList, setBlockListBoolean] = React.useState(true);
 
-    this.state = {
-      isBlockListMode: true,
-    };
+  // use the return of useEffect for componentWillUnmount
 
-    this.setBlockListMode = this.setBlockListMode.bind(this);
-    this.setAllowListMode = this.setAllowListMode.bind(this);
-    this.getCurrModeString = this.getCurrModeString.bind(this);
-  }
+  // Run after every re-render
+  // React.useEffect(() => {});
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  // Equivalent to componentDidMount and return = componentWillUnMount
+  // React.useEffect(() => {}, []);
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  const setBlockListMode = () => {
+    setBlockListBoolean(true);
+  };
 
-  setBlockListMode() {
-    this.setState({ isBlockListMode: true });
-  }
+  const setAllowListMode = () => {
+    setBlockListBoolean(false);
+  };
 
-  setAllowListMode() {
-    this.setState({ isBlockListMode: false });
-  }
-
-  getCurrModeString() {
-    if (this.state.isBlockListMode) {
-      return 'BlockList';
-    } else {
-      return 'AllowList';
-    }
-  }
-
-  render() {
-    let modeString = this.getCurrModeString();
-    return (
-      <div className="Settings">
-        <h1>This is SettingsPage</h1>
-        <button onClick={this.setBlockListMode}> BlockList Mode </button>
-        <button onClick={this.setAllowListMode}> AllowList Mode </button>
-        <img src={SunflowerBg} />
-        <br />
-        <span>{modeString}</span>
-      </div>
-    );
-  }
+  const currentMode = isBlockList ? 'BlockList' : 'AllowList';
+  return (
+    <div className="Settings">
+      <h1>This is SettingsPage</h1>
+      <button onClick={setBlockListMode}> BlockList Mode </button>
+      <button onClick={setAllowListMode}> AllowList Mode </button>
+      <img src={SunflowerBg} />
+      <br />
+      <span>{currentMode}</span>
+    </div>
+  );
 }
-
-export default SettingsPage;

@@ -8,37 +8,36 @@ const INIT_MINUTES = MINUTES_STEP_SIZE * 2;
 const MIN_TO_SEC = 60;
 const SEC_TO_MILLISEC = 1000;
 
-const updateDisplayedTimeMsg = 'updateDisplayedTime';
+const STATUS_NOT_STARTED = 0;
+const STATUS_RUNNING = 1;
+const STATUS_PAUSED = 2;
+const STATUS_SUCCESS = 3;
+const STATUS_FAILURE = 4;
 
-// Session Timer
-var SessionTimer = {
-  isRunning: false,
-  hasStarted: false,
+var Session = {
+  status: STATUS_NOT_STARTED,
   startMinutes: INIT_MINUTES,
   startSeconds: INIT_MINUTES * MIN_TO_SEC,
   pastSeconds: 0,
   displaySeconds: 0,
+  completeCallback: null,
+  updateCallback: null,
+
+  setCallbacks: function (updateCallback, completeCallback) {
+    this.updateCallback = updateCallback;
+    this.completeCallback = completeCallback;
+  },
 
   updateInSessionTime: function () {
-    console.log('updating');
-    chrome.runtime.sendMessage({
-      msg: updateDisplayedTimeMsg,
-      data: {
-        minutes: Math.floor((this.displaySeconds / MIN_TO_SEC) % MIN_TO_SEC),
-        seconds: parseInt(this.displaySeconds % MIN_TO_SEC),
-      },
-    });
+    const minutes = Math.floor(this.displaySeconds / MIN_TO_SEC);
+    const seconds = parseInt(this.displaySeconds % MIN_TO_SEC);
+    this.updateCallback(minutes, seconds, this.status);
   },
 
   updateUnStartedTime: function () {
-    console.log('updating');
-    chrome.runtime.sendMessage({
-      msg: updateDisplayedTimeMsg,
-      data: {
-        minutes: this.startMinutes,
-        seconds: 0,
-      },
-    });
+    const minutes = this.startMinutes;
+    const seconds = 0;
+    this.updateCallback(minutes, seconds, this.status);
   },
 
   // start the session
@@ -48,7 +47,13 @@ var SessionTimer = {
     this.interval = setInterval(function () {
       self.pastSeconds += 1;
       self.displaySeconds = self.startSeconds - self.pastSeconds;
-      self.updateInSessionTime();
+      if (self.displaySeconds === 0) {
+        self.quitSession(() => {});
+        self.status = STATUS_SUCCESS;
+        self.completeCallback();
+      } else {
+        self.updateInSessionTime();
+      }
     }, SEC_TO_MILLISEC);
   },
 
@@ -62,7 +67,7 @@ var SessionTimer = {
   },
 
   decreaseTime: function () {
-    if (this.hasStarted == false) {
+    if (this.status === STATUS_NOT_STARTED) {
       if (this.startMinutes > MIN_MINUTES) {
         this.startMinutes -= MINUTES_STEP_SIZE;
         this.updateUnStartedTime();
@@ -71,7 +76,7 @@ var SessionTimer = {
   },
 
   increaseTime: function () {
-    if (this.hasStarted == false) {
+    if (this.status === STATUS_NOT_STARTED) {
       if (this.startMinutes < MAX_MINUTES) {
         this.startMinutes += MINUTES_STEP_SIZE;
         this.updateUnStartedTime();
@@ -79,76 +84,86 @@ var SessionTimer = {
     }
   },
 
-  startSession: function (callback) {
-    if (!this.hasStarted) {
+  startSession: function (startCallback) {
+    if (this.status === STATUS_NOT_STARTED) {
       this.run();
-      this.hasStarted = true;
-      this.isRunning = true;
+      this.status = STATUS_RUNNING;
+      startCallback();
+    }
+  },
+
+  quitSession: function (callback) {
+    if (this.status === STATUS_RUNNING || this.status === STATUS_PAUSED) {
+      clearInterval(this.interval);
+      delete this.interval;
+      this.status = STATUS_FAILURE;
+      this.startMinutes = INIT_MINUTES;
+      this.pastSeconds = 0;
+      this.updateUnStartedTime();
       callback();
     }
   },
 
-  stopSession: function (callback) {
-    clearInterval(this.interval);
-    delete this.interval;
-    this.isRunning = false;
-    this.hasStarted = false;
-    this.startMinutes = INIT_MINUTES;
-    this.pastSeconds = 0;
-    this.updateUnStartedTime();
-    callback();
-  },
-
   toggleSession: function (pauseCallback, resumeCallback) {
-    if (this.hasStarted) {
-      if (this.isRunning) {
-        console.log('paused');
-        this.pause();
-        this.isRunning = !this.isRunning;
-        this.updateInSessionTime();
-        pauseCallback();
-      } else {
-        console.log('resumed');
-        this.resume();
-        this.isRunning = !this.isRunning;
-        this.updateInSessionTime();
-        resumeCallback();
-      }
+    if (this.status === STATUS_RUNNING) {
+      this.pause();
+      this.status = STATUS_PAUSED;
+      this.updateInSessionTime();
+      pauseCallback();
+    } else if (this.status === STATUS_PAUSED) {
+      this.resume();
+      this.status = STATUS_RUNNING;
+      this.updateInSessionTime();
+      resumeCallback();
     }
   },
 };
 
 // Receive FrontEnd message and process the session countdown on background
 export const runSession = (
+  updateCallback,
   startCallback,
-  stopCallback,
+  completeCallback,
+  quitCallback,
   pauseCallback,
   resumeCallback
 ) => {
+  Session.setCallbacks(updateCallback, completeCallback);
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
     sendResponse
   ) {
-    if (request.msg === 'decreaseTime') {
-      console.log('receive decrease time');
-      SessionTimer.decreaseTime();
-    } else if (request.msg === 'increaseTime') {
-      console.log('receive increase time');
-      SessionTimer.increaseTime();
-    } else if (request.msg == 'startSession') {
-      console.log('receive start');
-      SessionTimer.startSession(startCallback);
-    } else if (request.msg == 'toggleSession') {
-      SessionTimer.toggleSession(pauseCallback, resumeCallback);
-    } else if (request.msg == 'stopSession') {
-      SessionTimer.stopSession(stopCallback);
-    } else if (request.msg == 'popupInit') {
-      if (SessionTimer.hasStarted) {
-        SessionTimer.updateInSessionTime();
+    if (request.msg === 'decrease-time') {
+      Session.decreaseTime();
+    } else if (request.msg === 'increase-time') {
+      Session.increaseTime();
+    } else if (request.msg == 'start-session') {
+      Session.startSession(startCallback);
+    } else if (request.msg == 'toggle-session') {
+      Session.toggleSession(pauseCallback, resumeCallback);
+    } else if (request.msg == 'quit-session') {
+      Session.quitSession(quitCallback);
+    } else if (request.msg == 'back-session') {
+      Session.status = STATUS_NOT_STARTED;
+      Session.updateUnStartedTime();
+    } else if (request.msg == 'init-display') {
+      if (
+        Session.status === STATUS_RUNNING ||
+        Session.status === STATUS_PAUSED
+      ) {
+        Session.updateInSessionTime();
       } else {
-        SessionTimer.updateUnStartedTime();
+        Session.updateUnStartedTime();
       }
     }
   });
+};
+
+export const forceUpdateSession = () => {
+  if (Session.status === STATUS_RUNNING || Session.status === STATUS_PAUSED) {
+    Session.updateInSessionTime();
+  } else {
+    Session.updateUnStartedTime();
+  }
 };

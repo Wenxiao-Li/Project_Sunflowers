@@ -1,14 +1,26 @@
 import React from 'react';
 import { render } from 'react-dom';
 import DisplaySession from '../Popup/HomePage/DisplaySession.jsx';
-import { printLine } from './modules/print';
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
+const STATUS_NOT_STARTED = 0;
+const STATUS_RUNNING = 1;
+const STATUS_PAUSED = 2;
+const STATUS_SUCCESS = 3;
+const STATUS_FAILURE = 4;
 
-printLine("Using the 'printLine' function from the Print Module hello");
+const ELEMENT_ID = 'overlay';
 
-const createOverlay = () => {
+function removeElements(elementId) {
+  var elementIdCSS = '#' + elementId;
+  var elements = document.querySelectorAll(elementIdCSS);
+  elements.forEach(removeElement);
+}
+
+function removeElement(element) {
+  element.parentNode.removeChild(element);
+}
+
+const createOverlay = (elementId) => {
   document.body.style.margin = 0;
   document.body.style.padding = 0;
   document.body.onmousewheel = function () {
@@ -18,9 +30,8 @@ const createOverlay = () => {
     return false;
   };
   document.body.style.overflow = 'hidden';
-  var overlayHtml = "<div><button id='quit'> quit </button></div>";
   var div = document.createElement('div');
-  div.id = 'overlay';
+  div.id = elementId;
   document.body.insertBefore(div, document.body.firstChild);
   div.style.display = 'block';
   div.style.width = '100%';
@@ -30,14 +41,36 @@ const createOverlay = () => {
   div.style.left = '0px';
   div.style.backgroundColor = '#181818b3';
   div.style.zIndex = '65534';
-  div.innerText = 'test123';
-  div.innerHTML = overlayHtml;
-  const button = document.getElementById('quit');
-  button.addEventListener('click', () => {
-    console.log('clicked');
-  });
 };
 
-createOverlay();
+let hasOverlay = false;
 
-render(<DisplaySession />, window.document.querySelector('#overlay'));
+function processStatus(status) {
+  if (
+    status === STATUS_NOT_STARTED ||
+    status === STATUS_SUCCESS ||
+    status === STATUS_PAUSED
+  ) {
+    removeElements(ELEMENT_ID);
+    hasOverlay = false;
+  } else {
+    if (hasOverlay === false) {
+      createOverlay(ELEMENT_ID);
+      render(
+        <DisplaySession />,
+        window.document.querySelector('#' + ELEMENT_ID)
+      );
+      hasOverlay = true;
+    }
+  }
+}
+
+console.log('Content script works!');
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.msg === 'are-you-there-content?') {
+    sendResponse({ status: 'yes' });
+  } else if (request.msg === 'update-time') {
+    processStatus(request.data.status);
+  }
+});

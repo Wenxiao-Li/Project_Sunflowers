@@ -8,66 +8,109 @@ import { runSession } from './modules/session';
 
 dbHandle();
 
-let isblocking = false;
+const updateDisplayedTimeMsg = 'update-time';
+
+function updateCallback(minutes, seconds, status) {
+  console.log('update');
+  chrome.runtime.sendMessage({
+    msg: updateDisplayedTimeMsg,
+    data: {
+      minutes: minutes,
+      seconds: seconds,
+      status: status,
+    },
+  });
+
+  // broadcasting to every tab to update the session info
+  // TODO add avoiding non-web tabs
+  chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] }, function (tabs) {
+    tabs.forEach(function (tab) {
+      chrome.tabs.sendMessage(tab.id, {
+        msg: updateDisplayedTimeMsg,
+        data: {
+          minutes: minutes,
+          seconds: seconds,
+          status: status,
+        },
+      });
+    });
+  });
+}
 
 const startCallback = function () {
-  isblocking = true;
+  console.log('startCallback');
+  // insert scripts to all tabs (active tabs)
+  chrome.tabs.query(
+    { active: true, url: ['http://*/*', 'https://*/*'] },
+    function (tabs) {
+      tabs.forEach(function (tab) {
+        const tabId = tab.id;
+        insertScript(tabId);
+      });
+    }
+  );
+};
+
+const completeCallback = function () {
+  console.log('completeCallback');
+  // Update Database
 };
 
 const pauseCallback = function () {
-  isblocking = false;
+  console.log('pauseCallback');
+  // Resume Pause Timer
 };
 
 const resumeCallback = function () {
-  isblocking = true;
+  console.log('resumeCallback');
+  // Stop Pause Timer
 };
 
-const stopCallback = function () {
-  isblocking = false;
+const quitCallback = function () {
+  console.log('quitCallback');
+  // Update database
 };
 
-runSession(startCallback, stopCallback, pauseCallback, resumeCallback);
+runSession(
+  updateCallback,
+  startCallback,
+  completeCallback,
+  quitCallback,
+  pauseCallback,
+  resumeCallback
+);
 console.log('This is the background page.');
 console.log('Put the background scripts here.');
 
-// chrome.windows.getAll({ populate: true }, function (windows) {
-//     windows.forEach(function (window) {
-//         window.tabs.forEach(function (tab) {
-//             if (tab.url.match("http://*/*") ||
-//                 tab.url.match("https://*/*") ){
-//                 chrome.tabs.insertCSS({
-//                     file: 'content.styles.css'
-//                 });
-//                 chrome.tabs.executeScript({
-//                     file: 'contentScript.bundle.js'
-//                 });
-//             }
-//         });
-//     });
-// });
+const insertScript = (tabId) => {
+  chrome.tabs.sendMessage(tabId, { msg: 'are-you-there-content?' }, function (
+    response
+  ) {
+    response = response || {};
+    if (response.status != 'yes') {
+      chrome.tabs.executeScript(tabId, {
+        file: 'contentScript.bundle.js',
+      });
+    } else {
+      console.log('yes');
+    }
+  });
+};
 
-//chrome.tabs.onActivated.addListener
-//chrome.runtime.sendMessage -> not working for content scripts
-//chrome.tabs.sendMessage for content scripts which also require tab id
+// Will execute when tab is switched, this will not gurantee insertion in already active tabs
+chrome.tabs.onActivated.addListener(function (activeInfo) {
+  // for the current tab, inject the "inject.js" file & execute it
+  const tabId = activeInfo.tabId;
+  insertScript(tabId);
+});
 
-// having blacklists, modify strings (check the end to see if /* is included, if not append)
-
-// // Fires when create or navigate to a new tab, won't activate when switching tabs
-// chrome.webNavigation.onCommitted.addListener( details => {
-//     console.log("isblocking: " + isblocking);
-//     if (details.url.match("http://*/*") ||
-//         details.url.match("https://*/*") ){
-//         chrome.tabs.insertCSS({
-//             file: 'content.styles.css'
-//         });
-//         chrome.tabs.executeScript({
-//             file: 'contentScript.bundle.js'
-//         });
-//     }
-// });
+// Fires when create or reload a new tab, won't activate when switching tabs
+chrome.webNavigation.onCommitted.addListener((details) => {
+  const tabId = details.tabId;
+  insertScript(tabId);
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log(request.msg);
   if (request.msg === 'home-comm') {
     console.log('test home comm success');
   }

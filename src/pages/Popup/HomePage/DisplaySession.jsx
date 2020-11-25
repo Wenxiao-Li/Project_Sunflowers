@@ -1,103 +1,166 @@
 import React, { Component } from 'react';
 
-class DisplaySession extends Component {
-  _isMounted = false;
+const STATUS_NOT_STARTED = 0;
+const STATUS_RUNNING = 1;
+const STATUS_PAUSED = 2;
+const STATUS_SUCCESS = 3;
+const STATUS_FAILURE = 4;
+/**
+ * Functional Component for rendering session
+ */
+export default function DisplaySession() {
+  // States
+  const [minutes, setMinutes] = React.useState(0);
+  const [seconds, setSeconds] = React.useState(0);
+  const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
 
-  constructor(props) {
-    super(props);
+  /**
+   * Callback function
+   * @param {any} request the request object with messages
+   */
+  function updateTime(request) {
+    if (request.msg === 'update-time') {
+      setMinutes(request.data.minutes);
+      setSeconds(request.data.seconds);
+      setStatus(request.data.status);
+    }
+  }
 
-    this.state = {
-      displayedMinutes: 60,
-      displayedSeconds: 0,
+  /**
+   * Init Function, called when mounted
+   */
+  const initFunction = () => {
+    chrome.runtime.sendMessage({
+      msg: 'init-display',
+    });
+    chrome.runtime.onMessage.addListener(updateTime);
+  };
+
+  /**
+   * With [], equivalent to ComponentDidMount: [] ensure only run at Mount
+   * return statement equivalent to ComponentWillUnmount
+   */
+  React.useEffect(() => {
+    initFunction();
+    return () => {
+      chrome.runtime.onMessage.removeListener(updateTime);
     };
+  }, []);
 
-    this.postDecreaseTime = this.postDecreaseTime.bind(this);
-    this.postIncreaseTime = this.postIncreaseTime.bind(this);
-    this.postStartSession = this.postStartSession.bind(this);
-    this.postToggleSession = this.postToggleSession.bind(this);
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
-    var self = this;
+  const postDecreaseTime = () => {
     chrome.runtime.sendMessage({
-      msg: 'popupInit',
+      msg: 'decrease-time',
       data: {},
     });
-    chrome.runtime.onMessage.addListener(function (
-      request,
-      sender,
-      sendResponse
-    ) {
-      if (request.msg === 'updateDisplayedTime') {
-        //  To do something
-        console.log('popup receive');
-        if (self._isMounted) {
-          self.setState({ displayedMinutes: request.data.minutes });
-          self.setState({ displayedSeconds: request.data.seconds });
-        }
-      }
-    });
-  }
+  };
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  postDecreaseTime() {
+  const postIncreaseTime = () => {
     chrome.runtime.sendMessage({
-      msg: 'decreaseTime',
+      msg: 'increase-time',
       data: {},
     });
-  }
+  };
 
-  postIncreaseTime() {
+  const postStartSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'increaseTime',
+      msg: 'start-session',
       data: {},
     });
-  }
+  };
 
-  postStartSession() {
+  const postToggleSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'startSession',
+      msg: 'toggle-session',
       data: {},
     });
-  }
-  postToggleSession() {
+  };
+
+  const postQuitSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'toggleSession',
+      msg: 'quit-session',
       data: {},
     });
-  }
+  };
 
-  postStopSession() {
+  const postBackSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'stopSession',
-      data: {},
+      msg: 'back-session',
     });
-  }
+  };
 
-  render() {
+  const NotStartedView = () => {
     return (
       <div>
-        <div>
-          <div>
-            <button onClick={this.postDecreaseTime}> &lt; </button>
-            <span> {this.state.displayedMinutes} : </span>
-            <span>
-              {' '}
-              {String(this.state.displayedSeconds).padStart(2, '0')}{' '}
-            </span>
-            <button onClick={this.postIncreaseTime}> &gt; </button>
-          </div>
-        </div>
-        <button onClick={this.postStartSession}>Start</button>
-        <button onClick={this.postToggleSession}>Toggle</button>
-        <button onClick={this.postStopSession}>Stop</button>
+        <button onClick={postDecreaseTime}> &lt; </button>
+        <span> {minutes} : </span>
+        <span> {String(seconds).padStart(2, '0')} </span>
+        <button onClick={postIncreaseTime}> &gt; </button>
+        <br />
+        <button onClick={postStartSession}>Start</button>
       </div>
     );
-  }
-}
+  };
 
-export default DisplaySession;
+  const RunningView = () => {
+    return (
+      <div>
+        <span> {minutes} : </span>
+        <span> {String(seconds).padStart(2, '0')} </span>
+        <br />
+        <button onClick={postToggleSession}>Pause</button>
+        <button onClick={postQuitSession}>Quit</button>
+      </div>
+    );
+  };
+
+  const PausedView = () => {
+    return (
+      <div>
+        <span> {minutes} : </span>
+        <span> {String(seconds).padStart(2, '0')} </span>
+        <br />
+        <button onClick={postToggleSession}>Resume</button>
+        <button onClick={postQuitSession}>Quit</button>
+      </div>
+    );
+  };
+
+  const SuccessView = () => {
+    return (
+      <div>
+        <span> Success </span>
+        <button onClick={postBackSession}> back </button>
+      </div>
+    );
+  };
+
+  const FailureView = () => {
+    return (
+      <div>
+        <span> Failed </span>
+        <button onClick={postBackSession}> back </button>
+      </div>
+    );
+  };
+
+  const View = (props) => {
+    const currStatus = props.status;
+    if (currStatus === STATUS_NOT_STARTED) {
+      return <NotStartedView />;
+    } else if (currStatus === STATUS_RUNNING) {
+      return <RunningView />;
+    } else if (currStatus === STATUS_PAUSED) {
+      return <PausedView />;
+    } else if (currStatus === STATUS_SUCCESS) {
+      return <SuccessView />;
+    } else if (currStatus === STATUS_FAILURE) {
+      return <FailureView />;
+    }
+  };
+
+  return (
+    <div>
+      <View status={status} />
+    </div>
+  );
+}
