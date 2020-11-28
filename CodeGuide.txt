@@ -1,0 +1,96 @@
+Starting point:
+Popup/index.html
+  - will be compiled into popup.html
+  - "app-container" div is where jsx is rendered
+
+index.jsx
+  - render Popup into the div that has id="app-container"
+  - querySelector is a method that select html element using CSS reference
+
+React in general
+
+Q: What is jsx
+A: In short it's like html component, check lab3 and lab4
+
+Q: What is a React Component
+A: A react component can be a class, or a function, but the key thing is you need
+to either extends Component and have a render(), or you need to return a jsx
+
+Q: how does React Component Re-render(update) itself
+A: There is a thing called state and props, and the React Component will 
+  re-render if states or props changes
+
+Q: What is a state?
+A: It is a property of the current component and is used for Component Re-render
+
+
+How to update state:
+
+In class:
+
+  In constructor:
+    state = {
+      theSpecificState: initValue
+    }
+
+  async Set state method:
+  this.setState({theSpecificState: theValueForThisState})
+
+Use hook:
+
+  const [stateA, setStateA] = React.useState(initValue)
+
+  async set state method:
+
+  setStateA(theValueForThisState)
+
+Q: What is a props?
+A: It is something that is passed from parent
+Example: In Popup.jsx, under render(), you can see `<ProfilePage user={this.state.user} />`
+Now in the ProfilePage.jsx, you can see I access the user value under render() by using
+`this.props.user`
+
+React Life Cycle:
+
+  A React Component can have multiple stages of life cycle, 
+
+  first stage - mount:
+    - A React Component is mounted when it is first displayed on the page
+
+    Key method for process async function:
+    1. componentDidMount
+      - This method is called right after the component is mounted, we can guarantee that the initial value
+        of the states are set at this point, we can be sure that it will not be called again unless the component
+        is unmounted
+    
+    2. React.useEffect(()=>{
+      // This part is equivalent to componentDidMount
+    }, [])
+  
+  second stage - update:
+    - A React Component is updated when it is re-rendered on the page
+
+    1. componentDidUpdate
+      - Called after the component is updated, guarantee called after setState is complete (be careful of async)
+
+    2. React.useEffect(()=>{
+      // This part is equivalent to componentDidUpdate (for specific state)
+    }, [state]) // the second param is for state specific optimization
+
+    2. React.useEffect(()=>{
+      // This part is equivalent to componentDidUpdate 
+    }) // no second param indicates update for all state
+
+  third stage - unmount:
+    - A React Component will be unmounted if the react processing detect activity that will hide the Component
+
+    1. componentWillUnmount()
+    - called right before component is unmounted, this is for clean up method, aka (remove DOM elrment)
+
+    2. React.useEffect(()=> {
+
+      return () => {
+        // The return statement will be execute when componentWillUnmount
+      }
+    }, []) // no so sure about the effect of second component in this case, but usually process and clean up are paired up so just put them
+    // in the same useEffect hook and that will be fine
