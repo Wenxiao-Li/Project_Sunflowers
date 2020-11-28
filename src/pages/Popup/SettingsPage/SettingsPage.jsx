@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import firebase from '../../Background/modules/firebaseconfig';
-import { changeUsernameHandle, addBlacklistHandle, addWhitelistHandle } from './setting';
+import { changeUsernameHandle, addBlacklistHandle, addWhitelistHandle, viewWebsitelistHandle } from './setting';
 
 // The 2020 way of using react: use functional components
 export default function SettingsPage() {
@@ -18,6 +18,7 @@ export default function SettingsPage() {
    * setBlockListBoolean: setState for isBlockList, this is async so be careful
    * param: initial value
    */
+
   const [isBlockList, setBlockListBoolean] = React.useState(true);
 
   // use the return of useEffect for componentWillUnmount
@@ -29,6 +30,7 @@ export default function SettingsPage() {
   // React.useEffect(() => {}, []);
 
   const setBlockListMode = () => {
+    console.log("I am changing the mode to blockListMode");
     setBlockListBoolean(true);
   };
 
@@ -52,14 +54,24 @@ export default function SettingsPage() {
   };
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
+
+
+  const onViewWebsite = () => {
+    console.log("I am viewing the websites");
+    // currentWebsite = viewWebsitelistHandle()[0];
+    console.log(viewWebsitelistHandle());
+  }
+
   return (
     <div className="Settings">
       <h1>This is SettingsPage</h1>
       <button onClick={setBlockListMode}> BlockList Mode </button>
       <button onClick={setAllowListMode}> AllowList Mode </button>
+      <button onClick={onViewWebsite}> view websites </button>
       <img src={SunflowerBg} />
       <br />
       <span>{currentMode}</span>
+      {/* <span>{currentWebsite}</span> */}
       <h1>Change Username</h1>
       <form onSubmit={onSubmitUsername}>
         <label>First Name</label>
@@ -78,6 +90,8 @@ export default function SettingsPage() {
         <input type="url" name="addwhitelist" ref={whitelist} required />
         <button type="submit">Add</button>
       </form>
+
+
     </div>
   );
 }

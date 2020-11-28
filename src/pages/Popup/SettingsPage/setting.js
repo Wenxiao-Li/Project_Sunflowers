@@ -59,6 +59,8 @@ function viewWebsitelist() {
             whitelist = response.wl;
         }
     })
+    console.log(blacklist[0]);
+    console.log(whitelist);
     return blacklist, whitelist;
 }
 
@@ -75,5 +77,6 @@ export const addWhitelistHandle = (whitelist) => {
 };
 
 export const viewWebsitelistHandle = () => {
-    return viewWebsitelist();
+    viewWebsitelist();
 };
+
