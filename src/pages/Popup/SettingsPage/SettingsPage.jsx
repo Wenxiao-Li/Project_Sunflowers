@@ -4,8 +4,9 @@ import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import firebase from '../../Background/modules/firebaseconfig';
 import {
   changeUsernameHandle,
-  addBlockListHandle,
-  addAllowListHandle,
+  addBlacklistHandle,
+  addWhitelistHandle,
+  viewWebsitelistHandle,
 } from './setting';
 
 // The 2020 way of using react: use functional components
@@ -22,8 +23,10 @@ export default function SettingsPage() {
    * setBlockListBoolean: setState for isBlockList, this is async so be careful
    * param: initial value
    */
-  const [isBlockList, setBlockListBoolean] = React.useState(true);
 
+  const [isBlockList, setBlockListBoolean] = React.useState(true);
+  const [blockList, setBlockList] = React.useState([]);
+  const [allowList, setAllowList] = React.useState([]);
   // use the return of useEffect for componentWillUnmount
 
   // Run after every re-render
@@ -33,6 +36,7 @@ export default function SettingsPage() {
   // React.useEffect(() => {}, []);
 
   const setBlockListMode = () => {
+    console.log('I am changing the mode to blockListMode');
     setBlockListBoolean(true);
   };
 
@@ -45,45 +49,43 @@ export default function SettingsPage() {
     changeUsernameHandle(firstname.current.value, lastname.current.value);
   };
 
-  const onSubmitBlockList = (event) => {
+  const onSubmitBlacklist = (event) => {
     event.preventDefault();
-    addBlockListHandle(blacklist.current.value);
+    addBlacklistHandle(blacklist.current.value);
   };
 
-  const onSubmitAllowList = (event) => {
+  const onSubmitWhitelist = (event) => {
     event.preventDefault();
-    addAllowListHandle(whitelist.current.value);
-  };
-
-  const BlockListForm = () => {
-    return (
-      <form onSubmit={onSubmitBlockList}>
-        <label>Add BlockList Website</label>
-        <input type="url" name="addblacklist" ref={blacklist} required />
-        <button type="submit">Add</button>
-      </form>
-    );
-  };
-
-  const AllowListForm = () => {
-    return (
-      <form onSubmit={onSubmitAllowList}>
-        <label>Add AllowList Website</label>
-        <input type="url" name="addwhitelist" ref={whitelist} required />
-        <button type="submit">Add</button>
-      </form>
-    );
+    addWhitelistHandle(whitelist.current.value);
   };
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
+
+  const onViewWebsite = () => {
+    console.log('I am viewing the websites');
+    // currentWebsite = viewWebsitelistHandle()[0];
+    console.log(viewWebsitelistHandle(displayLists));
+  };
+
+  const displayLists = (blockList, allowList) => {
+    setBlockList(blockList);
+    setAllowList(allowList);
+  };
+
+  const Website = (props) => {
+    return <li> {props.url}</li>;
+  };
+
   return (
     <div className="Settings">
       <h1>This is SettingsPage</h1>
       <button onClick={setBlockListMode}> BlockList Mode </button>
       <button onClick={setAllowListMode}> AllowList Mode </button>
+      <button onClick={onViewWebsite}> view websites </button>
       <img src={SunflowerBg} />
       <br />
       <span>{currentMode}</span>
+      {/* <span>{currentWebsite}</span> */}
       <h1>Change Username</h1>
       <form onSubmit={onSubmitUsername}>
         <label>First Name</label>
@@ -92,7 +94,28 @@ export default function SettingsPage() {
         <input type="text" name="user_lastname" ref={lastname} required />
         <input type="submit" value="Submit" />
       </form>
-      {(isBlockList && <BlockListForm />) || <AllowListForm />}
+      <form onSubmit={onSubmitBlacklist}>
+        <label>Add Blacklist Website</label>
+        <input type="url" name="addblacklist" ref={blacklist} required />
+        <button type="submit">Add</button>
+      </form>
+      <form onSubmit={onSubmitWhitelist}>
+        <label>Add Whitelist Website</label>
+        <input type="url" name="addwhitelist" ref={whitelist} required />
+        <button type="submit">Add</button>
+      </form>
+      <span> Block Lists </span>
+      <ul>
+        {blockList.map((site) => (
+          <Website key={site} url={site} />
+        ))}
+      </ul>
+      <span> AllowLists </span>
+      <ul>
+        {allowList.map((site) => (
+          <Website key={site} url={site} />
+        ))}
+      </ul>
     </div>
   );
 }

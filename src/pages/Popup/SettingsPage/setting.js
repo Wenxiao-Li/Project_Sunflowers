@@ -19,8 +19,8 @@ function changeUsername(firstname, lastname) {
   );
 }
 
-function addBlockList(blockList) {
-  let bl = blockList;
+function addBlacklist(blacklist) {
+  let bl = blacklist;
   var user = firebase.auth().currentUser;
   var email;
   if (user != null) {
@@ -31,14 +31,14 @@ function addBlockList(blockList) {
     (response) => {
       if (response.message === 'success') {
         //window.location.replace('./popup.html');
-        console.log('Add blockList');
+        console.log('Add blacklist');
       }
     }
   );
 }
 
-function addAllowList(allowList) {
-  let wl = allowList;
+function addWhitelist(whitelist) {
+  let wl = whitelist;
   var user = firebase.auth().currentUser;
   var email;
   if (user != null) {
@@ -49,43 +49,41 @@ function addAllowList(allowList) {
     (response) => {
       if (response.message === 'success') {
         //window.location.replace('./popup.html');
-        console.log('Add allowList');
+        console.log('Add whitelist');
       }
     }
   );
 }
 
-function viewWebsitelist() {
+export function viewWebsitelistHandle(callback) {
   var user = firebase.auth().currentUser;
   var email;
-  var blockList, allowList;
+  var blacklist, whitelist;
   if (user != null) {
     email = user.email;
   }
+
+  console.log('I got: ', email);
   chrome.runtime.sendMessage(
     { command: 'view_website', useremail: email },
     (response) => {
       if (response.message === 'success') {
-        blockList = response.bl;
-        allowList = response.wl;
+        blacklist = response.bl;
+        whitelist = response.wl;
+        callback(blacklist, whitelist);
       }
     }
   );
-  return blockList, allowList;
 }
 
 export const changeUsernameHandle = (firstname, lastname) => {
   changeUsername(firstname, lastname);
 };
 
-export const addBlockListHandle = (blockList) => {
-  addBlockList(blockList);
+export const addBlacklistHandle = (blacklist) => {
+  addBlacklist(blacklist);
 };
 
-export const addAllowListHandle = (allowList) => {
-  addAllowList(allowList);
-};
-
-export const viewWebsitelistHandle = () => {
-  return viewWebsitelist();
+export const addWhitelistHandle = (whitelist) => {
+  addWhitelist(whitelist);
 };

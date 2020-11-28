@@ -23,7 +23,7 @@ function updateCallback(minutes, seconds, status) {
 
   // broadcasting to every tab to update the session info
   // TODO add avoiding non-web tabs
-  chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] }, function (tabs) {
+  chrome.tabs.query({ url: ['https://www.youtube.com/*'] }, function (tabs) {
     tabs.forEach(function (tab) {
       chrome.tabs.sendMessage(tab.id, {
         msg: updateDisplayedTimeMsg,
@@ -41,7 +41,7 @@ const startCallback = function () {
   console.log('startCallback');
   // insert scripts to all tabs (active tabs)
   chrome.tabs.query(
-    { active: true, url: ['http://*/*', 'https://*/*'] },
+    { active: true, url: ['https://www.youtube.com/*'] },
     function (tabs) {
       tabs.forEach(function (tab) {
         const tabId = tab.id;
@@ -115,3 +115,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('test home comm success');
   }
 });
+
