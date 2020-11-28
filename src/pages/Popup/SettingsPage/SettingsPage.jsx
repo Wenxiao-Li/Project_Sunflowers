@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import firebase from '../../Background/modules/firebaseconfig';
+import { changeUsernameHandle, addBlacklistHandle, addWhitelistHandle } from './setting';
 
 // The 2020 way of using react: use functional components
 export default function SettingsPage() {
   // Set States goes here
+  const firstname = React.useRef(null);
+  const lastname = React.useRef(null);
+  const blacklist = React.useRef(null);
+  const whitelist = React.useRef(null);
 
   /**
    * Description: Initializing States, do not pass function into useState
@@ -31,6 +36,21 @@ export default function SettingsPage() {
     setBlockListBoolean(false);
   };
 
+  const onSubmitUsername = (event) => {
+    event.preventDefault();
+    changeUsernameHandle(firstname.current.value, lastname.current.value);
+  };
+
+  const onSubmitBlacklist = (event) => {
+    event.preventDefault();
+    addBlacklistHandle(blacklist.current.value);
+  };
+
+  const onSubmitWhitelist = (event) => {
+    event.preventDefault();
+    addWhitelistHandle(whitelist.current.value);
+  };
+
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
     <div className="Settings">
@@ -40,6 +60,24 @@ export default function SettingsPage() {
       <img src={SunflowerBg} />
       <br />
       <span>{currentMode}</span>
+      <h1>Change Username</h1>
+      <form onSubmit={onSubmitUsername}>
+        <label>First Name</label>
+        <input type="text" name="user_firstname" ref={firstname} required />
+        <label>Last Name</label>
+        <input type="text" name="user_lastname" ref={lastname} required />
+        <input type="submit" value="Submit" />
+      </form>
+      <form onSubmit={onSubmitBlacklist}>
+        <label>Add Blacklist Website</label>
+        <input type="url" name="addblacklist" ref={blacklist} required />
+        <button type="submit">Add</button>
+      </form>
+      <form onSubmit={onSubmitWhitelist}>
+        <label>Add Whitelist Website</label>
+        <input type="url" name="addwhitelist" ref={whitelist} required />
+        <button type="submit">Add</button>
+      </form>
     </div>
   );
 }
