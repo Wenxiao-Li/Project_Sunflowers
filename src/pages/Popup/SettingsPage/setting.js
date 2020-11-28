@@ -1,4 +1,4 @@
-import firebase from '../../Background/modules/firebaseconfig';
+import firebase, { db } from '../../Background/modules/firebaseconfig';
 
 function changeUsername(firstname, lastname) {
     let fn = firstname;
@@ -16,7 +16,7 @@ function changeUsername(firstname, lastname) {
     });
 }
 
-function changeBlacklist(blacklist) {
+function addBlacklist(blacklist) {
     let bl = blacklist;
     var user = firebase.auth().currentUser;
     var email;
@@ -31,7 +31,7 @@ function changeBlacklist(blacklist) {
     });
 }
 
-function changeWhitelist(whitelist) {
+function addWhitelist(whitelist) {
     let wl = whitelist;
     var user = firebase.auth().currentUser;
     var email;
@@ -46,15 +46,34 @@ function changeWhitelist(whitelist) {
     });
 }
 
+function viewWebsitelist() {
+    var user = firebase.auth().currentUser;
+    var email;
+    var blacklist, whitelist;
+    if (user != null) {
+        email = user.email;
+    }
+    chrome.runtime.sendMessage({ command: "view_website", useremail: email }, (response) => {
+        if (response.message === "success") {
+            blacklist = response.bl;
+            whitelist = response.wl;
+        }
+    })
+    return blacklist, whitelist;
+}
+
 export const changeUsernameHandle = (firstname, lastname) => {
-    console.log("Changing username")
     changeUsername(firstname, lastname);
 };
 
 export const addBlacklistHandle = (blacklist) => {
-    changeBlacklist(blacklist);
+    addBlacklist(blacklist);
 };
 
 export const addWhitelistHandle = (whitelist) => {
-    changeWhitelist(whitelist);
+    addWhitelist(whitelist);
+};
+
+export const viewWebsitelistHandle = () => {
+    return viewWebsitelist();
 };
