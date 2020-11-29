@@ -23,7 +23,7 @@ function removeElement(element) {
 const createOverlay = (elementId) => {
   document.body.style.margin = 0;
   document.body.style.padding = 0;
-  document.body.onmousewheel = function () {
+  document.body.onwheel = function () {
     return false;
   };
   document.body.onkeydown = function (e) {
@@ -49,9 +49,13 @@ function processStatus(status) {
   if (
     status === STATUS_NOT_STARTED ||
     status === STATUS_SUCCESS ||
+    status === STATUS_FAILURE ||
     status === STATUS_PAUSED
   ) {
     removeElements(ELEMENT_ID);
+    document.body.style.overflow = 'auto';
+    document.body.onkeydown = null;
+    document.body.onwheel = null;
     hasOverlay = false;
   } else {
     if (hasOverlay === false) {
