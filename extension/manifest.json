@@ -9,10 +9,12 @@
         "48" : "./icon48.png",
         "128" : "./icon128.png"
     },
+    "web_accessible_resources": [
+        "firestore.js"
+    ],
     "background" : {
-        "scripts" : ["./background.js"]
+        "page" : "./background.html"
     },
-    
     "options_page" : "./options.html",
     "browser_action" : {
         "default_popup" : "./popup.html",
