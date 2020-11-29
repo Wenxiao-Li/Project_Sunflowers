@@ -21,6 +21,8 @@ export default function SettingsPage() {
    * param: initial value
    */
   const [isBlockList, setBlockListBoolean] = React.useState(true);
+  const [blockList, setBlockList] = React.useState([]);
+  const [allowList, setAllowList] = React.useState([]);
 
   // use the return of useEffect for componentWillUnmount
 
@@ -63,12 +65,28 @@ export default function SettingsPage() {
     deleteBlacklistHandle(bl.current.value);
   };
 
+  const onViewWebsite = () => {
+    console.log('I am viewing the websites');
+    // currentWebsite = viewWebsitelistHandle()[0];
+    console.log(viewWebsitelistHandle(displayLists));
+  };
+
+  const displayLists = (blockList, allowList) => {
+    setBlockList(blockList);
+    setAllowList(allowList);
+  };
+
+  const Website = (props) => {
+    return <li> {props.url}</li>;
+  };
+
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
     <div className="Settings">
       <h1>This is SettingsPage</h1>
       <button onClick={setBlockListMode}> BlockList Mode </button>
       <button onClick={setAllowListMode}> AllowList Mode </button>
+      <button onClick={onViewWebsite}> view websites </button>
       <img src={SunflowerBg} />
       <br />
       <span>{currentMode}</span>
@@ -100,6 +118,18 @@ export default function SettingsPage() {
         <input type="url" name="deletewhitelist" ref={wl} required />
         <button type="submit">Delete</button>
       </form>
+      <span> Block Lists </span>
+      <ul>
+        {blockList.map((site) => (
+          <Website key={site} url={site} />
+        ))}
+      </ul>
+      <span> AllowLists </span>
+      <ul>
+        {allowList.map((site) => (
+          <Website key={site} url={site} />
+        ))}
+      </ul>
     </div>
   );
 }

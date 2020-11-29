@@ -76,23 +76,6 @@ function deleteBlacklist(blacklist) {
     });
 }
 
-function viewWebsitelist() {
-    var user = firebase.auth().currentUser;
-    var email;
-    var blacklist, whitelist;
-    if (user != null) {
-        email = user.email;
-    }
-    chrome.runtime.sendMessage({ command: "view_website", useremail: email }, (response) => {
-        console.log("viewing viewing")
-        if (response.message === "success") {
-            blacklist = response.bl;
-            whitelist = response.wl;
-            return blacklist, whitelist;
-        }
-    })
-}
-
 export const changeUsernameHandle = (firstname, lastname) => {
     changeUsername(firstname, lastname);
 };
@@ -113,6 +96,18 @@ export const deleteWhitelistHandle = (whitelist) => {
     deleteWhitelist(whitelist);
 };
 
-export const viewWebsitelistHandle = () => {
-    return viewWebsitelist();
+export const viewWebsitelistHandle = (callback) => {
+    var user = firebase.auth().currentUser;
+    var email;
+    var blacklist, whitelist;
+    if (user != null) {
+        email = user.email;
+    }
+    chrome.runtime.sendMessage({ command: "view_website", useremail: email }, (response) => {
+        if (response.message === "success") {
+            blacklist = response.bl;
+            whitelist = response.wl;
+            callback(blacklist, whitelist);
+        }
+    })
 };
