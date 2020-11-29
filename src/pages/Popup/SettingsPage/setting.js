@@ -46,6 +46,36 @@ function addWhitelist(whitelist) {
     });
 }
 
+function deleteWhitelist(whitelist) {
+    let wl = whitelist;
+    var user = firebase.auth().currentUser;
+    var email;
+    if (user != null) {
+        email = user.email;
+    }
+    chrome.runtime.sendMessage({ command: "delete_whitelist", whitelist: wl, useremail: email }, (response) => {
+        if (response.message === "success") {
+            //window.location.replace('./popup.html');
+            console.log("Delete whitelist");
+        }
+    });
+}
+
+function deleteBlacklist(blacklist) {
+    let bl = blacklist;
+    var user = firebase.auth().currentUser;
+    var email;
+    if (user != null) {
+        email = user.email;
+    }
+    chrome.runtime.sendMessage({ command: "delete_blacklist", blacklist: bl, useremail: email }, (response) => {
+        if (response.message === "success") {
+            //window.location.replace('./popup.html');
+            console.log("Delete blacklist");
+        }
+    });
+}
+
 function viewWebsitelist() {
     var user = firebase.auth().currentUser;
     var email;
@@ -54,12 +84,13 @@ function viewWebsitelist() {
         email = user.email;
     }
     chrome.runtime.sendMessage({ command: "view_website", useremail: email }, (response) => {
+        console.log("viewing viewing")
         if (response.message === "success") {
             blacklist = response.bl;
             whitelist = response.wl;
+            return blacklist, whitelist;
         }
     })
-    return blacklist, whitelist;
 }
 
 export const changeUsernameHandle = (firstname, lastname) => {
@@ -72,6 +103,14 @@ export const addBlacklistHandle = (blacklist) => {
 
 export const addWhitelistHandle = (whitelist) => {
     addWhitelist(whitelist);
+};
+
+export const deleteBlacklistHandle = (blacklist) => {
+    deleteBlacklist(blacklist);
+};
+
+export const deleteWhitelistHandle = (whitelist) => {
+    deleteWhitelist(whitelist);
 };
 
 export const viewWebsitelistHandle = () => {

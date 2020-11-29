@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import firebase from '../../Background/modules/firebaseconfig';
-import { changeUsernameHandle, addBlacklistHandle, addWhitelistHandle } from './setting';
+import { changeUsernameHandle, addBlacklistHandle, addWhitelistHandle, viewWebsitelistHandle, deleteWhitelistHandle, deleteBlacklistHandle } from './setting';
 
 // The 2020 way of using react: use functional components
 export default function SettingsPage() {
@@ -11,6 +11,8 @@ export default function SettingsPage() {
   const lastname = React.useRef(null);
   const blacklist = React.useRef(null);
   const whitelist = React.useRef(null);
+  const wl = React.useRef(null);
+  const bl = React.useRef(null);
 
   /**
    * Description: Initializing States, do not pass function into useState
@@ -51,6 +53,16 @@ export default function SettingsPage() {
     addWhitelistHandle(whitelist.current.value);
   };
 
+  const onDeleteWhitelist = (event) => {
+    event.preventDefault();
+    deleteWhitelistHandle(wl.current.value);
+  };
+
+  const onDeleteBlacklist = (event) => {
+    event.preventDefault();
+    deleteBlacklistHandle(bl.current.value);
+  };
+
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
     <div className="Settings">
@@ -77,6 +89,16 @@ export default function SettingsPage() {
         <label>Add Whitelist Website</label>
         <input type="url" name="addwhitelist" ref={whitelist} required />
         <button type="submit">Add</button>
+      </form>
+      <form onSubmit={onDeleteBlacklist}>
+        <label>Delete Blacklist Website</label>
+        <input type="url" name="deleteblacklist" ref={bl} required />
+        <button type="submit">Delete</button>
+      </form>
+      <form onSubmit={onDeleteWhitelist}>
+        <label>Delete Whitelist Website</label>
+        <input type="url" name="deletewhitelist" ref={wl} required />
+        <button type="submit">Delete</button>
       </form>
     </div>
   );
