@@ -11,33 +11,23 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <div className="Home" >
-      <div className="bg">
+
+      <div className="logo">
         <img src={SunflowerBg} />
-        <br />
       </div>
-      <br />
 
-      <div className="dis">
-        <DisplaySession />
-        <br />
+      <div className="disSS">
+        <div> <DisplaySession /> </div>
       </div>
-      <br />
 
-      <div className="sficon">
-        <b className="num"> 2 </b>
+      <div className="sfIcon">
+        <b> 2 </b>
         <img src={SunflowerIcon} width="50" />
-        <br />
       </div>
-      <br />
 
-      <div>
-        <br />
-        <br />
-        <br />
-        <b> You will get One Sunflower per 15 minutes </b>
-        <br />
+      <div className="statement">
+        <p> You will get One Sunflower per 15 minutes </p>
       </div>
-      <br />
 
     </div>
   );
