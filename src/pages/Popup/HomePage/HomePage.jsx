@@ -11,11 +11,31 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <div className="Home" >
-      <img src={SunflowerBg} width="360" />
-      <h1> Welcome to our Sunflower Garden! </h1>
-      <DisplaySession />
-      <img src={SunflowerIcon} width="50" />
-      <p> You will get One Sunflower per 15 minutes </p>
+      <div className="bg">
+        <img src={SunflowerBg} />
+        <br />
+      </div>
+      <br />
+
+      <div className="dis">
+        <DisplaySession />
+        <br />
+      </div>
+      <br />
+
+      <div className="sficon">
+        <article className="num"> 2 </article>
+        <img src={SunflowerIcon} width="50" />
+        <br />
+      </div>
+      <br />
+
+      <div>
+        <p> You will get One Sunflower per 15 minutes </p>
+        <br />
+      </div>
+      <br />
+
     </div>
   );
 };

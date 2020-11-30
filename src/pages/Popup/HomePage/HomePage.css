@@ -1,8 +1,3 @@
-h1 {
-    color: #ffffcc;
-    text-align: center;
-}
-
 p {
     color: green;
     font-family: Arial;
@@ -15,3 +10,19 @@ body {
     font-family: Arial;
     text-align: center;
   }
+
+.sficon {
+    color: green;
+    font-family: Arial;
+    font-size: 25px;
+}
+
+.bg {
+    width: "360";
+}
+
+.dis {
+    color: green;
+    font-family: Arial;
+    font-size: 18px;
+}
