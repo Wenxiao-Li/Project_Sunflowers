@@ -24,14 +24,17 @@ const HomePage = () => {
       <br />
 
       <div className="sficon">
-        <article className="num"> 2 </article>
+        <b className="num"> 2 </b>
         <img src={SunflowerIcon} width="50" />
         <br />
       </div>
       <br />
 
       <div>
-        <p> You will get One Sunflower per 15 minutes </p>
+        <br />
+        <br />
+        <br />
+        <b> You will get One Sunflower per 15 minutes </b>
         <br />
       </div>
       <br />
