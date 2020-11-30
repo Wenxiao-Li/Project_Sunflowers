@@ -3,8 +3,6 @@ import SunflowerBg from '../../../../assets/img/header.png';
 import profP from '../../../../assets/img/profile pic';
 import { signOutHandle } from '../signin.js';
 
-
-
 class UserProfile extends Component {
   _isMounted = false;
 
@@ -29,41 +27,43 @@ class UserProfile extends Component {
     }
     return (
       <div>
-        <img class="bg" src={SunflowerBg} />
+        <img className="bg" src={SunflowerBg} />
 
-        <div class="profile">
-          <img class="profilep" src={profP} />
-          <div class="un">{userName}</div>
-
+        <div className="profile">
+          <img className="profilep" src={profP} />
+          <div className="un">{userName}</div>
         </div>
 
-        <div class="ad"> Account Details</div>
-        <div class="ad">User Name:
-        <span class="u">{userName} </span>
+        <div className="ad"> Account Details</div>
+        <div className="ad">
+          User Name:
+          <span className="u">{userName} </span>
         </div>
-        <div class="ad">Email:
-        <span class="u">{email}</span>
+        <div className="ad">
+          Email:
+          <span className="u">{email}</span>
         </div>
         <br />
-        <div class="vts"> View Total Sunflowers
-          <img class="profilep" src={profP} />
+        <div className="vts">
+          {' '}
+          View Total Sunflowers
+          <img className="profilep" src={profP} />
         </div>
-        <div class="button">
-          <button class="ui_button" onClick={() => this.props.toHistory()}>
+        <div className="button">
+          <button className="ui_button" onClick={() => this.props.toHistory()}>
             {' '}
-          Session History{' '}
+            Session History{' '}
           </button>
         </div>
         <br />
-        <div class="so">
-          <button class="ui_button" id="sign_out" onClick={signOutHandle}>
+        <div className="so">
+          <button className="ui_button" id="sign_out" onClick={signOutHandle}>
             Sign Out
-        </button>
+          </button>
         </div>
-      </div >
+      </div>
     );
   }
 }
-
 
 export default UserProfile;

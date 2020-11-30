@@ -57,10 +57,11 @@ const addBlacklist = (userEmail, blackList, callback) => {
 };
 
 const addWhitelist = (userEmail, whiteList, callback) => {
+  console.log('whitelist', whiteList);
   db.collection('user')
     .doc(userEmail)
     .update({
-      blacklist: firebase.firestore.FieldValue.arrayUnion(whiteList),
+      whitelist: firebase.firestore.FieldValue.arrayUnion(whiteList),
     })
     .then(() => {
       callback();
@@ -124,6 +125,7 @@ export let dbHandle = () => {
         sendResponse({ message: 'success' });
       });
     } else if (request.command === 'add_blacklist') {
+      console.log('blacklist', request.blacklist);
       addBlacklist(request.useremail, request.blacklist, () => {
         sendResponse({ message: 'success' });
       });

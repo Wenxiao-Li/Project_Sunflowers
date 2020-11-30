@@ -1,3 +1,47 @@
 .settings {
   background-color: #faf4c7;
 }
+
+.white {
+  background-color: #ffffff;
+}
+
+.btn-toggle.focus {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none;
+}
+
+.btn-toggle {
+  border-radius: 0 !important;
+}
+
+.btn-toggle.active {
+  outline: none !important;
+  outline-offset: none !important;
+  border-radius: 0 !important;
+  border-bottom: 2px solid black !important;
+}
+
+.scroll-view {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.scroll-view::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll-view::-webkit-scrollbar-track {
+  background: #fffded;
+  border-radius: 10px;
+}
+
+.scroll-view::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border-radius: 10px;
+}
+
+.scroll-view::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7;
+}

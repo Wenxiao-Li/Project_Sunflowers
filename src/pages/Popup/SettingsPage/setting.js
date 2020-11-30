@@ -39,6 +39,7 @@ function addBlacklist(blacklist) {
 
 function addWhitelist(whitelist) {
   let wl = whitelist;
+  console.log('wl', wl);
   var user = firebase.auth().currentUser;
   var email;
   if (user != null) {
@@ -48,7 +49,6 @@ function addWhitelist(whitelist) {
     { command: 'add_whitelist', whitelist: wl, useremail: email },
     (response) => {
       if (response.message === 'success') {
-        //window.location.replace('./popup.html');
         console.log('Add whitelist');
       }
     }
