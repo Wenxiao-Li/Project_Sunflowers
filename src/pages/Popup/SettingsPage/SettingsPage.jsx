@@ -27,6 +27,9 @@ export default function SettingsPage() {
   const [isBlockList, setBlockListBoolean] = React.useState(true);
   const [blockList, setBlockList] = React.useState([]);
   const [allowList, setAllowList] = React.useState([]);
+
+
+  
   // use the return of useEffect for componentWillUnmount
 
   // Run after every re-render

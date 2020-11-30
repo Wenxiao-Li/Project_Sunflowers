@@ -17,6 +17,10 @@ function changeUsername(firstname, lastname) {
       }
     }
   );
+
+
+  
+
 }
 
 function addBlacklist(blacklist) {

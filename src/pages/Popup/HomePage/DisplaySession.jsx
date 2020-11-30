@@ -66,6 +66,15 @@ export default function DisplaySession() {
       msg: 'start-session',
       data: {},
     });
+
+
+    var opt = {
+      type: "basic",
+      title: "Your session has started!",
+      message: "Take Care of your little Sunflowers <3",
+      iconUrl: "./icon16.png"
+    }
+    chrome.notifications.create('sessionStarted', opt, function () { console.log('created!'); });
   };
 
   const postToggleSession = () => {
@@ -80,6 +89,16 @@ export default function DisplaySession() {
       msg: 'quit-session',
       data: {},
     });
+
+
+    // NOV 30 added notifications
+    var opt = {
+      type: "basic",
+      title: "Your session has ended!",
+      message: "Keep planting more Sunflowers <3",
+      iconUrl: "./icon16.png"
+    }
+    chrome.notifications.create('sessionEnded', opt, function () { console.log('created!'); });
   };
 
   const postBackSession = () => {
