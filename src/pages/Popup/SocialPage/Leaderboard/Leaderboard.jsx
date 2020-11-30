@@ -17,15 +17,20 @@ class Leaderboard extends Component {
   }
 
   render() {
+    console.log(this.props.friendsScore)
     var email = 'undefined';
     var userName = 'undefined';
     if (this.props.user) {
       email = this.props.user.email;
       userName = this.props.user.displayName;
     }
+    var leaderboardRendered = this.props.friendsScore.map(
+      friend => <div key={friend.userName}>{friend.userName}, Sunflowers = {friend.score}<br /></div>
+    )
     return (
       <div>
         <h1> Leaderboard</h1>
+        <p> {leaderboardRendered} </p>
         <span>User Name: {userName}</span>
         <br />
         <span>Email: {email}</span>
