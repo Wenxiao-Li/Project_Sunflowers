@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
+import './UserProfile/UserProfile.css';
 
 class ProfilePage extends Component {
   _isMounted = false;
