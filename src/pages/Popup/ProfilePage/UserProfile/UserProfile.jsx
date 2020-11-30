@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import SunflowerBg from '../../../../assets/img/header.png';
-import profP from '../../../../assets/img/profile pic';
+import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import { signOutHandle } from '../signin.js';
-
-
 
 class UserProfile extends Component {
   _isMounted = false;
@@ -29,41 +26,24 @@ class UserProfile extends Component {
     }
     return (
       <div>
-        <img class="bg" src={SunflowerBg} />
-
-        <div class="profile">
-          <img class="profilep" src={profP} />
-          <div class="un">{userName}</div>
-
-        </div>
-
-        <div class="ad"> Account Details</div>
-        <div class="ad">User Name:
-        <span class="u">{userName} </span>
-        </div>
-        <div class="ad">Email:
-        <span class="u">{email}</span>
-        </div>
+        <img src={SunflowerBg} />
+        <h1 id="page-name">You are signed in</h1>
+        <h3> Account Details</h3>
+        <span>User Name: {userName}</span>
         <br />
-        <div class="vts"> View Total Sunflowers
-          <img class="profilep" src={profP} />
-        </div>
-        <div class="button">
-          <button class="ui_button" onClick={() => this.props.toHistory()}>
-            {' '}
+        <span>Email: {email}</span>
+        <br />
+        <button onClick={() => this.props.toHistory()}>
+          {' '}
           Session History{' '}
-          </button>
-        </div>
-        <br />
-        <div class="so">
-          <button class="ui_button" id="sign_out" onClick={signOutHandle}>
-            Sign Out
         </button>
-        </div>
-      </div >
+        <br />
+        <button id="sign_out" onClick={signOutHandle}>
+          Sign Out
+        </button>
+      </div>
     );
   }
 }
-
 
 export default UserProfile;
