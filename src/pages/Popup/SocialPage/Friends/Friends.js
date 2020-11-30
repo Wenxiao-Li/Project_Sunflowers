@@ -14,29 +14,65 @@ function addFriend(friend) {
     });
 }
 
+function deleteFriend(friend) {
+    let friendemail = friend;
+    var user = firebase.auth().currentUser;
+    var useremail;
+    if (user != null) {
+        useremail = user.email;
+    }
+    chrome.runtime.sendMessage({ command: "delete_friend", useremail: useremail, friendemail: friendemail }, (response) => {
+        if (response.message === "success") {
+            console.log("Delete friend");
+        }
+    });
+}
+
 function viewFriendslist() {
     var user = firebase.auth().currentUser;
     var email;
-    var friendname;
+    var friendemail;
     if (user != null) {
         email = user.email;
     }
     chrome.runtime.sendMessage({ command: "view_friends", useremail: email }, (response) => {
         if (response.message === "success") {
-            friendname = response.friend;
+            friendemail = response.friend;
         }
     })
-    return friendname;
+    return friendemail;
 }
 
 export const addFriendHandle = (friend) => {
     addFriend(friend);
-    console.log("Add friend");
 };
 
-
+/*
 export const viewFriendslistHandle = () => {
     return viewFriendslist();
 };
-
+*/
 //TODO: js for view friends and delete friends. I want to test correctness of add friends first, then implement these functions.
+
+export const deleteFriendHandle = (friend) => {
+    deleteFriend(friend);
+};
+
+export function viewWebsitelistHandle(callback) {
+    var user = firebase.auth().currentUser;
+    var email;
+    var friendlist;
+    if (user != null) {
+        email = user.email;
+    }
+
+    chrome.runtime.sendMessage(
+        { command: 'view_website', useremail: email },
+        (response) => {
+            if (response.message === 'success') {
+                friendlist = response.friend;
+                callback(friendlist);
+            }
+        }
+    );
+}

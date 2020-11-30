@@ -150,7 +150,7 @@ export let dbHandle = () => {
         sendResponse({ message: "success", friend: doc.data().friend })
       })
     } else if (request.command === 'delete_friend') {
-      deleteFriend(request.useremail, request.friend, () => {
+      deleteFriend(request.useremail, request.friendemail, () => {
         sendResponse({ message: 'success' });
       })
     }

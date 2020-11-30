@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, viewFriendslistHandle } from './Friends';
+import { addFriendHandle, deleteFriendHandle, viewFriendslistHandle } from './Friends';
 /*
 class Friends extends Component {
   _isMounted = false;
@@ -68,7 +68,9 @@ export default Friends;
 */
 export default function FriendPage() {
   // Set States goes here
-  const friendemail = React.useRef(null);
+  const addfriendemail = React.useRef(null);
+  const deletefriendemail = React.useRef(null);
+  const [friendList, setFriendList] = React.useState([]);
 
   /**
    * Description: Initializing States, do not pass function into useState
@@ -86,13 +88,26 @@ export default function FriendPage() {
   // Equivalent to componentDidMount and return = componentWillUnMount
   // React.useEffect(() => {}, []);
 
-  const onSubmitFriends = (event) => {
+  const onSubmitAddFriends = (event) => {
     event.preventDefault();
-    addFriendHandle(friendemail.current.value);
+    addFriendHandle(addfriendemail.current.value);
+  };
+
+  const onSubmitDeleteFriends = (event) => {
+    event.preventDefault();
+    deleteFriendHandle(deletefriendemail.current.value);
   };
 
   const showFriends = (event) => {
-    viewFriendslistHandle();
+    viewFriendslistHandle(displayFriends);
+  };
+
+  const displayFriends = (friendList) => {
+    setFriendList(friendList);
+  };
+
+  const Email = (props) => {
+    return <li> {props.text}</li>;
   };
 
 
@@ -100,14 +115,24 @@ export default function FriendPage() {
     <div className="Friends">
       <h1> Friends </h1>
       <br />
-      <form onSubmit={onSubmitFriends}>
+      <form onSubmit={onSubmitAddFriends}>
         <label>Add Friends</label>
-        <input type="text" name="addfriend" ref={friendemail} required />
-        <button type="submit">Add</button>
+        <input type="text" name="addfriend" ref={addfriendemail} required />
+        <button type="submit"> Add </button>
+      </form>
+      <form onSubmit={onSubmitDeleteFriends}>
+        <label>Delete Friends</label>
+        <input type="text" name="addfriend" ref={deletefriendemail} required />
+        <button type="submit"> Delete </button>
       </form>
       <br />
       <p> friends: </p>
-      {showFriends}
+
+      <ul>
+        {friendList.map((site) => (
+          <Email key={site} url={site} />
+        ))}
+      </ul>
     </div>
   );
 }
