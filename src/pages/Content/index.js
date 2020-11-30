@@ -52,6 +52,7 @@ function processStatus(status) {
     status === STATUS_FAILURE ||
     status === STATUS_PAUSED
   ) {
+    console.log('overlay removed');
     removeElements(ELEMENT_ID);
     document.body.style.overflow = 'auto';
     document.body.onkeydown = null;
@@ -59,6 +60,7 @@ function processStatus(status) {
     hasOverlay = false;
   } else {
     if (hasOverlay === false) {
+      console.log('overlay created');
       createOverlay(ELEMENT_ID);
       render(
         <DisplaySession />,

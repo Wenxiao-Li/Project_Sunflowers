@@ -9,6 +9,8 @@ import {
   viewWebsitelistHandle,
 } from './setting';
 
+import './SettingsPage.css';
+
 // The 2020 way of using react: use functional components
 export default function SettingsPage() {
   // Set States goes here
@@ -76,16 +78,83 @@ export default function SettingsPage() {
     return <li> {props.url}</li>;
   };
 
+  const BlockListView = () => {
+    return (
+      <div>
+        <form onSubmit={onSubmitBlacklist}>
+          <label>Add Blacklist Website</label>
+          <input type="url" name="addblacklist" ref={blacklist} required />
+          <button type="submit">Add</button>
+        </form>
+        <span> BlockList </span>
+        <ul>
+          {blockList.map((site) => (
+            <Website key={site} url={site} />
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  const AllowListView = () => {
+    return (
+      <div>
+        <form onSubmit={onSubmitWhitelist}>
+          <label>Add Whitelist Website</label>
+          <input type="url" name="addwhitelist" ref={whitelist} required />
+          <button type="submit">Add</button>
+        </form>
+        <span> AllowList </span>
+        <ul>
+          {allowList.map((site) => (
+            <Website key={site} url={site} />
+          ))}
+        </ul>
+      </div>
+    );
+  };
+  const blockListSuggestions = [
+    'https://www.facebook.com',
+    'https://www.youtube.com',
+    'https://www.twitch.tv',
+  ];
+  const allowListSuggestions = [
+    'https://www.google.com',
+    'https://www.wikipedia.org',
+    'https://canvas.ucsd.edu',
+  ];
+  const blockSuggestionsView = blockListSuggestions.map((site) => {
+    return <li key={'block Suggestions: ' + site}> {site} </li>;
+  });
+
+  const allowSuggestionsView = allowListSuggestions.map((site) => {
+    return <li key={'allow Suggestions: ' + site}> {site} </li>;
+  });
+
   return (
-    <div className="Settings">
-      <h1>This is SettingsPage</h1>
+    <div className="settings">
+      <img src={SunflowerBg} />
       <button onClick={setBlockListMode}> BlockList Mode </button>
       <button onClick={setAllowListMode}> AllowList Mode </button>
       <button onClick={onViewWebsite}> view websites </button>
-      <img src={SunflowerBg} />
       <br />
-      <span>{currentMode}</span>
-      {/* <span>{currentWebsite}</span> */}
+      <span>
+        Add {currentMode} websites for {currentMode} mode
+      </span>
+      {isBlockList ? <BlockListView /> : <AllowListView />}
+      <span> Suggestions </span>
+      {isBlockList ? (
+        <ul>{blockSuggestionsView}</ul>
+      ) : (
+        <ul>{allowSuggestionsView}</ul>
+      )}
+    </div>
+  );
+}
+
+const UserNameView = () => {
+  return (
+    <div>
       <h1>Change Username</h1>
       <form onSubmit={onSubmitUsername}>
         <label>First Name</label>
@@ -94,28 +163,6 @@ export default function SettingsPage() {
         <input type="text" name="user_lastname" ref={lastname} required />
         <input type="submit" value="Submit" />
       </form>
-      <form onSubmit={onSubmitBlacklist}>
-        <label>Add Blacklist Website</label>
-        <input type="url" name="addblacklist" ref={blacklist} required />
-        <button type="submit">Add</button>
-      </form>
-      <form onSubmit={onSubmitWhitelist}>
-        <label>Add Whitelist Website</label>
-        <input type="url" name="addwhitelist" ref={whitelist} required />
-        <button type="submit">Add</button>
-      </form>
-      <span> Block Lists </span>
-      <ul>
-        {blockList.map((site) => (
-          <Website key={site} url={site} />
-        ))}
-      </ul>
-      <span> AllowLists </span>
-      <ul>
-        {allowList.map((site) => (
-          <Website key={site} url={site} />
-        ))}
-      </ul>
     </div>
   );
-}
+};
