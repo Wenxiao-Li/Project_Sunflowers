@@ -157,6 +157,7 @@ export const runSession = (
         Session.updateUnStartedTime();
       }
     }
+    return true;
   });
 };
 

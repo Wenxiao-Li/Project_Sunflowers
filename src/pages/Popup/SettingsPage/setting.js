@@ -71,6 +71,9 @@ export function viewWebsitelistHandle(callback) {
         blacklist = response.bl;
         whitelist = response.wl;
         callback(blacklist, whitelist);
+        console.log('succeeded');
+      } else if (response.message === 'failure') {
+        console.log('failed');
       }
     }
   );

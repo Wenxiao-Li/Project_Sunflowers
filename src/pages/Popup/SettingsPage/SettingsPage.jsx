@@ -15,14 +15,10 @@ import {
 import './SettingsPage.css';
 
 import SunflowerBg from '../../../assets/img/header.png';
-import firebase from '../../Background/modules/firebaseconfig';
-import {
-  addBlacklistHandle,
-  addWhitelistHandle,
-  viewWebsitelistHandle,
-} from './setting';
+import { viewWebsitelistHandle } from './setting';
 import { ViewCurrentLists } from './ViewCurrentLists';
 import { ListForm } from './ListForm';
+import { Suggestions } from './Suggestions';
 
 /**
  * Render Settings Page inside Popup
@@ -52,24 +48,6 @@ export default function SettingsPage() {
     setBlockList(blockList);
     setAllowList(allowList);
   };
-
-  const blockListSuggestions = [
-    'https://www.facebook.com',
-    'https://www.youtube.com',
-    'https://www.twitch.tv',
-  ];
-  const allowListSuggestions = [
-    'https://www.google.com',
-    'https://www.wikipedia.org',
-    'https://canvas.ucsd.edu',
-  ];
-  const blockSuggestionsView = blockListSuggestions.map((site) => {
-    return <li key={'block Suggestions: ' + site}> {site} </li>;
-  });
-
-  const allowSuggestionsView = allowListSuggestions.map((site) => {
-    return <li key={'allow Suggestions: ' + site}> {site} </li>;
-  });
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
 
@@ -117,12 +95,7 @@ export default function SettingsPage() {
                 blockList={blockList}
                 allowList={allowList}
               />
-              <span> Suggestions </span>
-              {isBlockList ? (
-                <ul className="white">{blockSuggestionsView}</ul>
-              ) : (
-                <ul className="white">{allowSuggestionsView}</ul>
-              )}
+              <Suggestions isBlockList={isBlockList} />
             </div>
           </Col>
         </Row>

@@ -24,6 +24,7 @@ export default function DisplaySession() {
       setSeconds(request.data.seconds);
       setStatus(request.data.status);
     }
+    return true;
   }
 
   /**

@@ -104,7 +104,8 @@ export const viewWebsite = (userEmail, callback) => {
     .doc(userEmail)
     .get()
     .then((doc) => {
-      callback(doc);
+      callback('success', doc);
+      return doc;
     })
     .catch((error) => {
       console.log('Error getting document', error);
@@ -117,6 +118,7 @@ export let dbHandle = () => {
       updateName(request.useremail, request.firstname, request.lastname, () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.message === 'sign_in') {
       var user = request.user;
       var name = user.displayName.split(' ');
@@ -124,32 +126,37 @@ export let dbHandle = () => {
       setName(user.email, name[0], name[1], () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.command === 'add_blacklist') {
       console.log('blacklist', request.blacklist);
       addBlacklist(request.useremail, request.blacklist, () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.command === 'add_whitelist') {
       addWhitelist(request.useremail, request.whitelist, () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.command === 'delete_blacklist') {
       deleteBlacklist(request.useremail, request.blacklist, () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.command === 'delete_whitelist') {
       deleteWhitelist(request.useremail, request.whitelist, () => {
         sendResponse({ message: 'success' });
       });
+      return true;
     } else if (request.command === 'view_website') {
-      viewWebsite(request.useremail, (doc) => {
+      viewWebsite(request.useremail, (msg, doc) => {
         sendResponse({
-          message: 'success',
+          message: msg,
           bl: doc.data().blacklist,
           wl: doc.data().whitelist,
         });
       });
+      return true;
     }
-    return true;
   });
 };

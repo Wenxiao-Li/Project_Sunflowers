@@ -41,14 +41,22 @@ function updateCallback(minutes, seconds, status) {
   // TODO add avoiding non-web tabs
   chrome.tabs.query({ url: localBlockList }, function (tabs) {
     tabs.forEach(function (tab) {
-      chrome.tabs.sendMessage(tab.id, {
-        msg: updateDisplayedTimeMsg,
-        data: {
-          minutes: minutes,
-          seconds: seconds,
-          status: status,
+      chrome.tabs.sendMessage(
+        tab.id,
+        {
+          msg: updateDisplayedTimeMsg,
+          data: {
+            minutes: minutes,
+            seconds: seconds,
+            status: status,
+          },
         },
-      });
+        () => {
+          if (chrome.runtime.lastError) {
+            console.log('content script does not exist');
+          }
+        }
+      );
     });
   });
 }
@@ -107,11 +115,23 @@ const insertScript = (tabId) => {
   chrome.tabs.sendMessage(tabId, { msg: 'are-you-there-content?' }, function (
     response
   ) {
+    if (chrome.runtime.lastError) {
+      console.log('caught error injecting scripts');
+      return;
+    }
     response = response || {};
     if (response.status != 'yes') {
-      chrome.tabs.executeScript(tabId, {
-        file: 'contentScript.bundle.js',
-      });
+      chrome.tabs.executeScript(
+        tabId,
+        {
+          file: 'contentScript.bundle.js',
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.log('caught runtime error');
+          }
+        }
+      );
     } else {
       console.log('yes');
     }
