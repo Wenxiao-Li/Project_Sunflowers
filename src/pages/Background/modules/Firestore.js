@@ -79,15 +79,15 @@ const viewWebsite = (userEmail, callback) => {
     console.log('Error getting document', error);
   });
 }
-
+/*
 const viewFriend = (userEmail, callback) => {
-  db.collection('user').doc(request.useremail).get().then((doc) => {
+  db.collection('user').doc(userEmail).get().then((doc) => {
     callback(doc);
   }).catch((error) => {
     console.log('Error getting document', error);
   });
 }
-
+*/
 const addFriend = (userEmail, friendemail, callback) => {
   db.collection('user').doc(userEmail).update({
     friend: firebase.firestore.FieldValue.arrayUnion(friendemail),
@@ -146,10 +146,26 @@ export let dbHandle = () => {
         sendResponse({ message: 'success' });
       })
     } else if (request.command === 'view_friend') {
+      console.log('11111111');
+      db.collection('user')
+        .doc(request.useremail)
+        .get()
+        .then((doc) => {
+          sendResponse({
+            message: 'success',
+            friend: doc.data().friend,
+
+          });
+        })
+        .catch((error) => {
+          console.log('Error getting document', error);
+        });
+    }
+     /*else if (request.command === 'view_friend') {
       viewFriend(request.useremail, (doc) => {
         sendResponse({ message: "success", friend: doc.data().friend })
       })
-    } else if (request.command === 'delete_friend') {
+    }*/ else if (request.command === 'delete_friend') {
       deleteFriend(request.useremail, request.friendemail, () => {
         sendResponse({ message: 'success' });
       })

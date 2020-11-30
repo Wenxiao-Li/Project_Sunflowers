@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, deleteFriendHandle, viewFriendslistHandle } from './Friends';
+import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle } from './Friends';
 /*
 class Friends extends Component {
   _isMounted = false;
@@ -66,10 +66,11 @@ class Friends extends Component {
 
 export default Friends;
 */
-export default function FriendPage() {
+export default function FriendsPage() {
   // Set States goes here
   const addfriendemail = React.useRef(null);
   const deletefriendemail = React.useRef(null);
+  //const friendList = React.useRef(null);
   const [friendList, setFriendList] = React.useState([]);
 
   /**
@@ -91,6 +92,7 @@ export default function FriendPage() {
   const onSubmitAddFriends = (event) => {
     event.preventDefault();
     addFriendHandle(addfriendemail.current.value);
+    viewFriendlistHandle(displayFriends);
   };
 
   const onSubmitDeleteFriends = (event) => {
@@ -99,7 +101,7 @@ export default function FriendPage() {
   };
 
   const showFriends = (event) => {
-    viewFriendslistHandle(displayFriends);
+    viewFriendlistHandle(displayFriends);
   };
 
   const displayFriends = (friendList) => {
@@ -126,13 +128,13 @@ export default function FriendPage() {
         <button type="submit"> Delete </button>
       </form>
       <br />
-      <p> friends: </p>
-
+      <button onClick={showFriends}> showFriends </button>
+      <span> friends: </span>
       <ul>
-        {friendList.map((site) => (
-          <Email key={site} url={site} />
+        {friendList.map(email => (
+          <Email key={email} text={email} />
         ))}
       </ul>
-    </div>
+    </div >
   );
 }
