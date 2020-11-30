@@ -1,0 +1,17 @@
+h1 {
+    color: #ffffcc;
+    text-align: center;
+}
+
+p {
+    color: green;
+    font-family: Arial;
+    font-size: 13px;
+}
+
+body {
+    background-color: #ffffcc;  
+    color: green;
+    font-family: Arial;
+    text-align: center;
+  }
