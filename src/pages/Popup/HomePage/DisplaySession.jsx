@@ -79,7 +79,10 @@ export default function DisplaySession() {
       iconUrl: "./icon16.png"
     }
 
-    var sessionID = 'sessionStarted' + Math.floor(Math.random() * RADN_MAX);
+    var d = new Date();
+    var n = d.getTime();
+    var sessionID = 'sessionStarted' + n;
+    console.log(sessionID);
     chrome.notifications.create(sessionID, opt, function () { console.log('created!'); });
   };
 
@@ -104,7 +107,10 @@ export default function DisplaySession() {
       message: "Keep planting more Sunflowers <3",
       iconUrl: "./icon16.png"
     }
-    var endedID = "sessionEnded" + Math.floor(Math.random() * RADN_MAX);
+    var d = new Date();
+    var n = d.getTime();
+    var endedID = "sessionEnded" + n;
+    console.log(endedID);
     chrome.notifications.create(endedID, opt, function () { console.log('created!'); });
   };
 
