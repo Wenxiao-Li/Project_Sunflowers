@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { setEmitFlags } from 'typescript';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
 const STATUS_PAUSED = 2;
 const STATUS_SUCCESS = 3;
 const STATUS_FAILURE = 4;
+const RADN_MAX = 100000;
 /**
  * Functional Component for rendering session
  */
@@ -61,6 +63,8 @@ export default function DisplaySession() {
     });
   };
 
+
+
   const postStartSession = () => {
     chrome.runtime.sendMessage({
       msg: 'start-session',
@@ -74,7 +78,9 @@ export default function DisplaySession() {
       message: "Take Care of your little Sunflowers <3",
       iconUrl: "./icon16.png"
     }
-    chrome.notifications.create('sessionStarted', opt, function () { console.log('created!'); });
+
+    var sessionID = 'sessionStarted' + Math.floor(Math.random() * RADN_MAX);
+    chrome.notifications.create(sessionID, opt, function () { console.log('created!'); });
   };
 
   const postToggleSession = () => {
@@ -98,7 +104,8 @@ export default function DisplaySession() {
       message: "Keep planting more Sunflowers <3",
       iconUrl: "./icon16.png"
     }
-    chrome.notifications.create('sessionEnded', opt, function () { console.log('created!'); });
+    var endedID = "sessionEnded" + Math.floor(Math.random() * RADN_MAX);
+    chrome.notifications.create(endedID, opt, function () { console.log('created!'); });
   };
 
   const postBackSession = () => {
