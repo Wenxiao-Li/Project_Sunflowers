@@ -1,4 +1,17 @@
 import React, { Component } from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  ToggleButtonGroup,
+  ToggleButton,
+  Form,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
+
+import './DisplaySession.css';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
@@ -97,7 +110,9 @@ export default function DisplaySession() {
         <span> {String(seconds).padStart(2, '0')} </span>
         <button onClick={postIncreaseTime}> &gt; </button>
         <br />
-        <button onClick={postStartSession}>Start</button>
+        <Button variant="round" onClick={postStartSession}>
+          Start
+        </Button>
       </div>
     );
   };
@@ -108,8 +123,12 @@ export default function DisplaySession() {
         <span> {minutes} : </span>
         <span> {String(seconds).padStart(2, '0')} </span>
         <br />
-        <button onClick={postToggleSession}>Pause</button>
-        <button onClick={postQuitSession}>Quit</button>
+        <Button variant="round" onClick={postToggleSession}>
+          Pause
+        </Button>
+        <Button variant="round" onClick={postQuitSession}>
+          Quit
+        </Button>
       </div>
     );
   };
@@ -120,8 +139,12 @@ export default function DisplaySession() {
         <span> {minutes} : </span>
         <span> {String(seconds).padStart(2, '0')} </span>
         <br />
-        <button onClick={postToggleSession}>Resume</button>
-        <button onClick={postQuitSession}>Quit</button>
+        <Button variant="round" onClick={postToggleSession}>
+          Resume
+        </Button>
+        <Button variant="round" onClick={postQuitSession}>
+          Quit
+        </Button>
       </div>
     );
   };
@@ -130,7 +153,10 @@ export default function DisplaySession() {
     return (
       <div>
         <span> Success </span>
-        <button onClick={postBackSession}> back </button>
+        <Button variant="round" onClick={postBackSession}>
+          {' '}
+          back{' '}
+        </Button>
       </div>
     );
   };
@@ -139,7 +165,10 @@ export default function DisplaySession() {
     return (
       <div>
         <span> Failed </span>
-        <button onClick={postBackSession}> back </button>
+        <Button variant="round" onClick={postBackSession}>
+          {' '}
+          back{' '}
+        </Button>
       </div>
     );
   };

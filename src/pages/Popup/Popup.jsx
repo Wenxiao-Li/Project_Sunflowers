@@ -7,6 +7,7 @@ import SocialPage from './SocialPage/SocialPage.jsx';
 import SigninPage from './ProfilePage/SigninPage.jsx';
 import UnauthPage from './SocialPage/UnauthPage.jsx';
 import './Popup.css';
+import SunflowerBg from '../../assets/img/header.png';
 
 class Popup extends Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class Popup extends Component {
 
     return (
       <div>
+        <img src={SunflowerBg}></img>
         <div>{components[this.state.displayedPageName]}</div>
         <div>
           <button onClick={() => this.showComponent('HomePage')}>Home</button>

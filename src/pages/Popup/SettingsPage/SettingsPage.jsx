@@ -49,11 +49,13 @@ export default function SettingsPage() {
     setAllowList(allowList);
   };
 
-  const currentMode = isBlockList ? 'BlockList' : 'AllowList';
+  React.useEffect(() => {
+    onViewWebsite();
+  }, []);
 
+  const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
     <div className="settings">
-      <img src={SunflowerBg} />
       <Container fluid="md">
         <Row>
           <Col>

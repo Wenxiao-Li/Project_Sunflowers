@@ -20,9 +20,7 @@ class UnauthPage extends Component {
     return (
       <div>
         <div className="unsignedSocial">
-          <h1>You are not signed in</h1>
-          <img src={SunflowerBg} />
-          <span> Please sign in at profile page</span>
+          <h3> Please sign in at profile page</h3>
         </div>
       </div>
     );

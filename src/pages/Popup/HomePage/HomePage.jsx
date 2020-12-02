@@ -5,8 +5,6 @@ import DisplaySession from './DisplaySession.jsx';
 const HomePage = () => {
   return (
     <div className="Home">
-      <h1>Project Sunflower!</h1>
-      <img src={SunflowerBg} />
       <DisplaySession />
     </div>
   );
