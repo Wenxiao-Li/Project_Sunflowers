@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 
 const Website = ({ url }) => {
-  return <li> {url}</li>;
+  return <ListGroup.Item className="website"> {url}</ListGroup.Item>;
 };
 
 export const ViewCurrentLists = ({
@@ -30,11 +30,11 @@ export const ViewCurrentLists = ({
         fetch{' '}
       </Button>
 
-      <ul className="white">
+      <ListGroup>
         {list.map((site) => (
           <Website key={site} url={site} />
         ))}
-      </ul>
+      </ListGroup>
     </div>
   );
 };

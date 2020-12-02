@@ -19,7 +19,7 @@ class UnauthPage extends Component {
   render() {
     return (
       <div>
-        <div className="unsignedSocial">
+        <div className="page">
           <h3> Please sign in at profile page</h3>
         </div>
       </div>

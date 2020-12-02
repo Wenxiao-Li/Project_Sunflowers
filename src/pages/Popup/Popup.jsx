@@ -73,7 +73,7 @@ class Popup extends Component {
     let dpName = this.state.displayedPageName;
     return (
       <div>
-        <img src={SunflowerBg}></img>
+        <img id="logo" src={SunflowerBg}></img>
         <div>{components[dpName]}</div>
         <Container>
           <Row id="bottom-icon-navbar">

@@ -21,7 +21,7 @@ class SigininPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="page">
         <h3>This is the sign in page</h3>
         <div id="firebaseui-auth-container"></div>
       </div>

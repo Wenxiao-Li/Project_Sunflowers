@@ -36,7 +36,7 @@ class SocialPage extends Component {
       Notifications: <Notifications user={this.props.user} />,
     };
     return (
-      <div>
+      <div className="page">
         <button onClick={() => this.showComponent('Leaderboard')}>
           Leaderboard
         </button>

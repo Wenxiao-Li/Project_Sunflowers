@@ -14,5 +14,5 @@ body {
 #app-container {
   width: 360px;
   height: 480px;
-  overflow-y: scroll;
+  overflow: hidden;
 }

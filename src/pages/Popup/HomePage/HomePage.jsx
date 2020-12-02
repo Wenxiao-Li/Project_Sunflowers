@@ -4,7 +4,7 @@ import DisplaySession from './DisplaySession.jsx';
 
 const HomePage = () => {
   return (
-    <div className="Home">
+    <div className="page">
       <DisplaySession />
     </div>
   );

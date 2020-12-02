@@ -55,53 +55,39 @@ export default function SettingsPage() {
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
-    <div className="settings">
-      <Container fluid="md">
-        <Row>
-          <Col>
-            <ToggleButtonGroup
-              type="radio"
-              name="value"
-              value={isBlockList}
-              onChange={setMode}
-            >
-              <ToggleButton variant="toggle" value={true}>
-                {' '}
-                BlockList{' '}
-              </ToggleButton>
-              <ToggleButton variant="toggle" value={false}>
-                {' '}
-                AllowList{' '}
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <span>
-              Add {currentMode} websites for {currentMode} mode
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <ListForm isBlockList={isBlockList} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="scroll-view">
-              <ViewCurrentLists
-                isBlockList={isBlockList}
-                onViewWebsite={onViewWebsite}
-                blockList={blockList}
-                allowList={allowList}
-              />
-              <Suggestions isBlockList={isBlockList} />
-            </div>
-          </Col>
-        </Row>
-      </Container>
+    <div className="page" id="settings">
+      <div id="toggle-list-group">
+        <ToggleButtonGroup
+          type="radio"
+          name="value"
+          value={isBlockList}
+          onChange={setMode}
+        >
+          <ToggleButton variant="toggle" value={true}>
+            {' '}
+            BlockList{' '}
+          </ToggleButton>
+          <ToggleButton variant="toggle" value={false}>
+            {' '}
+            AllowList{' '}
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+      <div id="toggle-list-description">
+        <span>
+          Add {currentMode} websites for {currentMode} mode
+        </span>
+      </div>
+      <div className="scroll-view">
+        <ListForm isBlockList={isBlockList} />
+        <ViewCurrentLists
+          isBlockList={isBlockList}
+          onViewWebsite={onViewWebsite}
+          blockList={blockList}
+          allowList={allowList}
+        />
+        <Suggestions isBlockList={isBlockList} />
+      </div>
     </div>
   );
 }

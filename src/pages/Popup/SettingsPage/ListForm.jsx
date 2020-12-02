@@ -25,7 +25,7 @@ const onSubmitAllowlist = (event) => {
 const BlockListForm = () => {
   return (
     <Form onSubmit={onSubmitBlocklist}>
-      <InputGroup className="mb-3">
+      <InputGroup>
         <FormControl
           placeholder="Block websites during session"
           type="url"
@@ -45,7 +45,7 @@ const BlockListForm = () => {
 const AllowListForm = () => {
   return (
     <Form onSubmit={onSubmitAllowlist}>
-      <InputGroup className="mb-3">
+      <InputGroup>
         <FormControl
           placeholder="Unblock websites during session"
           type="url"

@@ -10,6 +10,15 @@
   border-bottom: 3px solid lightsalmon;
 }
 
+#logo {
+  height: 50px;
+}
+
+.page {
+  height: 380px;
+  overflow-y: auto;
+}
+
 #bottom-icon-navbar {
   background-color: #b8c774;
   position: absolute;

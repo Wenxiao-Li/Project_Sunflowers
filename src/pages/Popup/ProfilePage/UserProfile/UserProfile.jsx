@@ -27,8 +27,6 @@ class UserProfile extends Component {
     }
     return (
       <div>
-        <img className="bg" src={SunflowerBg} />
-
         <div className="profile">
           <img className="profilep" src={profP} />
           <div className="un">{userName}</div>

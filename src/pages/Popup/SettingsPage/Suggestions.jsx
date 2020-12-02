@@ -1,19 +1,8 @@
 import React from 'react';
-
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  Form,
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 const SuggestWebsite = ({ url }) => {
-  return <li> {url} </li>;
+  return <ListGroup.Item className="website"> {url} </ListGroup.Item>;
 };
 
 const blockListSuggestions = [
@@ -37,12 +26,14 @@ export const Suggestions = ({ isBlockList }) => {
 
   return (
     <div>
-      <span> Suggestions </span>
-      <ul>
+      <div className="title">
+        <h5 className="title-text"> Suggested websites... </h5>
+      </div>
+      <ListGroup>
         {suggestionList.map((site) => (
           <SuggestWebsite key={site} url={site} />
         ))}
-      </ul>
+      </ListGroup>
     </div>
   );
 };

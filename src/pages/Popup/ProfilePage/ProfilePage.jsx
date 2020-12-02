@@ -50,7 +50,7 @@ class ProfilePage extends Component {
       ),
     };
     return (
-      <div>
+      <div className="page">
         <div>{components[this.state.displayedComponent]}</div>
       </div>
     );
