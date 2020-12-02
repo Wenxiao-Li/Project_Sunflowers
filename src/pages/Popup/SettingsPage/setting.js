@@ -67,6 +67,7 @@ export function viewWebsitelistHandle(callback) {
   chrome.runtime.sendMessage(
     { command: 'view_website', useremail: email },
     (response) => {
+      // This is bad when you switch to other tabs before callback is called
       if (response.message === 'success') {
         blacklist = response.bl;
         whitelist = response.wl;

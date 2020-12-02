@@ -25,8 +25,6 @@ class SessionHistory extends Component {
     }
     return (
       <div>
-        <img src={SunflowerBg} />
-        <h1 id="page-name">You are signed in</h1>
         <h3> Session History</h3>
         <span>User Name: {userName}</span>
         <br />

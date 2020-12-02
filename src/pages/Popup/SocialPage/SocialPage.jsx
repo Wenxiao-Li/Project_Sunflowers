@@ -37,8 +37,6 @@ class SocialPage extends Component {
     };
     return (
       <div>
-        <img src={SunflowerBg} />
-        <br />
         <button onClick={() => this.showComponent('Leaderboard')}>
           Leaderboard
         </button>

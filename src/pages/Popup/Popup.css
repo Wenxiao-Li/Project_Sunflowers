@@ -1,0 +1,19 @@
+.icons {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border: 3px solid #b8c774;
+}
+
+.active {
+  border-radius: 0px;
+  border-bottom: 3px solid lightsalmon;
+}
+
+#bottom-icon-navbar {
+  background-color: #b8c774;
+  position: absolute;
+  bottom: 0px;
+  width: 100vw !important;
+  height: 50px !important;
+}
