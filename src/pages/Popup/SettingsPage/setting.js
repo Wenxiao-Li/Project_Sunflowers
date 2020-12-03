@@ -96,7 +96,7 @@ export const deleteWhitelistHandle = (whitelist) => {
     deleteWhitelist(whitelist);
 };
 
-export const viewWebsitelistHandle = (callback) => {
+/*export const viewWebsitelistHandle = (callback) => {
     var user = firebase.auth().currentUser;
     var email;
     var blacklist, whitelist;
@@ -109,5 +109,18 @@ export const viewWebsitelistHandle = (callback) => {
             whitelist = response.wl;
             callback(blacklist, whitelist);
         }
+    })
+};*/
+
+
+// Realtime display
+export const viewWebsitelistHandle = (callback) => {
+    var user = firebase.auth().currentUser;
+    var email;
+    if (user != null) {
+        email = user.email;
+    }
+    db.collection('user').doc(email).onSnapshot(snapshot => {
+        callback(snapshot.data().blacklist, snapshot.data().whitelist)
     })
 };
