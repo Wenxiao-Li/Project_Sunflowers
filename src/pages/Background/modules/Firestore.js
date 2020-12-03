@@ -160,6 +160,49 @@ export let dbHandle = () => {
         .catch((error) => {
           console.log('Error getting document', error);
         });
+    } else if (request.command === 'delete_blacklist') {
+      db.collection('user')
+        .doc(request.useremail)
+        .update({
+          blacklist: firebase.firestore.FieldValue.arrayRemove(
+            request.blacklist
+          ),
+        })
+        .then(() => {
+          sendResponse({ message: 'success' });
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
+    } else if (request.command === 'delete_whitelist') {
+      db.collection('user')
+        .doc(request.useremail)
+        .update({
+          whitelist: firebase.firestore.FieldValue.arrayRemove(
+            request.whitelist
+          ),
+        })
+        .then(() => {
+          sendResponse({ message: 'success' });
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
+    } else if (request.command === 'view_website') {
+      db.collection('user')
+        .doc(request.useremail)
+        .get()
+        .then((doc) => {
+          sendResponse({
+            message: 'success',
+            bl: doc.data().blacklist,
+            wl: doc.data().whitelist,
+          });
+          console.log(doc);
+        })
+        .catch((error) => {
+          console.log('Error getting document', error);
+        });
     }
      /*else if (request.command === 'view_friend') {
       viewFriend(request.useremail, (doc) => {
