@@ -5,10 +5,12 @@ import './HomePage.css';
 
 const HomePage = () => {
   return (
-    <div className="Home" >
-
+    <div className="page">
       <div className="disSS">
-        <div> <DisplaySession /> </div>
+        <div>
+          {' '}
+          <DisplaySession />{' '}
+        </div>
       </div>
 
       <div className="sfIcon">
@@ -18,7 +20,6 @@ const HomePage = () => {
       <div className="statement">
         <p> You will get One Sunflower per 15 minutes </p>
       </div>
-
     </div>
   );
 };
