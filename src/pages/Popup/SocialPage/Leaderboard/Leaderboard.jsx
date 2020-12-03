@@ -87,8 +87,8 @@ class Leaderboard extends Component {
     var leaderboardRendered = this.state.leaderBoardComponents.map(
       friend => <div key={friend.userName}>
         {friend.userName} Sunflowers = {friend.score}
-        <button id={friend.userName} onClick={this.updateLeaderBoard}>
-          <img src={friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon} style={{ width: 20, height: 20 }}>
+        <button id={friend.userName} onClick={this.updateLeaderBoard} style={{ background: 'none', border: 'none' }} >
+          <img id={friend.userName} onPress={this.updateLeaderBoard} src={friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon} alt="buttonImg" style={{ width: 20, height: 20, "pointerEvents": "all" }}>
           </img>
         </button>
         {friend.reactions.length}
