@@ -1,19 +1,9 @@
-body {
-    background-color: #ffffcc;  
-    color: green;
-    font-family: Arial;
-    text-align: center;
-  }
-
-.logo {
-    width: "360";
-}
-
 .sfIcon {
     color: green;
     font-family: Arial;
     font-size: 50px;
     width: "50";
+    text-align: center;
 }
 
 .disSS {
@@ -22,6 +12,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     padding: 40px;
+    text-align: center;
 }
 
 .statement {
