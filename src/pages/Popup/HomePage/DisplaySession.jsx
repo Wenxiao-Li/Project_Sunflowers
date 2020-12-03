@@ -80,8 +80,8 @@ export default function DisplaySession() {
     }
 
     var d = new Date();
-    var n = d.getTime();
-    var sessionID = 'sessionStarted' + n;
+    var currentTime = d.getTime();
+    var sessionID = 'sessionStarted' + currentTime;
     console.log(sessionID);
     chrome.notifications.create(sessionID, opt, function () { console.log('created!'); });
   };
@@ -108,8 +108,8 @@ export default function DisplaySession() {
       iconUrl: "./icon16.png"
     }
     var d = new Date();
-    var n = d.getTime();
-    var endedID = "sessionEnded" + n;
+    var currentTime = d.getTime();
+    var endedID = "sessionEnded" + currentTime;
     console.log(endedID);
     chrome.notifications.create(endedID, opt, function () { console.log('created!'); });
   };
