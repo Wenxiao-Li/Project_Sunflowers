@@ -55,6 +55,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .catch((error) => {
             console.error("Error writing document: ", error);
         });    
+    }else if (request.command === "update_sunflower"){
+        db.collection("user").doc(request.useremail).update({
+            sunflower : request.sunflower
+        })
+            .then(() => {
+                sendResponse ({message : "success"});
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+            });
     }
     return true;
 });
