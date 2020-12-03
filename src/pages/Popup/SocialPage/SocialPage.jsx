@@ -21,22 +21,37 @@ class SocialPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     // PLACEHOLDER: array which is used to render the leaderboard(should be replaced by the API Call to backend). 
+    // returns an array where each entry is 
+    // { userName: 'xyz', score: 12, reactions: ['userName1', 'userName2'] }
     var currentFriendsScoreArray = [
       {
         userName: 'Satyam',
-        score: 12
+        score: 12,
+        reactions: [
+          'Yitian',
+          'HaiHao'
+        ]
       },
       {
         userName: 'Yitian',
-        score: 20
+        score: 20,
+        reactions: [
+
+        ]
       },
       {
         userName: 'HaiHao',
-        score: 30
+        score: 30,
+        reactions: [
+
+        ]
       },
       {
         userName: 'Fei',
-        score: 40
+        score: 40,
+        reactions: [
+
+        ]
       }
     ];
 
