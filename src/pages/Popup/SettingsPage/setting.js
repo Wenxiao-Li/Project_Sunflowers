@@ -19,7 +19,7 @@ function changeUsername(firstname, lastname) {
   );
 }
 
-function addBlacklist(blacklist) {
+export function addBlacklist(blacklist) {
   let bl = blacklist;
   var user = firebase.auth().currentUser;
   var email;
@@ -37,7 +37,7 @@ function addBlacklist(blacklist) {
   );
 }
 
-function addWhitelist(whitelist) {
+export function addWhitelist(whitelist) {
   let wl = whitelist;
   console.log('wl', wl);
   var user = firebase.auth().currentUser;
@@ -50,6 +50,42 @@ function addWhitelist(whitelist) {
     (response) => {
       if (response.message === 'success') {
         console.log('Add whitelist');
+      }
+    }
+  );
+}
+
+export function deleteBlacklist(blacklist) {
+  let bl = blacklist;
+  var user = firebase.auth().currentUser;
+  var email;
+  if (user != null) {
+    email = user.email;
+  }
+  chrome.runtime.sendMessage(
+    { command: 'delete_blacklist', blacklist: bl, useremail: email },
+    (response) => {
+      if (response.message === 'success') {
+        //window.location.replace('./popup.html');
+        console.log('Delete blacklist');
+      }
+    }
+  );
+}
+
+export function deleteWhitelist(whitelist) {
+  let wl = whitelist;
+  console.log('wl', wl);
+  var user = firebase.auth().currentUser;
+  var email;
+  if (user != null) {
+    email = user.email;
+  }
+  chrome.runtime.sendMessage(
+    { command: 'delete_whitelist', whitelist: wl, useremail: email },
+    (response) => {
+      if (response.message === 'success') {
+        console.log('Delete whitelist');
       }
     }
   );

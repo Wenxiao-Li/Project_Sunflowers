@@ -79,3 +79,16 @@
 .scroll-view::-webkit-scrollbar-thumb:hover {
   background: #a7a7a7;
 }
+
+.icon-pin-right {
+  height: 24px;
+  width: 24px;
+  float: right;
+}
+
+.icon-pin-right:active {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-right: 2px;
+}

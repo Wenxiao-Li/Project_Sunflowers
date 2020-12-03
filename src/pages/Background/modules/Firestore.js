@@ -89,7 +89,7 @@ const deleteWhitelist = (userEmail, whiteList, callback) => {
   db.collection('user')
     .doc(userEmail)
     .update({
-      blacklist: firebase.firestore.FieldValue.arrayRemove(whiteList),
+      whitelist: firebase.firestore.FieldValue.arrayRemove(whiteList),
     })
     .then(() => {
       callback();

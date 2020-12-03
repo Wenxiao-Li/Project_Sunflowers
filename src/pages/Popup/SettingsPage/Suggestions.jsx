@@ -1,8 +1,17 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { addBlacklist, addWhitelist } from './setting';
+import { ListGroup, Button } from 'react-bootstrap';
+import addIcon from '../../../assets/img/addIcon.png';
 
-const SuggestWebsite = ({ url }) => {
-  return <ListGroup.Item className="website"> {url} </ListGroup.Item>;
+const SuggestWebsite = ({ url, isBlockList }) => {
+  let operation = isBlockList
+    ? () => addBlacklist(url)
+    : () => addWhitelist(url);
+  return (
+    <ListGroup.Item className="website">
+      {url} <img src={addIcon} onClick={operation} className="icon-pin-right" />
+    </ListGroup.Item>
+  );
 };
 
 const blockListSuggestions = [
@@ -31,7 +40,7 @@ export const Suggestions = ({ isBlockList }) => {
       </div>
       <ListGroup>
         {suggestionList.map((site) => (
-          <SuggestWebsite key={site} url={site} />
+          <SuggestWebsite key={site} url={site} isBlockList={isBlockList} />
         ))}
       </ListGroup>
     </div>
