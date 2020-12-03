@@ -78,9 +78,7 @@ class SocialPage extends Component {
       Notifications: <Notifications user={this.props.user} />,
     };
     return (
-      <div>
-        <img src={SunflowerBg} />
-        <br />
+      <div className="page">
         <button onClick={() => this.showComponent('Leaderboard')}>
           Leaderboard
         </button>

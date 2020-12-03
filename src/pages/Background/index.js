@@ -2,13 +2,28 @@ import '../../assets/img/icon16.png';
 import '../../assets/img/icon32.png';
 import '../../assets/img/icon48.png';
 import '../../assets/img/icon128.png';
-import './modules/firebaseconfig';
-import { dbHandle } from './modules/firestore';
+import firebase from './modules/firebaseconfig';
+import { viewWebsite, dbHandle } from './modules/firestore';
 import { runSession } from './modules/session';
 
 dbHandle();
 
 const updateDisplayedTimeMsg = 'update-time';
+let localBlockList = [];
+let localAllowList = [];
+
+const updateLocalLists = (doc) => {
+  localBlockList = doc.data().blacklist;
+  localAllowList = doc.data().whitelist;
+
+  var i;
+  for (i = 0; i < localBlockList.length; i++) {
+    localBlockList[i] += '/*';
+  }
+  for (i = 0; i < localAllowList.length; i++) {
+    localAllowList[i] += '/*';
+  }
+};
 
 function updateCallback(minutes, seconds, status) {
   console.log('update');
@@ -21,34 +36,48 @@ function updateCallback(minutes, seconds, status) {
     },
   });
 
+  console.log('locallists:', localBlockList);
   // broadcasting to every tab to update the session info
   // TODO add avoiding non-web tabs
-  chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] }, function (tabs) {
+  chrome.tabs.query({ url: localBlockList }, function (tabs) {
     tabs.forEach(function (tab) {
-      chrome.tabs.sendMessage(tab.id, {
-        msg: updateDisplayedTimeMsg,
-        data: {
-          minutes: minutes,
-          seconds: seconds,
-          status: status,
+      chrome.tabs.sendMessage(
+        tab.id,
+        {
+          msg: updateDisplayedTimeMsg,
+          data: {
+            minutes: minutes,
+            seconds: seconds,
+            status: status,
+          },
         },
-      });
+        () => {
+          if (chrome.runtime.lastError) {
+            console.log('content script does not exist');
+          }
+        }
+      );
     });
   });
 }
 
 const startCallback = function () {
   console.log('startCallback');
+
+  // update Local lists
+  var currentUser = firebase.auth().currentUser;
+  if (currentUser) {
+    viewWebsite(currentUser.email, updateLocalLists);
+  } else {
+  }
+
   // insert scripts to all tabs (active tabs)
-  chrome.tabs.query(
-    { active: true, url: ['http://*/*', 'https://*/*'] },
-    function (tabs) {
-      tabs.forEach(function (tab) {
-        const tabId = tab.id;
-        insertScript(tabId);
-      });
-    }
-  );
+  chrome.tabs.query({ active: true, url: ['https://*/*'] }, function (tabs) {
+    tabs.forEach(function (tab) {
+      const tabId = tab.id;
+      insertScript(tabId);
+    });
+  });
 };
 
 const completeCallback = function () {
@@ -86,11 +115,23 @@ const insertScript = (tabId) => {
   chrome.tabs.sendMessage(tabId, { msg: 'are-you-there-content?' }, function (
     response
   ) {
+    if (chrome.runtime.lastError) {
+      console.log('caught error injecting scripts');
+      return;
+    }
     response = response || {};
     if (response.status != 'yes') {
-      chrome.tabs.executeScript(tabId, {
-        file: 'contentScript.bundle.js',
-      });
+      chrome.tabs.executeScript(
+        tabId,
+        {
+          file: 'contentScript.bundle.js',
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.log('caught runtime error');
+          }
+        }
+      );
     } else {
       console.log('yes');
     }

@@ -1,0 +1,24 @@
+.sfIcon {
+    color: green;
+    font-family: Arial;
+    font-size: 50px;
+    width: "50";
+    text-align: center;
+}
+
+.disSS {
+    color: green;
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 40px;
+    text-align: center;
+}
+
+.statement {
+    color: green;
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 40px;
+}
