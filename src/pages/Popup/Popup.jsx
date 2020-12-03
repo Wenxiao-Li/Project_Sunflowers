@@ -6,7 +6,14 @@ import SettingsPage from './SettingsPage/SettingsPage.jsx';
 import SocialPage from './SocialPage/SocialPage.jsx';
 import SigninPage from './ProfilePage/SigninPage.jsx';
 import UnauthPage from './SocialPage/UnauthPage.jsx';
+
+import { Container, Row, Col } from 'react-bootstrap';
 import './Popup.css';
+import SunflowerBg from '../../assets/img/header.png';
+import HomeIcon from '../../assets/img/homeTab.png';
+import SocialIcon from '../../assets/img/socialTab.png';
+import SettingsIcon from '../../assets/img/settingTab.png';
+import ProfileIcon from '../../assets/img/profileTab.png';
 
 class Popup extends Component {
   constructor(props) {
@@ -63,22 +70,51 @@ class Popup extends Component {
       SigninPage: <SigninPage user={this.state.user} />,
       UnauthPage: <UnauthPage user={this.state.user} />,
     };
-
+    let dpName = this.state.displayedPageName;
     return (
       <div>
-        <div>{components[this.state.displayedPageName]}</div>
-        <div>
-          <button onClick={() => this.showComponent('HomePage')}>Home</button>
-          <button onClick={() => this.showComponent('SettingsPage')}>
-            Settings
-          </button>
-          <button onClick={() => this.showComponent('SocialPage')}>
-            Social
-          </button>
-          <button onClick={() => this.showComponent('ProfilePage')}>
-            Profile
-          </button>
-        </div>
+        <img id="logo" src={SunflowerBg}></img>
+        <div>{components[dpName]}</div>
+        <Container>
+          <Row id="bottom-icon-navbar">
+            <Col>
+              <img
+                className={dpName === 'HomePage' ? 'icons active' : 'icons'}
+                src={HomeIcon}
+                onClick={() => this.showComponent('HomePage')}
+              />
+            </Col>
+            <Col>
+              <img
+                className={dpName === 'SettingsPage' ? 'icons active' : 'icons'}
+                src={SettingsIcon}
+                onClick={() => this.showComponent('SettingsPage')}
+              />
+            </Col>
+            <Col>
+              <img
+                className={
+                  dpName === 'SocialPage' || dpName === 'UnauthPage'
+                    ? 'icons active'
+                    : 'icons'
+                }
+                src={SocialIcon}
+                onClick={() => this.showComponent('SocialPage')}
+              />
+            </Col>
+            <Col>
+              <img
+                className={
+                  dpName === 'ProfilePage' || dpName === 'SigninPage'
+                    ? 'icons active'
+                    : 'icons'
+                }
+                src={ProfileIcon}
+                onClick={() => this.showComponent('ProfilePage')}
+              />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
