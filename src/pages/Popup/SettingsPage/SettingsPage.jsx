@@ -1,20 +1,9 @@
 import React from 'react';
 
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  Form,
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap';
+import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 import './SettingsPage.css';
 
-import SunflowerBg from '../../../assets/img/header.png';
 import { viewWebsitelistHandle } from './setting';
 import { ViewCurrentLists } from './ViewCurrentLists';
 import { ListForm } from './ListForm';

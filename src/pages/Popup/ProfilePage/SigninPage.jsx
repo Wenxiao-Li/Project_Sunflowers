@@ -1,32 +1,17 @@
-import React, { Component } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
-import { signInHandle, signOutHandle } from './signin.js';
-import firebase from '../../Background/modules/firebaseconfig';
+import React from 'react';
+import { signInHandle } from './signin.js';
 
-class SigininPage extends Component {
-  _isMounted = false;
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
+const SigninPage = () => {
+  React.useEffect(() => {
     signInHandle();
-  }
+  }, []);
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  return (
+    <div className="page">
+      <h3>This is the sign in page</h3>
+      <div id="firebaseui-auth-container"></div>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className="page">
-        <h3>This is the sign in page</h3>
-        <div id="firebaseui-auth-container"></div>
-      </div>
-    );
-  }
-}
-
-export default SigininPage;
+export default SigninPage;
