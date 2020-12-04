@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  Form,
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
+import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
+import DecreaseIcon from '../../../assets/img/decrease.jpg';
+import IncreaseIcon from '../../../assets/img/increase.jpg';
 import './DisplaySession.css';
 
 const STATUS_NOT_STARTED = 0;
@@ -26,7 +19,7 @@ export default function DisplaySession() {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
-
+  const [mode, setMode] = React.useState('Blocklist');
   /**
    * Callback function
    * @param {any} request the request object with messages
@@ -36,6 +29,7 @@ export default function DisplaySession() {
       setMinutes(request.data.minutes);
       setSeconds(request.data.seconds);
       setStatus(request.data.status);
+      setMode('Blocklist');
     }
     return true;
   }
@@ -90,10 +84,16 @@ export default function DisplaySession() {
   };
 
   const postQuitSession = () => {
-    chrome.runtime.sendMessage({
-      msg: 'quit-session',
-      data: {},
-    });
+    if (
+      window.confirm(
+        'Are you sure you want to give up all sunflowers in this session?'
+      )
+    ) {
+      chrome.runtime.sendMessage({
+        msg: 'quit-session',
+        data: {},
+      });
+    }
   };
 
   const postBackSession = () => {
@@ -102,13 +102,43 @@ export default function DisplaySession() {
     });
   };
 
+  const changeMode = () => {
+    chrome.runtime.sendMessage({
+      msg: 'change-mode',
+    });
+  };
+
   const NotStartedView = () => {
+    const numSunflowers = Math.floor(minutes / 15);
     return (
       <div>
-        <button onClick={postDecreaseTime}> &lt; </button>
-        <span> {minutes} : </span>
-        <span> {String(seconds).padStart(2, '0')} </span>
-        <button onClick={postIncreaseTime}> &gt; </button>
+        <div id="set-time">
+          <img
+            className="op-icons"
+            src={DecreaseIcon}
+            onClick={postDecreaseTime}
+          />
+          <div className="display-time">
+            <span> {minutes} : </span>
+            <span> {String(seconds).padStart(2, '0')} </span>
+          </div>
+          <img
+            className="op-icons"
+            src={IncreaseIcon}
+            onClick={postIncreaseTime}
+          />
+        </div>
+        <div id="num-sunflower">
+          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <span> X {numSunflowers} </span>
+        </div>
+        <h4 className="statement">
+          {' '}
+          You will get One Sunflower per 15 minutes{' '}
+        </h4>
+        <Button variant="round" onClick={changeMode}>
+          {mode}
+        </Button>
         <br />
         <Button variant="round" onClick={postStartSession}>
           Start
@@ -120,15 +150,19 @@ export default function DisplaySession() {
   const RunningView = () => {
     return (
       <div>
-        <span> {minutes} : </span>
-        <span> {String(seconds).padStart(2, '0')} </span>
+        <div className="display-time">
+          <span> {minutes} : </span>
+          <span> {String(seconds).padStart(2, '0')} </span>
+        </div>
         <br />
-        <Button variant="round" onClick={postToggleSession}>
-          Pause
-        </Button>
-        <Button variant="round" onClick={postQuitSession}>
-          Quit
-        </Button>
+        <div>
+          <Button variant="round" onClick={postToggleSession}>
+            Pause
+          </Button>
+          <Button variant="round" onClick={postQuitSession}>
+            Quit
+          </Button>
+        </div>
       </div>
     );
   };
@@ -136,15 +170,19 @@ export default function DisplaySession() {
   const PausedView = () => {
     return (
       <div>
-        <span> {minutes} : </span>
-        <span> {String(seconds).padStart(2, '0')} </span>
+        <div className="display-time">
+          <span> {minutes} : </span>
+          <span> {String(seconds).padStart(2, '0')} </span>
+        </div>
         <br />
-        <Button variant="round" onClick={postToggleSession}>
-          Resume
-        </Button>
-        <Button variant="round" onClick={postQuitSession}>
-          Quit
-        </Button>
+        <div>
+          <Button variant="round" onClick={postToggleSession}>
+            Resume
+          </Button>
+          <Button variant="round" onClick={postQuitSession}>
+            Quit
+          </Button>
+        </div>
       </div>
     );
   };
@@ -152,7 +190,10 @@ export default function DisplaySession() {
   const SuccessView = () => {
     return (
       <div>
-        <span> Success </span>
+        <span>
+          {' '}
+          Congratulations! You have successfully planted many sunflowers{' '}
+        </span>
         <Button variant="round" onClick={postBackSession}>
           {' '}
           back{' '}
@@ -164,7 +205,12 @@ export default function DisplaySession() {
   const FailureView = () => {
     return (
       <div>
-        <span> Failed </span>
+        <span>
+          {' '}
+          Unfortunately, all of your sunflowers planted in this session are
+          gone.{' '}
+        </span>
+        <br />
         <Button variant="round" onClick={postBackSession}>
           {' '}
           back{' '}
@@ -189,7 +235,7 @@ export default function DisplaySession() {
   };
 
   return (
-    <div>
+    <div className="disSS">
       <View status={status} />
     </div>
   );

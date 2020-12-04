@@ -2,6 +2,10 @@
   background-color: whitesmoke;
   border-radius: 25px !important;
   box-shadow: 0px 2px 5px grey;
+  margin: 10px;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px;
 }
 
 .btn-round:focus {
@@ -15,4 +19,73 @@
   background-color: lightgray;
   outline: none !important;
   outline-offset: none !important;
+}
+
+.display-time {
+  background-color: #b8c774;
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 25px;
+  box-shadow: -1px 0px 5px slategray inset;
+}
+
+.display-time > span {
+  color: black;
+  font-size: 25px;
+}
+
+.op-icons {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border: 3px solid transparent;
+}
+
+.op-icons:active {
+  border-bottom: 3px solid transparent;
+}
+
+#num-sunflower {
+  margin-top: 15px;
+}
+
+#num-sunflower > span {
+  margin-top: 10px;
+  bottom: 0px;
+  font-size: 30px;
+}
+
+.statement {
+  color: green;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sfIcon {
+  width: 50px;
+  padding-bottom: 15px;
+}
+
+.disSS {
+  color: green;
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 40px;
+  padding-top: 15vh;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+#mode {
+  margin: 10px;
+}
+
+#start {
+  margin: 10px;
 }

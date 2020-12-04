@@ -10,21 +10,21 @@ const ProfilePage = () => {
 
   const { user } = React.useContext(AuthContext);
 
-  const components = {
-    UserProfile: <UserProfile user={user} toHistory={toHistory} />,
-    SessionHistory: <SessionHistory user={user} toProfile={toProfile} />,
-  };
-
-  const showComponent = (componentName) => {
-    setPage(componentName);
-  };
-
   const toHistory = () => {
     showComponent('SessionHistory');
   };
 
   const toProfile = () => {
     showComponent('UserProfile');
+  };
+
+  const showComponent = (componentName) => {
+    setPage(componentName);
+  };
+
+  const components = {
+    UserProfile: <UserProfile user={user} toHistory={toHistory} />,
+    SessionHistory: <SessionHistory user={user} toProfile={toProfile} />,
   };
 
   if (user) {
