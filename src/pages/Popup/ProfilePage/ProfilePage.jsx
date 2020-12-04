@@ -6,7 +6,7 @@ import { AuthContext } from '../../../auth/Auth';
 import './UserProfile/UserProfile.css';
 
 const ProfilePage = () => {
-  const [displayedComponent, setdisplayComp] = React.useState('UserProfile');
+  const [pageName, setPage] = React.useState('UserProfile');
 
   const { user } = React.useContext(AuthContext);
 
@@ -16,7 +16,7 @@ const ProfilePage = () => {
   };
 
   const showComponent = (componentName) => {
-    setdisplayComp(componentName);
+    setPage(componentName);
   };
 
   const toHistory = () => {
@@ -30,7 +30,7 @@ const ProfilePage = () => {
   if (user) {
     return (
       <div className="page">
-        <div>{components[displayedComponent]}</div>
+        <div>{components[pageName]}</div>
       </div>
     );
   } else {
