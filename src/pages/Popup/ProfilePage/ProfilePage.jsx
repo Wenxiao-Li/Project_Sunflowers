@@ -1,60 +1,41 @@
-import React, { Component } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
+import React from 'react';
 import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
+import SigninPage from './SigninPage';
+import { AuthContext } from '../../../auth/Auth';
 import './UserProfile/UserProfile.css';
 
-class ProfilePage extends Component {
-  _isMounted = false;
+const ProfilePage = () => {
+  const [pageName, setPage] = React.useState('UserProfile');
 
-  constructor(props) {
-    super(props);
+  const { user } = React.useContext(AuthContext);
 
-    this.state = {
-      displayedComponent: 'UserProfile',
-    };
+  const components = {
+    UserProfile: <UserProfile user={user} toHistory={toHistory} />,
+    SessionHistory: <SessionHistory user={user} toProfile={toProfile} />,
+  };
 
-    this.showComponent = this.showComponent.bind(this);
-    this.toHistory = this.toHistory.bind(this);
-    this.toProfile = this.toProfile.bind(this);
-  }
+  const showComponent = (componentName) => {
+    setPage(componentName);
+  };
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  const toHistory = () => {
+    showComponent('SessionHistory');
+  };
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  const toProfile = () => {
+    showComponent('UserProfile');
+  };
 
-  showComponent(componentName) {
-    console.log(componentName);
-    this.setState({ displayedComponent: componentName });
-  }
-
-  toHistory() {
-    this.showComponent('SessionHistory');
-  }
-
-  toProfile() {
-    this.showComponent('UserProfile');
-  }
-
-  render() {
-    const components = {
-      UserProfile: (
-        <UserProfile user={this.props.user} toHistory={this.toHistory} />
-      ),
-      SessionHistory: (
-        <SessionHistory user={this.props.user} toProfile={this.toProfile} />
-      ),
-    };
+  if (user) {
     return (
       <div className="page">
-        <div>{components[this.state.displayedComponent]}</div>
+        <div>{components[pageName]}</div>
       </div>
     );
+  } else {
+    return <SigninPage />;
   }
-}
+};
 
 export default ProfilePage;

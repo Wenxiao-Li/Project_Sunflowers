@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
-
+import { AuthContext } from '../../../../auth/Auth';
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
   constructor(userName, score, reactions, currentUser) {
@@ -22,89 +21,102 @@ class LeaderBoardComponent {
   }
 }
 
-class Leaderboard extends Component {
-  _isMounted = false;
+const Leaderboard = () => {
+  const [leaderBoardComponents, setLBComponents] = React.useState([]);
 
-  constructor(props) {
-    super(props);
+  const { user } = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    var currentFriendsScoreArray = [
+      {
+        userName: 'Satyam',
+        score: 12,
+        reactions: ['Yitian', 'HaiHao'],
+      },
+      {
+        userName: 'Yitian',
+        score: 20,
+        reactions: [],
+      },
+      {
+        userName: 'HaiHao',
+        score: 30,
+        reactions: [],
+      },
+      {
+        userName: 'Fei',
+        score: 40,
+        reactions: [],
+      },
+    ];
+    //Sort the array returned.
+    currentFriendsScoreArray.sort((a, b) => b.score - a.score);
+
     var newLeaderBoardComponents = [];
-    for (var i = 0; i < this.props.friendsScore.length; i++) {
-      var current = this.props.friendsScore[i];
-      var leaderBoardComponent = new LeaderBoardComponent(current.userName, current.score, current.reactions, this.props.user.displayName);
+    for (var i = 0; i < currentFriendsScoreArray.length; i++) {
+      var current = currentFriendsScoreArray[i];
+      var leaderBoardComponent = new LeaderBoardComponent(
+        current.userName,
+        current.score,
+        current.reactions,
+        user.displayName
+      );
       newLeaderBoardComponents.push(leaderBoardComponent);
     }
-    this.state = {
-      leaderBoardComponents: []
-    };
+    setLBComponents(newLeaderBoardComponents);
+  }, []);
 
-    this.state.leaderBoardComponents = newLeaderBoardComponents;
-    this.updateLeaderBoard = this.updateLeaderBoard.bind(this);
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  // If a reaction happends updates the leaderboard.
-  updateLeaderBoard(event) {
-    var nameReactedTo = event.target.id;
-    var copy = this.state.leaderBoardComponents;
+  const updateLeaderBoard = (name) => {
+    var nameReactedTo = name;
+    console.log(nameReactedTo);
+    var copy = leaderBoardComponents.slice();
     for (var i = 0; i < copy.length; i++) {
       if (copy[i].userName === nameReactedTo) {
         if (copy[i].reactions.indexOf(copy[i].currentUser) === -1) {
-          console.log("Reaction added for user", nameReactedTo);
+          console.log('Reaction added for user', nameReactedTo);
           copy[i].reactions.push(copy[i].currentUser);
         } else {
-          console.log("Reaction removed for user", nameReactedTo);
+          console.log('Reaction removed for user', nameReactedTo);
           copy[i].reactions.pop(copy[i].currentUser);
         }
       }
-
-      this.setState({
-        leaderBoardComponents: copy,
-      })
     }
-
+    setLBComponents(copy);
+  };
+  var email = 'undefined';
+  var userName = 'undefined';
+  if (user) {
+    email = user.email;
+    userName = user.displayName;
   }
 
-  render() {
-    var email = 'undefined';
-    var userName = 'undefined';
-    if (this.props.user) {
-      email = this.props.user.email;
-      userName = this.props.user.displayName;
-    }
+  var leaderboardRendered = leaderBoardComponents.map((friend) => (
+    <div key={friend.userName}>
+      {friend.userName} Sunflowers = {friend.score}
+      <button
+        id={friend.userName}
+        onClick={() => updateLeaderBoard(friend.userName)}
+      >
+        <img
+          src={
+            friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon
+          }
+          style={{ width: 20, height: 20 }}
+        ></img>
+      </button>
+      {friend.reactions.length}
+    </div>
+  ));
 
-    var buttonStyle = {
-      width: 20,
-      height: 20
-    }
-
-    var leaderboardRendered = this.state.leaderBoardComponents.map(
-      friend => <div key={friend.userName}>
-        {friend.userName} Sunflowers = {friend.score}
-        <button id={friend.userName} onClick={this.updateLeaderBoard} style={{ background: 'none', border: 'none' }} >
-          <img id={friend.userName} onPress={this.updateLeaderBoard} src={friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon} alt="buttonImg" style={{ width: 20, height: 20, "pointerEvents": "all" }}>
-          </img>
-        </button>
-        {friend.reactions.length}
-      </div>
-    );
-
-    return (
-      <div>
-        <h1> Leaderboard</h1>
-        {leaderboardRendered}
-        <span>User Name: {userName}</span>
-        <br />
-        <span>Email: {email}</span>
-      </div >
-    );
-  }
-}
+  return (
+    <div>
+      <h1> Leaderboard</h1>
+      {leaderboardRendered}
+      <span>User Name: {userName}</span>
+      <br />
+      <span>Email: {email}</span>
+    </div>
+  );
+};
 
 export default Leaderboard;
