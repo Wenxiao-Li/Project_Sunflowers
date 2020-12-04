@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
-
+import { AuthContext } from '../../../../auth/Auth';
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
   constructor(userName, score, reactions, currentUser) {
@@ -21,8 +21,10 @@ class LeaderBoardComponent {
   }
 }
 
-const Leaderboard = ({ user }) => {
+const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
+
+  const { user } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     var currentFriendsScoreArray = [
