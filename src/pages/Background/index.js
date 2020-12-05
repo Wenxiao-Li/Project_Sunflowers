@@ -52,21 +52,25 @@ const startCallback = function () {
 };
 
 const completeCallback = function () {
+  alert("Your session has been completed");
   console.log('completeCallback');
   // Update Database
 };
 
 const pauseCallback = function () {
+  alert("Your session has been paused!");
   console.log('pauseCallback');
   // Resume Pause Timer
 };
 
 const resumeCallback = function () {
+  alert("Your session has been resumed!");
   console.log('resumeCallback');
   // Stop Pause Timer
 };
 
 const quitCallback = function () {
+  alert("Your session has been terminated");
   console.log('quitCallback');
   // Update database
 };

@@ -16,6 +16,8 @@ export default function DisplaySession() {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
+
+
   const [isPaused, setIsPaused] = React.useState(false);
   const [whenPaused, setWhenPaused] = React.useState(0);
   const [whenResumed, setWhenResumed] = React.useState(0);
@@ -106,7 +108,7 @@ export default function DisplaySession() {
     }
     else {
       setWhenResumed(new Date().getTime());
-      setTimePausedDuration((whenResumed - whenPaused) / 1000);
+      setTimeout(setTimePausedDuration((whenResumed - whenPaused) / 1000), 0);
       setIsPaused(false);
     }
     console.log({ isPaused });
@@ -114,7 +116,6 @@ export default function DisplaySession() {
     console.log({ whenResumed });
 
     if (isPaused == false) {
-
       console.log({ timePausedDuration });
       console.log('printing hours')
     }
@@ -122,6 +123,8 @@ export default function DisplaySession() {
 
     setPausedCounts(pausedCounts + 1);
     console.log(pausedCounts);
+
+
     if (pausedCounts > 10) {
       setPausedCounts(0);
       chrome.runtime.sendMessage({
@@ -142,7 +145,6 @@ export default function DisplaySession() {
       console.log(endedID);
       chrome.notifications.create(endedID, opt, function () { console.log('created!'); });
       return;
-
     }
 
     chrome.runtime.sendMessage({
