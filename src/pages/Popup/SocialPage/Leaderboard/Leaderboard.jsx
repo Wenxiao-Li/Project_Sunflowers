@@ -41,7 +41,7 @@ const Leaderboard = () => {
         0x1F525: [
           'sagupta@ucsd.edu',
         ],
-        0x1F495: [
+        0x1F496: [
           'hello@world.com',
           'sagupta@ucsd.edu',
         ]
