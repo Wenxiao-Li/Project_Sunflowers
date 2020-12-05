@@ -37,23 +37,6 @@
   margin-right: 5px;
 }
 
-.btn-toggle.focus {
-  outline: none !important;
-  outline-offset: none !important;
-  box-shadow: none;
-}
-
-.btn-toggle {
-  border-radius: 0 !important;
-}
-
-.btn-toggle.active {
-  outline: none !important;
-  outline-offset: none !important;
-  border-radius: 0 !important;
-  border-bottom: 2px solid black !important;
-}
-
 .scroll-view {
   height: 290px;
   margin-top: 5px;

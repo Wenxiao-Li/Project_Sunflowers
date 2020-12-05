@@ -104,8 +104,7 @@ export const viewWebsite = (userEmail, callback) => {
     .doc(userEmail)
     .get()
     .then((doc) => {
-      callback('success', doc);
-      return doc;
+      callback(doc);
     })
     .catch((error) => {
       console.log('Error getting document', error);
@@ -149,9 +148,9 @@ export let dbHandle = () => {
       });
       return true;
     } else if (request.command === 'view_website') {
-      viewWebsite(request.useremail, (msg, doc) => {
+      viewWebsite(request.useremail, (doc) => {
         sendResponse({
-          message: msg,
+          message: 'success',
           bl: doc.data().blacklist,
           wl: doc.data().whitelist,
         });

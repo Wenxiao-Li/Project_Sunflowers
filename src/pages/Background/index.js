@@ -116,8 +116,7 @@ const insertScript = (tabId) => {
     response
   ) {
     if (chrome.runtime.lastError) {
-      console.log('caught error injecting scripts');
-      return;
+      console.log('caught error checking duplicate');
     }
     response = response || {};
     if (response.status != 'yes') {

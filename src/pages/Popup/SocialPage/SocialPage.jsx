@@ -5,6 +5,8 @@ import Notifications from './Notifications/Notifications.jsx';
 import UnauthPage from './UnauthPage';
 import { AuthContext } from '../../../auth/Auth';
 
+import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+
 const SocialPage = () => {
   const [pageName, setPage] = React.useState('Leaderboard');
 
@@ -23,13 +25,35 @@ const SocialPage = () => {
   if (user) {
     return (
       <div className="page">
-        <button onClick={() => showComponent('Leaderboard')}>
-          Leaderboard
-        </button>
-        <button onClick={() => showComponent('Friends')}>Friends</button>
-        <button onClick={() => showComponent('Notifications')}>
-          Notifications
-        </button>
+        <ToggleButtonGroup
+          type="radio"
+          name="value"
+          value={pageName}
+          onChange={setPage}
+          style={{ width: '100%' }}
+        >
+          <ToggleButton
+            variant="toggle"
+            value={'Leaderboard'}
+            style={{ width: '33%' }}
+          >
+            Leaderboard
+          </ToggleButton>
+          <ToggleButton
+            variant="toggle"
+            value={'Friends'}
+            style={{ width: '33%' }}
+          >
+            Friends
+          </ToggleButton>
+          <ToggleButton
+            variant="toggle"
+            value={'Notifications'}
+            style={{ width: '33%' }}
+          >
+            Notifications
+          </ToggleButton>
+        </ToggleButtonGroup>
         <div>{components[pageName]}</div>
       </div>
     );
