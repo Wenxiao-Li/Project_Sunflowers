@@ -17,3 +17,7 @@ body {
   height: 480px;
   overflow: hidden;
 }
+
+html{
+  font-size: 16px;
+}
