@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import SunflowerBg from '../../../../assets/img/header.png';
 import profP from '../../../../assets/img/profile pic';
+import SunflowerIcon from '../../../../assets/img/profileSun';
 import { signOutHandle } from '../signin.js';
+import './UserProfile.css';
+
 
 class UserProfile extends Component {
   _isMounted = false;
@@ -45,7 +48,7 @@ class UserProfile extends Component {
         <div className="vts">
           {' '}
           View Total Sunflowers
-          <img className="profilep" src={profP} />
+          <img className="sunflower" src={SunflowerIcon} />
         </div>
         <div className="button">
           <button className="ui_button" onClick={() => this.props.toHistory()}>

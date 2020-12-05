@@ -3,7 +3,7 @@ import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
 import SigninPage from './SigninPage';
 import { AuthContext } from '../../../auth/Auth';
-import './UserProfile/UserProfile.css';
+
 
 const ProfilePage = () => {
   const [pageName, setPage] = React.useState('UserProfile');

@@ -1,5 +1,7 @@
 import React from 'react';
 import { signInHandle } from './signin.js';
+import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
+import './SigninPage.css';
 
 const SigninPage = () => {
   React.useEffect(() => {
@@ -8,7 +10,9 @@ const SigninPage = () => {
 
   return (
     <div className="page">
-      <h3>This is the sign in page</h3>
+      <div className="join">Join
+        <img className="joinSun" src={SunflowerIcon} />
+      </div>
       <div id="firebaseui-auth-container"></div>
     </div>
   );
