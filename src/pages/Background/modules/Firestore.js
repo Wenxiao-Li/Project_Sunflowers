@@ -22,6 +22,21 @@ const setName = (userEmail, firstName, lastName, callback) => {
         last_name: lastName,
         blacklist: [],
         whitelist: [],
+        user_flower: 0,
+        reactions: { "0x1F496": [], "0x1F525": [], "0x1F603": [] },
+        friends: []
+      }).then(() => {
+        callback();
+      }).catch((error) => {
+        console.error('Error writing document: ', error);
+      });
+      db.collection('user').doc(userEmail).collection('sessions').doc().set({
+        data: new Date(),
+        session_length: 0,
+        is_complete: false,
+        start_time: "",
+        end_time: "",
+        num_flower: 0
       }).then(() => {
         callback();
       }).catch((error) => {
@@ -72,9 +87,9 @@ const deleteWhitelist = (userEmail, whiteList, callback) => {
 }
 
 const viewWebsite = (userEmail, callback) => {
-    db.collection('user').doc(userEmail).onSnapshot(snapshot => {
-        callback(snapshot.data())
-    })
+  db.collection('user').doc(userEmail).onSnapshot(snapshot => {
+    callback(snapshot.data().blacklist, snapshot.data().whitelist)
+  })
 }
 
 export let dbHandle = () => {
@@ -108,7 +123,7 @@ export let dbHandle = () => {
       })
     } else if (request.command === 'view_website') {
       viewWebsite(request.useremail, (doc) => {
-        console.log("hey you",doc.blacklist)
+        console.log("hey you", doc.blacklist)
         sendResponse({ message: "success", bl: doc.blacklist, wl: doc.whitelist })
       })
     }
