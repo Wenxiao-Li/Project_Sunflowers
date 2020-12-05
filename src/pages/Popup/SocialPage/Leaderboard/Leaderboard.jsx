@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
 import { AuthContext } from '../../../../auth/Auth';
-import sunflowerIcon from "../../../../assets/img/sunflowerIcon.jpg";
-import "./Leaderboard.css"
+import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
+import './Leaderboard.css';
 
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
@@ -34,17 +34,9 @@ const Leaderboard = () => {
       email: 'hello@world.com',
       score: 12,
       reactions: {
-        0x1F603: [
-          'sagupta@ucsd.edu',
-          'yitian@wang.com',
-        ],
-        0x1F525: [
-          'sagupta@ucsd.edu',
-        ],
-        0x1F496: [
-          'hello@world.com',
-          'sagupta@ucsd.edu',
-        ]
+        0x1f603: ['sagupta@ucsd.edu', 'yitian@wang.com'],
+        0x1f525: ['sagupta@ucsd.edu'],
+        0x1f496: ['hello@world.com', 'sagupta@ucsd.edu'],
       },
     },
   ];
@@ -61,7 +53,7 @@ const Leaderboard = () => {
         current.email,
         current.score,
         current.reactions,
-        user.email,
+        user.email
       );
       newLeaderBoardComponents.push(leaderBoardComponent);
     }
@@ -69,11 +61,15 @@ const Leaderboard = () => {
   }, []);
 
   const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
-    console.log("Friend Reacted to ", friendReactedTo);
-    console.log("Emoji Reacted on", keyReactedOn);
+    console.log('Friend Reacted to ', friendReactedTo);
+    console.log('Emoji Reacted on', keyReactedOn);
     var copy = [...leaderBoardComponents];
-    var indexOffriend = copy.findIndex(friend => friend.email === friendReactedTo);
-    var reactionExists = copy[indexOffriend].reactions[keyReactedOn].indexOf(user.email);
+    var indexOffriend = copy.findIndex(
+      (friend) => friend.email === friendReactedTo
+    );
+    var reactionExists = copy[indexOffriend].reactions[keyReactedOn].indexOf(
+      user.email
+    );
     if (reactionExists === -1) {
       copy[indexOffriend].reactions[keyReactedOn].push(user.email);
     } else {
@@ -83,7 +79,6 @@ const Leaderboard = () => {
     console.log(leaderBoardComponents);
     setLBComponents(copy);
   };
-
 
   var email = 'undefined';
   var userName = 'undefined';
@@ -95,17 +90,21 @@ const Leaderboard = () => {
   var leaderboardRendered = leaderBoardComponents.map((friend) => (
     <div key={friend.userName}>
       {friend.userName}
-      {" " + friend.score + "x"}
-      <img className="sunflower-icon" src={sunflowerIcon}>
-      </img>
-      {
-        Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
-          <button key={key} value={friend.email} class={arrayOfReacts.indexOf(user.email) == -1 ? "unreacted" : "reacted"} onClick={e => updateLeaderBoard(e.target.value, key)}>
-            {String.fromCodePoint(key)} {arrayOfReacts.length}
-          </button>
-        ))
-      }
-    </div >
+      {' ' + friend.score + 'x'}
+      <img className="sunflower-icon" src={sunflowerIcon}></img>
+      {Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+        <button
+          key={key}
+          value={friend.email}
+          className={
+            arrayOfReacts.indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
+          }
+          onClick={(e) => updateLeaderBoard(e.target.value, key)}
+        >
+          {String.fromCodePoint(key)} {arrayOfReacts.length}
+        </button>
+      ))}
+    </div>
   ));
 
   return (
