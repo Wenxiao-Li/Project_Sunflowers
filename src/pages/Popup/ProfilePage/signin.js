@@ -9,6 +9,7 @@ const uiConfig = {
       window.location.reload();
     },
   },
+  signInFlow: 'popup',
   signInOptions: [
     {
       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
