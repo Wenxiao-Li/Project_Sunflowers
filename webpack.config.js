@@ -36,12 +36,10 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
-    newtab: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.jsx'),
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
-    home: path.join(__dirname, 'src', 'pages', 'Home', 'index.jsx')
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['contentScript'],
@@ -144,12 +142,6 @@ var options = {
       ],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.html'),
-      filename: 'newtab.html',
-      chunks: ['newtab'],
-      cache: false,
-    }),
-    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
       filename: 'options.html',
       chunks: ['options'],
@@ -171,18 +163,6 @@ var options = {
       ),
       filename: 'background.html',
       chunks: ['background'],
-      cache: false,
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(
-        __dirname,
-        'src',
-        'pages',
-        'Home',
-        'home.html'
-      ),
-      filename: 'home.html',
-      chunks: ['home'],
       cache: false,
     }),
   ],
