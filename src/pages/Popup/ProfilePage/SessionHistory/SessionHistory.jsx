@@ -1,11 +1,76 @@
 import React, { Component } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
+import firebase, { db } from '../../../Background/modules/firebaseconfig';
 
+import Chart from "react-google-charts";
 class SessionHistory extends Component {
   _isMounted = false;
 
   constructor(props) {
     super(props);
+    
+    this.state ={
+      user : this.props.user,
+      lengthOfWeek : [],
+      numberOfWeek : [],
+      Date : []
+    };
+
+    //this.delta = this.delta.bind(this);
+
+
+    var sessionRef = db.collection('user').doc(this.props.user.email).collection('sessions');
+    if(this.props.user){
+      sessionRef.get().then(function(querySnapshot){
+        let dayHistory = new Map(); // date/total session time
+        let dayNumber = new Map(); // date/total session number
+        let sessionPerDay = [];
+        let lengthOfWeek = [];
+        let Date = [];
+        querySnapshot.forEach(function(doc){
+          console.log(doc.data().Date);
+          console.log(doc.data().session_length);
+          if(dayHistory.has(doc.data().Date)){
+            dayHistory.set(doc.data().Date, dayHistory.get(doc.data().Date) + doc.data().session_length);
+            dayNumber.set(doc.data().Date, dayNumber.get(doc.data().Date) + 1);
+          }else {
+            dayHistory.set(doc.data().Date, doc.data().session_length);
+            dayNumber.set(doc.data().Date, 1);
+          }
+
+        });
+        let keyArray = Array.from(dayHistory.keys()); //sort the key by time
+        console.log("keyArray done");
+        keyArray.sort();
+        console.log("sort done");
+        console.log(keyArray)
+
+        for (let i = keyArray.length - 1; i >= keyArray.length - 7; i--){
+          Date.push(keyArray[i]);
+          lengthOfWeek.push(dayHistory.get(keyArray[i]));
+          sessionPerDay.push(dayNumber.get(keyArray[i]));
+        }
+
+        for (let i = 0; i < 7; i++){
+          Date[i] = Date[i].substring(5);
+        }
+
+        this.setState({
+          user : this.props.user,
+          lengthOfWeek : lengthOfWeek,
+          numberOfWeek : sessionPerDay,
+          Date : Date
+        });
+
+        console.log(this.state.Date);
+        console.log(this.state.lengthOfWeek);
+        console.log(this.state.sessionPerDay);
+
+      }.bind(this));
+
+      console.log("constructor done");
+    } 
+
   }
 
   componentDidMount() {
@@ -16,6 +81,8 @@ class SessionHistory extends Component {
     this._isMounted = false;
   }
 
+ 
+  
   render() {
     var email = 'undefined';
     var userName = 'undefined';
@@ -24,16 +91,40 @@ class SessionHistory extends Component {
       userName = this.props.user.displayName;
     }
     return (
-      <div>
-        <img src={SunflowerBg} />
+        <div>
+          <img src={SunflowerBg} />
         <h1 id="page-name">You are signed in</h1>
         <h3> Session History</h3>
-        <span>User Name: {userName}</span>
-        <br />
-        <span>Email: {email}</span>
-        <br />
-        <button onClick={() => this.props.toProfile()}> Back </button>
-      </div>
+          <Chart
+    width={400}
+    height={250}
+    chartType="ColumnChart"
+    loader={<div>Loading Chart</div>}
+    data={[
+      ['Day', 'Focus Time'],
+      [this.state.Date[this.state.Date.length - 1], Number(this.state.lengthOfWeek[6])],
+      [this.state.Date[this.state.Date.length - 2], Number(this.state.lengthOfWeek[5])],
+      [this.state.Date[this.state.Date.length - 3], Number(this.state.lengthOfWeek[4])],
+      [this.state.Date[this.state.Date.length - 4], Number(this.state.lengthOfWeek[3])],
+      [this.state.Date[this.state.Date.length - 5], Number(this.state.lengthOfWeek[2])],
+      [this.state.Date[this.state.Date.length - 6], Number(this.state.lengthOfWeek[1])],
+      [this.state.Date[this.state.Date.length - 7], Number(this.state.lengthOfWeek[0])],
+    ]}
+    options={{
+      title: this.state.user.displayName + ' Focus History',
+      chartArea: { width: '40%' },
+      hAxis: {
+        title: 'Date',
+        minValue: 0,
+      },
+      vAxis: {
+        title: 'Focus Time',
+      },
+    }}
+    legendToggle
+  />
+  <button onClick={() => this.props.toProfile()}> Back </button>
+        </div>
     );
   }
 }
