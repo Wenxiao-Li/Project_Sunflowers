@@ -80,6 +80,7 @@ const startCallback = function () {
   });
 };
 
+
 const completeCallback = function () {
   console.log('completeCallback');
   // Update Database
