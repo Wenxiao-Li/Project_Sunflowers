@@ -68,7 +68,7 @@ const initFieldPair = {
   callback: () => {},
 };
 
-let sessionPairArr = [
+export let sessionPairArr = [
   decreaseTimePair,
   increaseTimePair,
   toggleModePair,
@@ -79,19 +79,6 @@ let sessionPairArr = [
   initFieldPair,
 ];
 
-// This method would take an actionArr and convert it into an chrome Listener function
-const actionArrToListenerFunc = (actionPairArr) => {
-  return function (request, sender, sendResponse) {
-    actionPairArr.forEach((actionPair) => {
-      if (request.msg === actionPair.msg) {
-        actionPair.action(actionPair.callback, sender, sendResponse);
-      }
-    });
-    return true;
-  };
-};
-
-export const runSession = () => {
+export const initSession = () => {
   initSessionCallbacks(updateCallback, completeCallback);
-  chrome.runtime.onMessage.addListener(actionArrToListenerFunc(sessionPairArr));
 };

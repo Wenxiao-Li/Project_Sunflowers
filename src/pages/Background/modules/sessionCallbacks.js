@@ -1,6 +1,6 @@
 import firebase from './firebaseconfig';
 import { viewWebsite } from './firestore';
-import { insertScript } from './scriptInjection';
+import { injectToCurrentTabs } from './scriptInjection';
 
 const updateDisplayedTimeMsg = 'update-time';
 
@@ -67,13 +67,7 @@ export const startCallback = function (isBlocklist) {
   } else {
   }
 
-  // insert scripts to all tabs (active tabs)
-  chrome.tabs.query({ active: true, url: ['https://*/*'] }, function (tabs) {
-    tabs.forEach(function (tab) {
-      const tabId = tab.id;
-      insertScript(tabId);
-    });
-  });
+  injectToCurrentTabs();
 };
 
 export const completeCallback = function (sessionLength, startDate, endDate) {
