@@ -24,7 +24,8 @@
     "webNavigation",
     "<all_urls>",
     "storage",
-    "background"
+    "background",
+    "notifications"
   ],
   "web_accessible_resources": [
     "content.styles.css",
