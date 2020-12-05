@@ -12,7 +12,6 @@ class LeaderBoardComponent {
   }
 
   updateReactions() {
-    console.log(this.reactions);
     if (this.reactions.indexOf(this.currentUser) === -1) {
       this.reactions.push(this.currentUser);
     } else {
@@ -29,22 +28,22 @@ const Leaderboard = () => {
   React.useEffect(() => {
     var currentFriendsScoreArray = [
       {
-        userName: 'Satyam',
+        userName: 'Satyam Gupta',
         score: 12,
-        reactions: ['Yitian', 'HaiHao'],
+        reactions: ['Yitian', 'HaiHao', 'Satyam Gupta'],
       },
       {
-        userName: 'Yitian',
+        userName: 'Yitian Wang',
         score: 20,
         reactions: [],
       },
       {
-        userName: 'HaiHao',
+        userName: 'HaiHao Sun',
         score: 30,
         reactions: [],
       },
       {
-        userName: 'Fei',
+        userName: 'Fei Dai',
         score: 40,
         reactions: [],
       },
@@ -68,7 +67,6 @@ const Leaderboard = () => {
 
   const updateLeaderBoard = (name) => {
     var nameReactedTo = name;
-    console.log(nameReactedTo);
     var copy = leaderBoardComponents.slice();
     for (var i = 0; i < copy.length; i++) {
       if (copy[i].userName === nameReactedTo) {
