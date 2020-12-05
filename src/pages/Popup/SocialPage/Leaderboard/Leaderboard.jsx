@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
 import { AuthContext } from '../../../../auth/Auth';
+import sunflowerIcon from "../../../../assets/img/sunflowerIcon.jpg";
+import "./Leaderboard.css"
+
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
-  constructor(userName, score, reactions, currentUser) {
+  constructor(userName, email, score, reactions, currentUser) {
     this.userName = userName;
+    this.email = email;
     this.score = score;
     this.reactions = reactions;
     this.currentUser = currentUser;
@@ -25,29 +29,27 @@ const Leaderboard = () => {
 
   const { user } = React.useContext(AuthContext);
 
+  var currentFriendsScoreArray = [
+    {
+      email: 'hello@world.com',
+      score: 12,
+      reactions: {
+        0x1F603: [
+          'sagupta@ucsd.edu',
+          'yitian@wang.com',
+        ],
+        0x1F525: [
+          'sagupta@ucsd.edu',
+        ],
+        0x1F495: [
+          'hello@world.com',
+          'sagupta@ucsd.edu',
+        ]
+      },
+    },
+  ];
+
   React.useEffect(() => {
-    var currentFriendsScoreArray = [
-      {
-        userName: 'Satyam Gupta',
-        score: 12,
-        reactions: ['Yitian', 'HaiHao', 'Satyam Gupta'],
-      },
-      {
-        userName: 'Yitian Wang',
-        score: 20,
-        reactions: [],
-      },
-      {
-        userName: 'HaiHao Sun',
-        score: 30,
-        reactions: [],
-      },
-      {
-        userName: 'Fei Dai',
-        score: 40,
-        reactions: [],
-      },
-    ];
     //Sort the array returned.
     currentFriendsScoreArray.sort((a, b) => b.score - a.score);
 
@@ -55,32 +57,34 @@ const Leaderboard = () => {
     for (var i = 0; i < currentFriendsScoreArray.length; i++) {
       var current = currentFriendsScoreArray[i];
       var leaderBoardComponent = new LeaderBoardComponent(
-        current.userName,
+        current.email,
+        current.email,
         current.score,
         current.reactions,
-        user.displayName
+        user.email,
       );
       newLeaderBoardComponents.push(leaderBoardComponent);
     }
     setLBComponents(newLeaderBoardComponents);
   }, []);
 
-  const updateLeaderBoard = (name) => {
-    var nameReactedTo = name;
-    var copy = leaderBoardComponents.slice();
-    for (var i = 0; i < copy.length; i++) {
-      if (copy[i].userName === nameReactedTo) {
-        if (copy[i].reactions.indexOf(copy[i].currentUser) === -1) {
-          console.log('Reaction added for user', nameReactedTo);
-          copy[i].reactions.push(copy[i].currentUser);
-        } else {
-          console.log('Reaction removed for user', nameReactedTo);
-          copy[i].reactions.pop(copy[i].currentUser);
-        }
-      }
+  const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
+    console.log("Friend Reacted to ", friendReactedTo);
+    console.log("Emoji Reacted on", keyReactedOn);
+    var copy = [...leaderBoardComponents];
+    var indexOffriend = copy.findIndex(friend => friend.email === friendReactedTo);
+    var reactionExists = copy[indexOffriend].reactions[keyReactedOn].indexOf(user.email);
+    if (reactionExists === -1) {
+      copy[indexOffriend].reactions[keyReactedOn].push(user.email);
+    } else {
+      copy[indexOffriend].reactions[keyReactedOn].splice(reactionExists, 1);
     }
+    console.log(copy);
+    console.log(leaderBoardComponents);
     setLBComponents(copy);
   };
+
+
   var email = 'undefined';
   var userName = 'undefined';
   if (user) {
@@ -90,20 +94,18 @@ const Leaderboard = () => {
 
   var leaderboardRendered = leaderBoardComponents.map((friend) => (
     <div key={friend.userName}>
-      {friend.userName} Sunflowers = {friend.score}
-      <button
-        id={friend.userName}
-        onClick={() => updateLeaderBoard(friend.userName)}
-      >
-        <img
-          src={
-            friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon
-          }
-          style={{ width: 20, height: 20 }}
-        ></img>
-      </button>
-      {friend.reactions.length}
-    </div>
+      {friend.userName}
+      {" " + friend.score + "x"}
+      <img className="sunflower-icon" src={sunflowerIcon}>
+      </img>
+      {
+        Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+          <button key={key} value={friend.email} class={arrayOfReacts.indexOf(user.email) == -1 ? "unreacted" : "reacted"} onClick={e => updateLeaderBoard(e.target.value, key)}>
+            {String.fromCodePoint(key)} {arrayOfReacts.length}
+          </button>
+        ))
+      }
+    </div >
   ));
 
   return (
