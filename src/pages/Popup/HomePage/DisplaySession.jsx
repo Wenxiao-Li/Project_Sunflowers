@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
-import DecreaseIcon from '../../../assets/img/decrease.jpg';
-import IncreaseIcon from '../../../assets/img/increase.jpg';
+import DecreaseIcon from '../../../assets/img/decrease.png';
+import IncreaseIcon from '../../../assets/img/increase.png';
 import './DisplaySession.css';
 
 const STATUS_NOT_STARTED = 0;
