@@ -1,3 +1,4 @@
+// import { FALSE } from 'node-sass';
 import React, { Component } from 'react';
 import { setEmitFlags } from 'typescript';
 
@@ -15,7 +16,15 @@ export default function DisplaySession() {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
-
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [whenPaused, setWhenPaused] = React.useState(0);
+  const [whenResumed, setWhenResumed] = React.useState(0);
+  const [timePausedDuration, setTimePausedDuration] = React.useState(0);
+  const [pausedCounts, setPausedCounts] = React.useState(0);
+  // var isPaused = false;
+  // var whenPaused = 0;
+  // var whenResumed = 0;
+  // var timePausedDuration = 0;
   /**
    * Callback function
    * @param {any} request the request object with messages
@@ -86,7 +95,56 @@ export default function DisplaySession() {
     chrome.notifications.create(sessionID, opt, function () { console.log('created!'); });
   };
 
+
+
   const postToggleSession = () => {
+    console.log(isPaused);
+
+    if (isPaused == false) {
+      setWhenPaused(new Date().getTime());
+      setIsPaused(true);
+    }
+    else {
+      setWhenResumed(new Date().getTime());
+      setTimePausedDuration((whenResumed - whenPaused) / 1000);
+      setIsPaused(false);
+    }
+    console.log({ isPaused });
+    console.log({ whenPaused });
+    console.log({ whenResumed });
+
+    if (isPaused == false) {
+
+      console.log({ timePausedDuration });
+      console.log('printing hours')
+    }
+
+
+    setPausedCounts(pausedCounts + 1);
+    console.log(pausedCounts);
+    if (pausedCounts > 10) {
+      setPausedCounts(0);
+      chrome.runtime.sendMessage({
+        msg: 'quit-session',
+        data: {},
+      });
+
+
+      var opt = {
+        type: "basic",
+        title: "Your session has ended!",
+        message: "Keep planting more Sunflowers <3",
+        iconUrl: "./icon16.png"
+      }
+      var d = new Date();
+      var currentTime = d.getTime();
+      var endedID = "sessionEnded" + currentTime;
+      console.log(endedID);
+      chrome.notifications.create(endedID, opt, function () { console.log('created!'); });
+      return;
+
+    }
+
     chrome.runtime.sendMessage({
       msg: 'toggle-session',
       data: {},
@@ -100,7 +158,7 @@ export default function DisplaySession() {
     });
 
 
-    // NOV 30 added notifications
+
     var opt = {
       type: "basic",
       title: "Your session has ended!",
