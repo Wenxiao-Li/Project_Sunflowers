@@ -23,6 +23,7 @@ const setName = (userEmail, firstName, lastName, callback) => {
         blacklist: [],
         whitelist: [],
         friend: [],
+        friendname: [],
       }).then(() => {
         callback();
       }).catch((error) => {
@@ -73,24 +74,32 @@ const deleteWhitelist = (userEmail, whiteList, callback) => {
 }
 
 const viewWebsite = (userEmail, callback) => {
-  db.collection('user').doc(request.useremail).get().then((doc) => {
-    callback(doc);
-  }).catch((error) => {
-    console.log('Error getting document', error);
-  });
-}
-/*
-const viewFriend = (userEmail, callback) => {
   db.collection('user').doc(userEmail).get().then((doc) => {
     callback(doc);
   }).catch((error) => {
     console.log('Error getting document', error);
   });
 }
-*/
-const addFriend = (userEmail, friendemail, callback) => {
+
+const viewFriend = (friendList, callback) => {
+  var nameList = [];
+  for (var i = 0; i < friendList.length; i++) {
+    viewWebsite(friendList[i], (doc) => {
+      var fn = doc.data().last_name;
+      var ln = doc.data().first_name;
+      var friendName = fn + " " + ln;
+      console.log(friendName);
+      nameList.push(friendName);
+      console.log(nameList);
+    })
+  }
+  callback(nameList);
+}
+
+const addFriend = (userEmail, friendemail, friendname, callback) => {
   db.collection('user').doc(userEmail).update({
     friend: firebase.firestore.FieldValue.arrayUnion(friendemail),
+    friendname: firebase.firestore.FieldValue.arrayUnion(friendname),
   }).then(() => {
     callback();
   }).catch((error) => {
@@ -98,9 +107,10 @@ const addFriend = (userEmail, friendemail, callback) => {
   });
 }
 
-const deleteFriend = (userEmail, friendemail, callback) => {
+const deleteFriend = (userEmail, friendemail, friendname, callback) => {
   db.collection('user').doc(userEmail).update({
-    friend: firebase.firestore.FieldValue.arrayRemove(friendemail)
+    friend: firebase.firestore.FieldValue.arrayRemove(friendemail),
+    friendname: firebase.firestore.FieldValue.arrayRemove(friendname),
   }).then(() => {
     callback();
   }).catch((error) => {
@@ -139,36 +149,43 @@ export let dbHandle = () => {
       })
     } else if (request.command === 'view_website') {
       viewWebsite(request.useremail, (doc) => {
-        sendResponse({ message: "success", bl: doc.data().blacklist, wl: doc.data().whitelist })
+        sendResponse({ message: "success", bl: doc.data().blacklist, wl: doc.data().whitelist });
       })
     } else if (request.command === 'add_friend') {
-      addFriend(request.useremail, request.friendemail, () => {
+      addFriend(request.useremail, request.friendemail, request.friendname, () => {
         sendResponse({ message: 'success' });
       })
     } else if (request.command === 'view_friend') {
-      console.log('11111111');
       db.collection('user')
         .doc(request.useremail)
         .get()
         .then((doc) => {
           sendResponse({
             message: 'success',
-            friend: doc.data().friend,
-
+            friend: doc.data().friendname,
           });
         })
         .catch((error) => {
           console.log('Error getting document', error);
         });
     }
-     /*else if (request.command === 'view_friend') {
-      viewFriend(request.useremail, (doc) => {
-        sendResponse({ message: "success", friend: doc.data().friend })
-      })
-    }*/ else if (request.command === 'delete_friend') {
-      deleteFriend(request.useremail, request.friendemail, () => {
+    else if (request.command === 'delete_friend') {
+      deleteFriend(request.useremail, request.friendemail, request.friendname, () => {
         sendResponse({ message: 'success' });
       })
+    } else if (request.command === 'view_owner') {
+      console.log(request.email);
+      db.collection('user')
+        .doc(request.email)
+        .get()
+        .then((doc) => {
+          sendResponse({
+            name: doc.data().first_name,
+          });
+        })
+        .catch((error) => {
+          console.log('Error getting document', error);
+        });
     }
     return true;
   });

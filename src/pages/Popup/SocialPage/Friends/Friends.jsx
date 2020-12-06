@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle } from './Friends';
+import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle } from './Friends';
 /*
 class Friends extends Component {
   _isMounted = false;
@@ -14,26 +14,16 @@ class Friends extends Component {
       email: ''
     };
 
-    //this.firebaseRef = firebase.database().ref("Friends");
+
+
   }
-  
-  pushToFirebase(event) {
-    const {friendemail} = this.state;
-    const {useremail} = this.props.user.email;
-    event.preventDefault();
-    //this.firebaseRef.child(name).set({name});
-    chrome.runtime.sendMessage({command: 'add_friend', useremail: useremail, friendemail: friendemail});
-    this.setState({name: ''});
-  }
-  
-  
+
   componentDidMount() {
     this._isMounted = true;
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-    this.firebaseRef.off();
   }
 
   render() {
@@ -47,15 +37,6 @@ class Friends extends Component {
     }
     return (
       <div>
-        <h1> Friends </h1>
-        
-        <label> Email </label>
-        <input onChange= {e => this.setState({email: e.target.value})}/>
-        <button onClick={this.pushToFirebase.bind(this)}> Add </button>
-        <br />
-
-        <span>Friends: {friends}</span>
-        <br />
         <span>User Name: {userName}</span>
         <br />
         <span>Email: {useremail}</span>
@@ -63,15 +44,15 @@ class Friends extends Component {
     );
   }
 }
-
 export default Friends;
 */
+
 export default function FriendsPage() {
   // Set States goes here
   const addfriendemail = React.useRef(null);
   const deletefriendemail = React.useRef(null);
   //const friendList = React.useRef(null);
-  const [friendList, setFriendList] = React.useState([]);
+  const [nameList, setFriendList] = React.useState([]);
 
   /**
    * Description: Initializing States, do not pass function into useState
@@ -91,13 +72,20 @@ export default function FriendsPage() {
 
   const onSubmitAddFriends = (event) => {
     event.preventDefault();
-    addFriendHandle(addfriendemail.current.value);
+    ViewNameHandle(addfriendemail.current.value, function (response) {
+      addFriendHandle(addfriendemail.current.value, response);
+      viewFriendlistHandle(displayFriends);
+    })
     viewFriendlistHandle(displayFriends);
   };
 
   const onSubmitDeleteFriends = (event) => {
     event.preventDefault();
-    deleteFriendHandle(deletefriendemail.current.value);
+    ViewNameHandle(deletefriendemail.current.value, function (response) {
+      deleteFriendHandle(deletefriendemail.current.value, response);
+      viewFriendlistHandle(displayFriends);
+    })
+    viewFriendlistHandle(displayFriends);
   };
 
   const showFriends = (event) => {
@@ -108,10 +96,13 @@ export default function FriendsPage() {
     setFriendList(friendList);
   };
 
+  const displayName = (friendname) => {
+    setFriendName(friendname);
+  }
+
   const Email = (props) => {
     return <li> {props.text}</li>;
   };
-
 
   return (
     <div className="Friends">
@@ -131,7 +122,7 @@ export default function FriendsPage() {
       <button onClick={showFriends}> showFriends </button>
       <span> friends: </span>
       <ul>
-        {friendList.map(email => (
+        {nameList.map(email => (
           <Email key={email} text={email} />
         ))}
       </ul>
