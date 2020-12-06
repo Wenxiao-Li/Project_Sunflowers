@@ -1,25 +1,7 @@
-import firebase from './firebaseconfig';
-import { viewWebsite } from './firestore';
 import { injectToCurrentTabs } from './scriptInjection';
 import { addSession } from '../model/sessionDispatch';
-
+import { controlOverlay } from '../model/overlay';
 const updateDisplayedTimeMsg = 'update-time';
-
-let localBlockList = [];
-let localAllowList = [];
-
-const updateLocalLists = (doc) => {
-  localBlockList = doc.data().blacklist;
-  localAllowList = doc.data().whitelist;
-
-  var i;
-  for (i = 0; i < localBlockList.length; i++) {
-    localBlockList[i] += '/*';
-  }
-  for (i = 0; i < localAllowList.length; i++) {
-    localAllowList[i] += '/*';
-  }
-};
 
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {
   console.log('update');
@@ -33,40 +15,11 @@ export const updateCallback = function (minutes, seconds, status, isBlocklist) {
     },
   });
 
-  console.log('locallists:', localBlockList);
-  // broadcasting to every tab to update the session info
-  // TODO add avoiding non-web tabs
-  chrome.tabs.query({ url: localBlockList }, function (tabs) {
-    tabs.forEach(function (tab) {
-      chrome.tabs.sendMessage(
-        tab.id,
-        {
-          msg: updateDisplayedTimeMsg,
-          data: {
-            minutes: minutes,
-            seconds: seconds,
-            status: status,
-          },
-        },
-        () => {
-          if (chrome.runtime.lastError) {
-            console.log('content script does not exist');
-          }
-        }
-      );
-    });
-  });
+  controlOverlay(minutes, seconds, status, isBlocklist);
 };
 
 export const startCallback = function (isBlocklist) {
   console.log('is blocklist mode: ', isBlocklist);
-
-  // update Local lists
-  var currentUser = firebase.auth().currentUser;
-  if (currentUser) {
-    viewWebsite(currentUser.email, updateLocalLists);
-  } else {
-  }
 
   injectToCurrentTabs();
 };
