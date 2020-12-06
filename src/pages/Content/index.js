@@ -11,6 +11,24 @@ const STATUS_FAILURE = 4;
 
 const ELEMENT_ID = 'overlay';
 
+if (window.isContentScriptInjected !== true) {
+  window.isContentScriptInjected = true;
+
+  console.log('Content script works!');
+
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    if (request.msg === 'are-you-there-content?') {
+      sendResponse({ status: 'yes' });
+    } else if (request.msg === 'update-time') {
+      processStatus(request.data.status);
+    }
+  });
+}
+
 function removeElements(elementId) {
   var elementIdCSS = '#' + elementId;
   var elements = document.querySelectorAll(elementIdCSS);
@@ -21,7 +39,7 @@ function removeElement(element) {
   element.parentNode.removeChild(element);
 }
 
-const createOverlay = (elementId) => {
+function createOverlay(elementId) {
   document.body.style.margin = 0;
   document.body.style.padding = 0;
   document.body.onwheel = function () {
@@ -42,7 +60,7 @@ const createOverlay = (elementId) => {
   div.style.left = '0px';
   div.style.backgroundColor = '#181818b3';
   div.style.zIndex = '65534';
-};
+}
 
 let hasOverlay = false;
 
@@ -71,13 +89,3 @@ function processStatus(status) {
     }
   }
 }
-
-console.log('Content script works!');
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.msg === 'are-you-there-content?') {
-    sendResponse({ status: 'yes' });
-  } else if (request.msg === 'update-time') {
-    processStatus(request.data.status);
-  }
-});
