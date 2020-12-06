@@ -18,7 +18,7 @@ export default function DisplaySession() {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
-  const [mode, setMode] = React.useState('Blocklist');
+  const [isBlocklist, setBlocklist] = React.useState(true);
   /**
    * Callback function
    * @param {any} request the request object with messages
@@ -28,7 +28,7 @@ export default function DisplaySession() {
       setMinutes(request.data.minutes);
       setSeconds(request.data.seconds);
       setStatus(request.data.status);
-      setMode('Blocklist');
+      setBlocklist(request.data.isBlocklist);
     }
     return true;
   }
@@ -97,13 +97,13 @@ export default function DisplaySession() {
 
   const postBackSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'back-session',
+      msg: 'return-session',
     });
   };
 
   const changeMode = () => {
     chrome.runtime.sendMessage({
-      msg: 'change-mode',
+      msg: 'toggle-mode',
     });
   };
 
@@ -137,7 +137,7 @@ export default function DisplaySession() {
         </h4>
 
         <Button variant="round" onClick={changeMode}>
-          {mode}
+          {isBlocklist ? 'Blocklist' : 'Allowlist'}
         </Button>
         <br />
         <Button variant="round" onClick={postStartSession}>

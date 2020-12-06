@@ -1,5 +1,0 @@
-const STATUS_NOT_STARTED = 0;
-const STATUS_RUNNING = 1;
-const STATUS_PAUSED = 2;
-const STATUS_SUCCESS = 3;
-const STATUS_FAILURE = 4;
