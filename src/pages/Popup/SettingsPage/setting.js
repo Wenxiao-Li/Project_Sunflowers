@@ -11,6 +11,11 @@ function changeUsername(firstname, lastname) {
   chrome.runtime.sendMessage(
     { command: 'set_name', firstname: fn, lastname: ln, useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       if (response.message === 'success') {
         //window.location.replace('./popup.html');
         console.log('Set name');
@@ -19,7 +24,7 @@ function changeUsername(firstname, lastname) {
   );
 }
 
-export function addBlacklist(blacklist) {
+export function addBlacklist(blacklist, callback) {
   let bl = blacklist;
   var user = firebase.auth().currentUser;
   var email;
@@ -29,15 +34,21 @@ export function addBlacklist(blacklist) {
   chrome.runtime.sendMessage(
     { command: 'add_blacklist', blacklist: bl, useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       if (response.message === 'success') {
         //window.location.replace('./popup.html');
         console.log('Add blacklist');
+        callback();
       }
     }
   );
 }
 
-export function addWhitelist(whitelist) {
+export function addWhitelist(whitelist, callback) {
   let wl = whitelist;
   console.log('wl', wl);
   var user = firebase.auth().currentUser;
@@ -48,14 +59,20 @@ export function addWhitelist(whitelist) {
   chrome.runtime.sendMessage(
     { command: 'add_whitelist', whitelist: wl, useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       if (response.message === 'success') {
         console.log('Add whitelist');
+        callback();
       }
     }
   );
 }
 
-export function deleteBlacklist(blacklist) {
+export function deleteBlacklist(blacklist, callback) {
   let bl = blacklist;
   var user = firebase.auth().currentUser;
   var email;
@@ -65,15 +82,21 @@ export function deleteBlacklist(blacklist) {
   chrome.runtime.sendMessage(
     { command: 'delete_blacklist', blacklist: bl, useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       if (response.message === 'success') {
         //window.location.replace('./popup.html');
         console.log('Delete blacklist');
+        callback();
       }
     }
   );
 }
 
-export function deleteWhitelist(whitelist) {
+export function deleteWhitelist(whitelist, callback) {
   let wl = whitelist;
   console.log('wl', wl);
   var user = firebase.auth().currentUser;
@@ -84,8 +107,14 @@ export function deleteWhitelist(whitelist) {
   chrome.runtime.sendMessage(
     { command: 'delete_whitelist', whitelist: wl, useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       if (response.message === 'success') {
         console.log('Delete whitelist');
+        callback();
       }
     }
   );
@@ -94,20 +123,25 @@ export function deleteWhitelist(whitelist) {
 export function viewWebsitelistHandle(callback) {
   var user = firebase.auth().currentUser;
   var email;
-  var blacklist, whitelist;
+  var blocklist, allowlist;
   if (user != null) {
     email = user.email;
   }
 
   console.log('I got: ', email);
   chrome.runtime.sendMessage(
-    { command: 'view_website', useremail: email },
+    { msg: 'view_website', command: 'view_website', useremail: email },
     (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
+      }
       // This is bad when you switch to other tabs before callback is called
       if (response.message === 'success') {
-        blacklist = response.bl;
-        whitelist = response.wl;
-        callback(blacklist, whitelist);
+        blocklist = response.bl;
+        allowlist = response.wl;
+        callback(blocklist, allowlist);
         console.log('succeeded');
       } else if (response.message === 'failure') {
         console.log('failed');
@@ -118,12 +152,4 @@ export function viewWebsitelistHandle(callback) {
 
 export const changeUsernameHandle = (firstname, lastname) => {
   changeUsername(firstname, lastname);
-};
-
-export const addBlacklistHandle = (blacklist) => {
-  addBlacklist(blacklist);
-};
-
-export const addWhitelistHandle = (whitelist) => {
-  addWhitelist(whitelist);
 };

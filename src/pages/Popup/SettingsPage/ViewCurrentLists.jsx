@@ -3,10 +3,10 @@ import { deleteBlacklist, deleteWhitelist } from './setting';
 import { Button, ListGroup } from 'react-bootstrap';
 import deleteIcon from '../../../assets/img/deleteIcon.png';
 
-const Website = ({ url, isBlockList }) => {
+const Website = ({ url, isBlockList, onViewWebsite }) => {
   let operation = isBlockList
-    ? () => deleteBlacklist(url)
-    : () => deleteWhitelist(url);
+    ? () => deleteBlacklist(url, onViewWebsite)
+    : () => deleteWhitelist(url, onViewWebsite);
   return (
     <ListGroup.Item className="website">
       {' '}
@@ -43,7 +43,12 @@ export const ViewCurrentLists = ({
 
       <ListGroup>
         {list.map((site) => (
-          <Website key={site} url={site} isBlockList={isBlockList} />
+          <Website
+            key={site}
+            url={site}
+            isBlockList={isBlockList}
+            onViewWebsite={onViewWebsite}
+          />
         ))}
       </ListGroup>
     </div>

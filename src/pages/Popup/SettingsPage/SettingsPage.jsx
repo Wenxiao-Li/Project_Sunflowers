@@ -68,14 +68,14 @@ export default function SettingsPage() {
         </span>
       </div>
       <div className="scroll-view">
-        <ListForm isBlockList={isBlockList} />
+        <ListForm isBlockList={isBlockList} onViewWebsite={onViewWebsite} />
         <ViewCurrentLists
           isBlockList={isBlockList}
           onViewWebsite={onViewWebsite}
           blockList={blockList}
           allowList={allowList}
         />
-        <Suggestions isBlockList={isBlockList} />
+        <Suggestions isBlockList={isBlockList} onViewWebsite={onViewWebsite} />
       </div>
     </div>
   );

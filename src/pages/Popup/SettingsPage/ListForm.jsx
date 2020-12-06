@@ -2,27 +2,17 @@ import React from 'react';
 
 import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 
-import { addBlacklistHandle, addWhitelistHandle } from './setting';
+import { addBlacklist, addWhitelist } from './setting';
 
-const onSubmitBlocklist = (event) => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const formDataObj = Object.fromEntries(formData.entries());
-  const website = formDataObj.addBlockList;
-  console.log(website);
-  addBlacklistHandle(website);
-};
-
-const onSubmitAllowlist = (event) => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const formDataObj = Object.fromEntries(formData.entries());
-  const website = formDataObj.addAllowList;
-  console.log(website);
-  addWhitelistHandle(website);
-};
-
-const BlockListForm = () => {
+const BlockListForm = ({ onViewWebsite }) => {
+  const onSubmitBlocklist = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    const website = formDataObj.addBlockList;
+    console.log(website);
+    addBlacklist(website, onViewWebsite);
+  };
   return (
     <Form onSubmit={onSubmitBlocklist}>
       <InputGroup>
@@ -42,7 +32,15 @@ const BlockListForm = () => {
   );
 };
 
-const AllowListForm = () => {
+const AllowListForm = ({ onViewWebsite }) => {
+  const onSubmitAllowlist = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    const website = formDataObj.addAllowList;
+    console.log(website);
+    addWhitelist(website, onViewWebsite);
+  };
   return (
     <Form onSubmit={onSubmitAllowlist}>
       <InputGroup>
@@ -62,10 +60,10 @@ const AllowListForm = () => {
   );
 };
 
-export const ListForm = ({ isBlockList }) => {
+export const ListForm = ({ isBlockList, onViewWebsite }) => {
   if (isBlockList) {
-    return <BlockListForm />;
+    return <BlockListForm onViewWebsite={onViewWebsite} />;
   } else {
-    return <AllowListForm />;
+    return <AllowListForm onViewWebsite={onViewWebsite} />;
   }
 };
