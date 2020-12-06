@@ -8,7 +8,7 @@ import {
   quitSessionAction,
   returnSessionAction,
   initFieldAction,
-} from './sessionAction';
+} from '../modules/sessionAction';
 import {
   startCallback,
   pauseCallback,
@@ -16,7 +16,7 @@ import {
   quitCallback,
   updateCallback,
   completeCallback,
-} from './sessionCallbacks';
+} from '../modules/sessionCallbacks';
 
 const decreaseTimePair = {
   msg: 'decrease-time',

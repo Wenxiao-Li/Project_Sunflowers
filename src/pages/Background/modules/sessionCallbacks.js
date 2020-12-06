@@ -1,6 +1,7 @@
 import firebase from './firebaseconfig';
 import { viewWebsite } from './firestore';
 import { injectToCurrentTabs } from './scriptInjection';
+import { addSession } from '../model/sessionDispatch';
 
 const updateDisplayedTimeMsg = 'update-time';
 
@@ -71,14 +72,8 @@ export const startCallback = function (isBlocklist) {
 };
 
 export const completeCallback = function (sessionLength, startDate, endDate) {
-  const sessionField = {
-    session_length: sessionLength,
-    is_complete: true,
-    start_time: startDate.toUTCString(),
-    end_time: endDate.toUTCString(),
-  };
-  console.log(sessionField);
   // Update Database
+  addSession(sessionLength, true, startDate, endDate);
 };
 
 export const pauseCallback = function () {
@@ -92,12 +87,6 @@ export const resumeCallback = function () {
 };
 
 export const quitCallback = function (sessionLength, startDate, endDate) {
-  const sessionField = {
-    session_length: sessionLength,
-    is_complete: false,
-    start_time: startDate.toUTCString(),
-    end_time: endDate.toUTCString(),
-  };
-  console.log(sessionField);
   // Update database
+  addSession(sessionLength, false, startDate, endDate);
 };

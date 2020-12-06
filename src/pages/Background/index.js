@@ -5,7 +5,7 @@ import '../../assets/img/icon128.png';
 import { dbHandle } from './modules/firestore';
 import { runListener } from './modules/messageListener';
 import { injectToActiveTab } from './modules/scriptInjection';
-import { sessionPairArr, initSession } from './modules/sessionController';
+import { sessionPairArr, initSession } from './controller/sessionController';
 
 console.log('This is the background page.');
 console.log('Put the background scripts here.');
