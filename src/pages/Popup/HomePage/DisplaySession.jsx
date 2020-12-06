@@ -69,10 +69,31 @@ export default function DisplaySession() {
   };
 
   const postStartSession = () => {
+
+
+
+
     chrome.runtime.sendMessage({
       msg: 'start-session',
       data: {},
     });
+
+
+    var opt = {
+      type: "basic",
+      title: "Your session has started!",
+      message: "Take Care of your little Sunflowers <3",
+      iconUrl: "./icon16.png"
+    }
+
+    var d = new Date();
+    var currentTime = d.getTime();
+    var sessionID = 'sessionStarted' + currentTime;
+    console.log(sessionID);
+    chrome.notifications.create(sessionID, opt, function () { console.log('created!'); });
+
+
+
   };
 
   const postToggleSession = () => {
@@ -92,6 +113,8 @@ export default function DisplaySession() {
         msg: 'quit-session',
         data: {},
       });
+
+
     }
   };
 
