@@ -176,11 +176,3 @@ export let dbHandle = () => {
     }
   });
 };
-
-export const onListChanges = (userEmail, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .onSnapshot((snapshot) => {
-      callback(snapshot.data().blocklist, snapshot.data().allowlist);
-    });
-};
