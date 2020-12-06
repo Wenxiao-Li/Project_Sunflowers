@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
@@ -113,22 +114,24 @@ export default function DisplaySession() {
     return (
       <div>
         <div id="set-time">
-          <img
+          <Image
             className="op-icons"
             src={DecreaseIcon}
+            rounded
             onClick={postDecreaseTime}
           />
           <div className="display-time">
             <span> {minutes} : </span>
             <span> {String(seconds).padStart(2, '0')} </span>
           </div>
-          <img
+          <Image
             className="op-icons"
             src={IncreaseIcon}
+            rounded
             onClick={postIncreaseTime}
           />
         </div>
-        <div id="num-sunflower">
+        <div id="num-sunflower" color="black">
           <img className="sfIcon" src={SunflowerIcon} width="50" />
           <span> X {numSunflowers} </span>
         </div>
@@ -136,11 +139,12 @@ export default function DisplaySession() {
           {' '}
           You will get One Sunflower per 15 minutes{' '}
         </h4>
-        <Button variant="round" onClick={changeMode}>
+        <Button variant="outline-dark" size="sm" onClick={changeMode}>
           {isBlocklist ? 'Blocklist' : 'Allowlist'}
         </Button>
         <br />
-        <Button variant="round" onClick={postStartSession}>
+        <br />
+        <Button variant="success" size="sm" onClick={postStartSession}>
           Start
         </Button>
       </div>
@@ -155,11 +159,13 @@ export default function DisplaySession() {
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
         <br />
+        <br />
         <div>
-          <Button variant="round" onClick={postToggleSession}>
+          <Button variant="success" size="sm" onClick={postToggleSession}>
             Pause
           </Button>
-          <Button variant="round" onClick={postQuitSession}>
+          <span> {'  '} </span>
+          <Button variant="success" size="sm" onClick={postQuitSession}>
             Quit
           </Button>
         </div>
@@ -175,11 +181,13 @@ export default function DisplaySession() {
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
         <br />
+        <br />
         <div>
-          <Button variant="round" onClick={postToggleSession}>
+          <Button variant="success" size="sm" onClick={postToggleSession}>
             Resume
           </Button>
-          <Button variant="round" onClick={postQuitSession}>
+          <span> {'  '} </span>
+          <Button variant="success" size="sm" onClick={postQuitSession}>
             Quit
           </Button>
         </div>
@@ -194,7 +202,8 @@ export default function DisplaySession() {
           {' '}
           Congratulations! You have successfully planted many sunflowers{' '}
         </span>
-        <Button variant="round" onClick={postBackSession}>
+        <br />
+        <Button variant="success" size="sm" onClick={postBackSession}>
           {' '}
           back{' '}
         </Button>
@@ -211,7 +220,7 @@ export default function DisplaySession() {
           gone.{' '}
         </span>
         <br />
-        <Button variant="round" onClick={postBackSession}>
+        <Button variant="success" size="sm" onClick={postBackSession}>
           {' '}
           back{' '}
         </Button>
