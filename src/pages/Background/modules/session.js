@@ -1,7 +1,7 @@
 // background countdown process
 import * as Status from './sessionStatus';
 
-const MINUTES_STEP_SIZE = 1;
+const MINUTES_STEP_SIZE = 15;
 const MIN_MINUTES = MINUTES_STEP_SIZE;
 const MAX_MINUTES = MINUTES_STEP_SIZE * 16;
 const INIT_MINUTES = MINUTES_STEP_SIZE * 2;
