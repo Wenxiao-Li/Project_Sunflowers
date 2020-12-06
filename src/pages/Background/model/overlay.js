@@ -1,7 +1,15 @@
 import { localBlockList, localAllowList } from '../modules/websiteLists';
 
 const extractHost = (url) => {
-  return new URL(url).hostname;
+  var hostString = new URL(url).hostname;
+  var firstDotIndex = hostString.indexOf('.');
+  var lastDotIndex = hostString.lastIndexOf('.');
+
+  if (firstDotIndex !== lastDotIndex) {
+    return hostString.substring(firstDotIndex + 1);
+  } else {
+    return hostString;
+  }
 };
 
 const matchURLHost = (first, second) => {
