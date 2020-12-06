@@ -114,18 +114,18 @@ export default function DisplaySession() {
     return (
       <div>
         <div id="set-time">
-          <img
+          <Image
             className="op-icons"
-            src={DecreaseIcon} roundedCircle
+            src={DecreaseIcon} rounded
             onClick={postDecreaseTime}
           />
           <div className="display-time">
             <span> {minutes} : </span>
             <span> {String(seconds).padStart(2, '0')} </span>
           </div>
-          <img
+          <Image
             className="op-icons"
-            src={IncreaseIcon} roundedCircle
+            src={IncreaseIcon} rounded
             onClick={postIncreaseTime}
           />
         </div>
