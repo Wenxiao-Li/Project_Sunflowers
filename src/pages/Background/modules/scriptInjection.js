@@ -41,7 +41,7 @@ export const injectToActiveTab = () => {
 
 export const injectToCurrentTabs = () => {
   // insert scripts to all tabs (active tabs)
-  chrome.tabs.query({ active: true, url: ['https://*/*'] }, function (tabs) {
+  chrome.tabs.query({}, function (tabs) {
     tabs.forEach(function (tab) {
       const tabId = tab.id;
       insertScript(tabId);

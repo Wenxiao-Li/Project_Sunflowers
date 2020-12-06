@@ -32,7 +32,7 @@ export const controlOverlay = (minutes, seconds, status, isBlocklist) => {
   // broadcasting to every tab to update the session info
   // TODO add avoiding non-web tabs
   const updateDisplayedTimeMsg = 'update-time';
-  chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] }, function (tabs) {
+  chrome.tabs.query({}, function (tabs) {
     tabs.forEach(function (tab) {
       let block = shouldBlock(tab, isBlocklist);
       console.log('block value: ', block);
