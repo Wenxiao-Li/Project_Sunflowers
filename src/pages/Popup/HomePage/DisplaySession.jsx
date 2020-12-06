@@ -107,8 +107,9 @@ export default function DisplaySession() {
     });
   };
 
+  const numSunflowers = Math.floor(minutes / 15);
+
   const NotStartedView = () => {
-    const numSunflowers = Math.floor(minutes / 15);
     return (
       <div>
         <div id="set-time">
@@ -143,7 +144,6 @@ export default function DisplaySession() {
         <Button variant="round" onClick={postStartSession}>
           Start
         </Button>
-
       </div>
     );
   };
@@ -154,6 +154,10 @@ export default function DisplaySession() {
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
+        </div>
+        <div id="num-sunflower">
+          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <span> X {numSunflowers} </span>
         </div>
         <br />
         <div className="bt">
@@ -174,6 +178,10 @@ export default function DisplaySession() {
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
+        </div>
+        <div id="num-sunflower">
+          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <span> X {numSunflowers} </span>
         </div>
         <br />
         <div className="bt">
