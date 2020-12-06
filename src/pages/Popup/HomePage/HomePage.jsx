@@ -1,6 +1,6 @@
 import React from 'react';
 import DisplaySession from './DisplaySession.jsx';
-import './HomePage.css';
+import './DisplaySession.css';
 
 const HomePage = () => {
   return (

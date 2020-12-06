@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-import './DisplaySession.css';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
@@ -136,6 +135,7 @@ export default function DisplaySession() {
           {' '}
           You will get One Sunflower per 15 minutes{' '}
         </h4>
+
         <Button variant="round" onClick={changeMode}>
           {isBlocklist ? 'Blocklist' : 'Allowlist'}
         </Button>
@@ -143,6 +143,7 @@ export default function DisplaySession() {
         <Button variant="round" onClick={postStartSession}>
           Start
         </Button>
+
       </div>
     );
   };
@@ -155,7 +156,7 @@ export default function DisplaySession() {
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
         <br />
-        <div>
+        <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
             Pause
           </Button>
@@ -175,7 +176,7 @@ export default function DisplaySession() {
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
         <br />
-        <div>
+        <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
             Resume
           </Button>

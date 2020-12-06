@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import DisplaySession from '../Popup/HomePage/DisplaySession.jsx';
+//include_css("./content.style.css");
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
