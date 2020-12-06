@@ -1,12 +1,12 @@
 import React from 'react';
-import { addBlacklist, addWhitelist } from './setting';
+import { addBlocklist, addAllowlist } from './setting';
 import { ListGroup, Button } from 'react-bootstrap';
 import addIcon from '../../../assets/img/addIcon.png';
 
 const SuggestWebsite = ({ url, isBlockList, onViewWebsite }) => {
   let operation = isBlockList
-    ? () => addBlacklist(url, onViewWebsite)
-    : () => addWhitelist(url, onViewWebsite);
+    ? () => addBlocklist(url, onViewWebsite)
+    : () => addAllowlist(url, onViewWebsite);
   return (
     <ListGroup.Item className="website">
       {url} <img src={addIcon} onClick={operation} className="icon-pin-right" />

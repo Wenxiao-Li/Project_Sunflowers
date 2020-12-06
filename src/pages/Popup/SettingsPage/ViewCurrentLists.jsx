@@ -1,12 +1,12 @@
 import React from 'react';
-import { deleteBlacklist, deleteWhitelist } from './setting';
+import { deleteBlocklist, deleteAllowlist } from './setting';
 import { Button, ListGroup } from 'react-bootstrap';
 import deleteIcon from '../../../assets/img/deleteIcon.png';
 
 const Website = ({ url, isBlockList, onViewWebsite }) => {
   let operation = isBlockList
-    ? () => deleteBlacklist(url, onViewWebsite)
-    : () => deleteWhitelist(url, onViewWebsite);
+    ? () => deleteBlocklist(url, onViewWebsite)
+    : () => deleteAllowlist(url, onViewWebsite);
   return (
     <ListGroup.Item className="website">
       {' '}

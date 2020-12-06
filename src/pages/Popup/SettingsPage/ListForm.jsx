@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 
-import { addBlacklist, addWhitelist } from './setting';
+import { addBlocklist, addAllowlist } from './setting';
 
 const BlockListForm = ({ onViewWebsite }) => {
   const onSubmitBlocklist = (event) => {
@@ -11,7 +11,7 @@ const BlockListForm = ({ onViewWebsite }) => {
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addBlockList;
     console.log(website);
-    addBlacklist(website, onViewWebsite);
+    addBlocklist(website, onViewWebsite);
   };
   return (
     <Form onSubmit={onSubmitBlocklist}>
@@ -39,7 +39,7 @@ const AllowListForm = ({ onViewWebsite }) => {
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addAllowList;
     console.log(website);
-    addWhitelist(website, onViewWebsite);
+    addAllowlist(website, onViewWebsite);
   };
   return (
     <Form onSubmit={onSubmitAllowlist}>
