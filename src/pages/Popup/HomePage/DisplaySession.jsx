@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-import './DisplaySession.css';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
@@ -19,7 +18,7 @@ export default function DisplaySession() {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
-  const [mode, setMode] = React.useState('Blocklist');
+  const [isBlocklist, setBlocklist] = React.useState(true);
   /**
    * Callback function
    * @param {any} request the request object with messages
@@ -29,7 +28,7 @@ export default function DisplaySession() {
       setMinutes(request.data.minutes);
       setSeconds(request.data.seconds);
       setStatus(request.data.status);
-      setMode('Blocklist');
+      setBlocklist(request.data.isBlocklist);
     }
     return true;
   }
@@ -121,18 +120,19 @@ export default function DisplaySession() {
 
   const postBackSession = () => {
     chrome.runtime.sendMessage({
-      msg: 'back-session',
+      msg: 'return-session',
     });
   };
 
   const changeMode = () => {
     chrome.runtime.sendMessage({
-      msg: 'change-mode',
+      msg: 'toggle-mode',
     });
   };
 
+  const numSunflowers = Math.floor(minutes / 15);
+
   const NotStartedView = () => {
-    const numSunflowers = Math.floor(minutes / 15);
     return (
       <div>
         <div id="set-time">
@@ -159,8 +159,9 @@ export default function DisplaySession() {
           {' '}
           You will get One Sunflower per 15 minutes{' '}
         </h4>
+
         <Button variant="round" onClick={changeMode}>
-          {mode}
+          {isBlocklist ? 'Blocklist' : 'Allowlist'}
         </Button>
         <br />
         <Button variant="round" onClick={postStartSession}>
@@ -177,8 +178,17 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
+        <div id="num-sunflower">
+          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <span> X {numSunflowers} </span>
+        </div>
+        <h4 className="statement">
+          {' '}
+          You will get One Sunflower per 15 minutes{' '}
+        </h4>
+
         <br />
-        <div>
+        <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
             Pause
           </Button>
@@ -197,8 +207,17 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
+        <div id="num-sunflower">
+          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <span> X {numSunflowers} </span>
+        </div>
+        <h4 className="statement">
+          {' '}
+          You will get One Sunflower per 15 minutes{' '}
+        </h4>
+
         <br />
-        <div>
+        <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
             Resume
           </Button>
