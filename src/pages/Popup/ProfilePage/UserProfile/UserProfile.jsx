@@ -4,6 +4,7 @@ import profP from '../../../../assets/img/profile pic';
 import SunflowerIcon from '../../../../assets/img/profileSun';
 import { signOutHandle } from '../signin.js';
 import './UserProfile.css';
+import firebase, { db } from '../../../Background/modules/firebaseconfig';
 
 
 class UserProfile extends Component {
@@ -11,6 +12,21 @@ class UserProfile extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      score : 0
+    }
+    
+    var user = this.props.user;
+    var profileRef = db.collection('user');
+    if(user){
+      var num = 0;
+      profileRef.doc(user.email).onSnapshot(function (doc){
+        num = doc.data().user_flower;
+        //console.log(num);
+        this.setState({score : num});
+      }.bind(this));
+    } 
   }
 
   componentDidMount() {
@@ -24,9 +40,11 @@ class UserProfile extends Component {
   render() {
     var email = 'undefined';
     var userName = 'undefined';
+    let sunflower = 0;
     if (this.props.user) {
       email = this.props.user.email;
       userName = this.props.user.displayName;
+      sunflower = this.state.score;
     }
     return (
       <div>
@@ -49,6 +67,8 @@ class UserProfile extends Component {
           {' '}
           View Total Sunflowers
           <img className="sunflower" src={SunflowerIcon} />
+          <span>{sunflower}</span>
+        <br />
         </div>
         <div className="button">
           <button className="ui_button" onClick={() => this.props.toHistory()}>
