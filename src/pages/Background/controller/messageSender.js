@@ -21,11 +21,19 @@ const onUserUpdate = (snapshot) => {
 };
 
 const sendFriendQuerySnapshot = (querysnapshot) => {
-  var fields = {
-    msg: 'query_snapshot',
-    qsnapshot: querysnapshot,
-  };
-  chrome.runtime.sendMessage(fields);
+  let snapshotArr = [];
+  let size = querysnapshot.size;
+  querysnapshot.forEach(function (doc) {
+    snapshotArr = snapshotArr.concat(doc.data());
+    size = size - 1;
+    if (size === 0) {
+      var fields = {
+        msg: 'query_snapshot',
+        qsnapshot: snapshotArr,
+      };
+      chrome.runtime.sendMessage(fields);
+    }
+  });
 };
 
 export const startListenUserUpdates = () => {
@@ -37,9 +45,11 @@ export const endListenUserUpdates = () => {
 };
 
 export const startListenLBUpdates = () => {
+  console.log('startLBListener');
   currentUserListenerHandle(leaderboardListener, sendFriendQuerySnapshot);
 };
 
 export const endListenLBUpdates = () => {
+  console.log('unsubscribe lb update');
   unsubscriberLeaderboard && unsubscriberLeaderboard();
 };

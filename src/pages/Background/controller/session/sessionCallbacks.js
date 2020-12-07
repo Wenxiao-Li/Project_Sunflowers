@@ -1,4 +1,8 @@
 import { injectToCurrentTabs } from './overlay/scriptInjection';
+import {
+  startInjectionListener,
+  removeInjectionListener,
+} from './overlay/scriptInjection';
 import { addSession } from '../../model/sessionDispatch';
 import { controlOverlay } from './overlay/overlay';
 import { incrementFlower } from '../../model/userflowerDispatch';
@@ -44,6 +48,6 @@ export const resumeCallback = function () {
 
 export const quitCallback = function (sessionLength, startDate, endDate) {
   // Update database
-  removeInjectionListener();
   addSession(sessionLength, false, startDate, endDate);
+  removeInjectionListener();
 };

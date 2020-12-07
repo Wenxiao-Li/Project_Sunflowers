@@ -55,5 +55,5 @@ export const leaderboardListener = (user, callback) => {
   var friendsQueryRef = db
     .collection('user')
     .where('friends', 'array-contains', user.email);
-  unsubsriberLeaderboard = friendsQueryRef.onSnapshot(callback);
+  unsubscriberLeaderboard = friendsQueryRef.onSnapshot(callback);
 };

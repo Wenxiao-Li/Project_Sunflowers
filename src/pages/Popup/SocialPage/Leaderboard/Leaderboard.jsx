@@ -32,6 +32,25 @@ const Leaderboard = () => {
 
   const { user } = React.useContext(AuthContext);
 
+  function getLBSnapshot(request, sender, senderResponse) {
+    if (request.msg === 'query_snapshot') {
+      console.log(request.qsnapshot);
+    }
+  }
+
+  React.useEffect(() => {
+    chrome.runtime.sendMessage({
+      msg: 'start_lblisten',
+    });
+    chrome.runtime.onMessage.addListener(getLBSnapshot);
+    return () => {
+      chrome.runtime.sendMessage({
+        msg: 'close_lblisten',
+      });
+      chrome.runtime.onMessage.removeListener(getLBSnapshot);
+    };
+  }, []);
+
   React.useEffect(() => {
     const setArray = (inputArray) => {
       var currentFriendsScoreArray = [];

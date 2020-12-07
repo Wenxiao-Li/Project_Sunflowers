@@ -22,6 +22,19 @@ const Popup = () => {
     ProfilePage: <ProfilePage />,
   };
 
+  function getUserSnapshot(request, sender, senderResponse) {
+    if (request.msg === 'user_snapshot') {
+      console.log(request.snapshotdata);
+    }
+  }
+
+  React.useEffect(() => {
+    chrome.runtime.onMessage.addListener(getUserSnapshot);
+    return () => {
+      chrome.runtime.onMessage.removeListener(getUserSnapshot);
+    };
+  }, []);
+
   const showComponent = (componentName) => {
     setPage(componentName);
   };
