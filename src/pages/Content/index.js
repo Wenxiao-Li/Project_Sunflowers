@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import DisplaySession from '../Popup/HomePage/DisplaySession.jsx';
-//include_css("./content.style.css");
+import Content from './Content';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
@@ -81,10 +80,7 @@ function processStatus(status) {
     if (hasOverlay === false) {
       console.log('overlay created');
       createOverlay(ELEMENT_ID);
-      render(
-        <DisplaySession />,
-        window.document.querySelector('#' + ELEMENT_ID)
-      );
+      render(<Content />, window.document.querySelector('#' + ELEMENT_ID));
       hasOverlay = true;
     }
   }
