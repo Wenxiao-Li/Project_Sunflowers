@@ -274,5 +274,6 @@ export let dbHandle = () => {
           console.log('Error getting document', error);
         });
     }
+    return true;
   });
 };
