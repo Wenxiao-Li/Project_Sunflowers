@@ -31,6 +31,7 @@ const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
 
   const { user } = React.useContext(AuthContext);
+  const reactionsAvailable = ['0x1F603', '0x1F525', '0x1F496'];
 
   React.useEffect(() => {
     const setArray = (inputArray) => {
@@ -57,6 +58,7 @@ const Leaderboard = () => {
 
     //return unsubscribe;
   }, []);
+
   const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
     console.log('Friend Reacted to ', friendReactedTo);
     console.log('Emoji Reacted on', keyReactedOn);
@@ -106,16 +108,16 @@ const Leaderboard = () => {
       {friend.userName}
       {' ' + friend.score + 'x'}
       <img className="sunflower-icon" src={sunflowerIcon}></img>
-      {Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+      {reactionsAvailable.map((key) => (
         <button
           key={key}
           value={friend.email}
           className={
-            arrayOfReacts.indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
+            friend.reactions[key].indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
           }
           onClick={(e) => updateLeaderBoard(e.target.value, key)}
         >
-          {String.fromCodePoint(key)} {arrayOfReacts.length}
+          {String.fromCodePoint(key)} {friend.reactions[key].length}
         </button>
       ))}
     </div>
