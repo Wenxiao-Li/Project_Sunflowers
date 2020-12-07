@@ -28,31 +28,31 @@ function deleteFriend(friendemail, friendname) {
     });
 }
 
-function viewFriendlist() {
+function addRequest(useremail) {
     var user = firebase.auth().currentUser;
-    var email;
+    var friendname;
     var friendemail;
 
     if (user != null) {
-        email = user.email;
+        friendemail = user.email
+        friendname = user.displayName;
     }
-    chrome.runtime.sendMessage({ command: "view_friend", useremail: email }, (response) => {
+    chrome.runtime.sendMessage({ command: "add_request", useremail: useremail, friendemail: friendemail, friendname: friendname }, (response) => {
         if (response.message === "success") {
-            friendemail = response.friend;
+            console.log("Add request");
         }
     });
-    return friendemail;
 }
 
 export const addFriendHandle = (friend, name) => {
     addFriend(friend, name);
 };
 
-/*
-export const viewFriendlistHandle = () => {
-    return viewFriendlist();
+
+export const friendRequestHandle = (useremail) => {
+    addRequest(useremail);
 };
-*/
+
 //TODO: js for view friends and delete friends. I want to test correctness of add friends first, then implement these functions.
 
 export const deleteFriendHandle = (friend, name) => {
@@ -81,6 +81,9 @@ export function viewFriendlistHandle(callback) {
 
 export function ViewNameHandle(email, callback) {
     chrome.runtime.sendMessage({ command: "view_owner", email: email }, (response1) => {
-        return callback(response1.name);
+        var fn = response1.fn;
+        var ln = response1.ln;
+        var name = fn + " " + ln;
+        return callback(name);
     });
 }

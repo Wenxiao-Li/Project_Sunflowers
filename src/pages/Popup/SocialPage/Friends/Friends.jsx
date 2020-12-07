@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle } from './Friends';
+import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle, friendRequestHandle } from './Friends';
 /*
 class Friends extends Component {
   _isMounted = false;
@@ -73,9 +73,10 @@ export default function FriendsPage() {
   const onSubmitAddFriends = (event) => {
     event.preventDefault();
     ViewNameHandle(addfriendemail.current.value, function (response) {
-      addFriendHandle(addfriendemail.current.value, response);
+      //addFriendHandle(addfriendemail.current.value, response);
+      friendRequestHandle(addfriendemail.current.value);
       viewFriendlistHandle(displayFriends);
-    })
+    });
     viewFriendlistHandle(displayFriends);
   };
 
@@ -84,7 +85,7 @@ export default function FriendsPage() {
     ViewNameHandle(deletefriendemail.current.value, function (response) {
       deleteFriendHandle(deletefriendemail.current.value, response);
       viewFriendlistHandle(displayFriends);
-    })
+    });
     viewFriendlistHandle(displayFriends);
   };
 
@@ -95,10 +96,6 @@ export default function FriendsPage() {
   const displayFriends = (friendList) => {
     setFriendList(friendList);
   };
-
-  const displayName = (friendname) => {
-    setFriendName(friendname);
-  }
 
   const Email = (props) => {
     return <li> {props.text}</li>;

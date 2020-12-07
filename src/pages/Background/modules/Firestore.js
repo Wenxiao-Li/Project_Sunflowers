@@ -24,6 +24,8 @@ const setName = (userEmail, firstName, lastName, callback) => {
         whitelist: [],
         friend: [],
         friendname: [],
+        friend2: [],
+        friendname2: [],
       }).then(() => {
         callback();
       }).catch((error) => {
@@ -96,6 +98,17 @@ const viewFriend = (friendList, callback) => {
   callback(nameList);
 }
 
+const addRequest = (userEmail, friendemail, friendname, callback) => {
+  db.collection('user').doc(userEmail).update({
+    friend2: firebase.firestore.FieldValue.arrayUnion(friendemail),
+    friendname2: firebase.firestore.FieldValue.arrayUnion(friendname),
+  }).then(() => {
+    callback();
+  }).catch((error) => {
+    console.error('Error writing document: ', error);
+  });
+}
+
 const addFriend = (userEmail, friendemail, friendname, callback) => {
   db.collection('user').doc(userEmail).update({
     friend: firebase.firestore.FieldValue.arrayUnion(friendemail),
@@ -111,6 +124,17 @@ const deleteFriend = (userEmail, friendemail, friendname, callback) => {
   db.collection('user').doc(userEmail).update({
     friend: firebase.firestore.FieldValue.arrayRemove(friendemail),
     friendname: firebase.firestore.FieldValue.arrayRemove(friendname),
+  }).then(() => {
+    callback();
+  }).catch((error) => {
+    console.error('Error writing document: ', error)
+  });
+}
+
+const deleteFriend2 = (userEmail, friendemail, friendname, callback) => {
+  db.collection('user').doc(userEmail).update({
+    friend2: firebase.firestore.FieldValue.arrayRemove(friendemail),
+    friendname2: firebase.firestore.FieldValue.arrayRemove(friendname),
   }).then(() => {
     callback();
   }).catch((error) => {
@@ -147,6 +171,10 @@ export let dbHandle = () => {
       deleteWhitelist(request.useremail, request.whitelist, () => {
         sendResponse({ message: 'success' });
       })
+    } else if (request.command === 'add_request') {
+      addRequest(request.useremail, request.friendemail, request.friendname, () => {
+        sendResponse({ message: 'success' });
+      })
     } else if (request.command === 'view_website') {
       viewWebsite(request.useremail, (doc) => {
         sendResponse({ message: "success", bl: doc.data().blacklist, wl: doc.data().whitelist });
@@ -168,9 +196,26 @@ export let dbHandle = () => {
         .catch((error) => {
           console.log('Error getting document', error);
         });
+    } else if (request.command === 'view_friend2') {
+      db.collection('user')
+        .doc(request.useremail)
+        .get()
+        .then((doc) => {
+          sendResponse({
+            message: 'success',
+            friend: doc.data().friendname2,
+          });
+        })
+        .catch((error) => {
+          console.log('Error getting document', error);
+        });
     }
     else if (request.command === 'delete_friend') {
       deleteFriend(request.useremail, request.friendemail, request.friendname, () => {
+        sendResponse({ message: 'success' });
+      })
+    } else if (request.command === 'delete_friend2') {
+      deleteFriend2(request.useremail, request.friendemail, request.friendname, () => {
         sendResponse({ message: 'success' });
       })
     } else if (request.command === 'view_owner') {
@@ -180,7 +225,8 @@ export let dbHandle = () => {
         .get()
         .then((doc) => {
           sendResponse({
-            name: doc.data().first_name,
+            fn: doc.data().first_name,
+            ln: doc.data().last_name,
           });
         })
         .catch((error) => {
