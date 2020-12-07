@@ -205,14 +205,16 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <h4 className="statement" style={{ marginTop: '10vh' }}>
+        <h4 className="statement" style={{ marginTop: '8vh' }}>
           {' '}
           You will get One Sunflower per 15 minutes{' '}
         </h4>
         <h4 className="statement" style={{ marginTop: '3vh' }}>
           If you quit the session, no sunflower will be rewarded.
-          You can only pause once! 
         </h4>
+        <h4 className="statement" style={{ marginTop: '0vh' }}>
+          Remaining number of pauses: { 1 - pauseCount / 2}
+        </h4 >
         <br />
         <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
