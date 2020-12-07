@@ -1,118 +1,119 @@
 import React, { Component } from 'react';
+import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
-import { AuthContext } from '../../../../auth/Auth';
-
-const ACCEPTED_STATUS_STRING = "Accepted";
-const PENDING_STATUS_STRING = "Pending";
-const CONFIRM_REMOVE_STATUS_STRING = "Confirm Remove";
-
-class FriendComponent {
-  constructor(userName, status, currentUser) {
-    this.userName = userName;
-    this.status = status;
-    this.currentUser = currentUser;
+import firebase from '../../../Background/modules/firebaseconfig';
+import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle, friendRequestHandle } from './Friends';
+/*
+class Friends extends Component {
+  _isMounted = false;
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ''
+    };
   }
-};
-
-const friends = () => {
-
-  const [friendComponents, setFriendComponents] = React.useState([]);
-
-  const { user } = React.useContext(AuthContext);
-
-  React.useEffect(() => {
-    // Replace with the database call to get the friends.
-    var currentFriendsArray = [
-      {
-        userName: 'Satyam',
-        status: ACCEPTED_STATUS_STRING
-      },
-      {
-        userName: 'Yitian',
-        status: ACCEPTED_STATUS_STRING
-      },
-      {
-        userName: 'HaiHao',
-        status: ACCEPTED_STATUS_STRING
-      },
-      {
-        userName: 'Xinyue',
-        status: PENDING_STATUS_STRING
-      },
-      {
-        userName: 'Zhirong',
-        status: PENDING_STATUS_STRING
-      }
-    ];
-
-    var newFriendsComponent = []
-    for (var i = 0; i < currentFriendsArray.length; i++) {
-      var current = currentFriendsArray[i];
-      var friendComponent = new FriendComponent(
-        current.userName,
-        current.status,
-        user.displayName
-      );
-      newFriendsComponent.push(friendComponent);
+  componentDidMount() {
+    this._isMounted = true;
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  render() {
+    var useremail = 'undefined';
+    var userName = 'undefined';
+    var friends = 'undefined';
+    if (this.props.user) {
+      useremail = this.props.user.email;
+      userName = this.props.user.displayName;
     }
-    setFriendComponents(newFriendsComponent);
-  }, []);
+    return (
+      <div>
+        <span>User Name: {userName}</span>
+        <br />
+        <span>Email: {useremail}</span>
+      </div>
+    );
+  }
+}
+export default Friends;
+*/
 
-  const updateFriends = (name, typeOfAction = CONFIRM_REMOVE_STATUS_STRING) => {
-    var copy = friendComponents.slice();
-    var index = copy.findIndex(user => {
-      if (user.userName === name) {
-        return true;
-      }
+export default function FriendsPage() {
+  // Set States goes here
+  const addfriendemail = React.useRef(null);
+  const deletefriendemail = React.useRef(null);
+  //const friendList = React.useRef(null);
+  const [nameList, setFriendList] = React.useState([]);
+
+  /**
+   * Description: Initializing States, do not pass function into useState
+   * isBlockList: state
+   * setBlockListBoolean: setState for isBlockList, this is async so be careful
+   * param: initial value
+   */
+  //const [isBlockList, setBlockListBoolean] = React.useState(true);
+
+  // use the return of useEffect for componentWillUnmount
+
+  // Run after every re-render
+  // React.useEffect(() => {});
+
+  // Equivalent to componentDidMount and return = componentWillUnMount
+  // React.useEffect(() => {}, []);
+
+  const onSubmitAddFriends = (event) => {
+    event.preventDefault();
+    ViewNameHandle(addfriendemail.current.value, function (response) {
+      //addFriendHandle(addfriendemail.current.value, response);
+      friendRequestHandle(addfriendemail.current.value);
+      viewFriendlistHandle(displayFriends);
     });
-
-    if (index !== -1) {
-      if (copy[index].status === ACCEPTED_STATUS_STRING) {
-        copy[index].status = CONFIRM_REMOVE_STATUS_STRING;
-      } else {
-        if (typeOfAction === CONFIRM_REMOVE_STATUS_STRING) {
-          delete copy[index];
-          copy.splice(index, 1);
-        } else {
-          copy[index].status = ACCEPTED_STATUS_STRING;
-        }
-      }
-    }
-
-    setFriendComponents(copy);
+    viewFriendlistHandle(displayFriends);
   };
 
-  var friendsRendered = friendComponents.map((friend) => (
-    <div key={friend.userName}>
-      {friend.userName}
-      <button
-        id={friend.userName}
-        onClick={() => updateFriends(friend.userName)}
-        disabled={friend.status === PENDING_STATUS_STRING}
-      >
-        {friend.status === ACCEPTED_STATUS_STRING && "Remove Friend"}
-        {friend.status === PENDING_STATUS_STRING && PENDING_STATUS_STRING}
-        {friend.status === CONFIRM_REMOVE_STATUS_STRING && CONFIRM_REMOVE_STATUS_STRING}
-      </button>
-      {friend.status === CONFIRM_REMOVE_STATUS_STRING && <button id="Cancel" onClick={e => updateFriends(friend.userName, e.target.id)}>Cancel</button>}
-    </div>
-  ));
+  const onSubmitDeleteFriends = (event) => {
+    event.preventDefault();
+    ViewNameHandle(deletefriendemail.current.value, function (response) {
+      deleteFriendHandle(deletefriendemail.current.value, response);
+      viewFriendlistHandle(displayFriends);
+    });
+    viewFriendlistHandle(displayFriends);
+  };
 
-  const addFriend = () => {
-    console.log("Adding a friend");
-  }
+  const showFriends = (event) => {
+    viewFriendlistHandle(displayFriends);
+  };
+
+  const displayFriends = (friendList) => {
+    setFriendList(friendList);
+  };
+
+  const Email = (props) => {
+    return <li> {props.text}</li>;
+  };
 
   return (
-    <div>
+    <div className="Friends">
       <h1> Friends </h1>
-      <button onClick={() => addFriend}> Add a Friend </button>
       <br />
-      {friendsRendered}
-      <span>User Name: {user.displayName}</span>
+      <form onSubmit={onSubmitAddFriends}>
+        <label>Add Friends</label>
+        <input type="text" name="addfriend" ref={addfriendemail} required />
+        <button type="submit"> Add </button>
+      </form>
+      <form onSubmit={onSubmitDeleteFriends}>
+        <label>Delete Friends</label>
+        <input type="text" name="addfriend" ref={deletefriendemail} required />
+        <button type="submit"> Delete </button>
+      </form>
       <br />
-      <span>Email: {user.email}</span>
-    </div>
+      <button onClick={showFriends}> showFriends </button>
+      <span> friends: </span>
+      <ul>
+        {nameList.map(email => (
+          <Email key={email} text={email} />
+        ))}
+      </ul>
+    </div >
   );
 }
-
-export default friends;
