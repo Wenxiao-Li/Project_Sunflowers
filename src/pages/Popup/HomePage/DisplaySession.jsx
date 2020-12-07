@@ -200,7 +200,7 @@ export default function DisplaySession() {
   const RunningView = () => {
     return (
       <div>
-        <div className="sentence">There are</div>
+
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
@@ -231,12 +231,18 @@ export default function DisplaySession() {
   const PausedView = () => {
     return (
       <div>
-        <div className="sentence">There are</div>
+
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <div className="sentence"> left for your session </div>
+        <h4 className="statement" style={{ marginTop: '10vh' }}>
+          {' '}
+          You will get One Sunflower per 15 minutes{' '}
+        </h4>
+        <h4 className="statement" style={{ marginTop: '3vh' }}>
+          If you quit the session, no sunflower will be rewarded
+        </h4>
 
         <br />
         <div className="bt">
