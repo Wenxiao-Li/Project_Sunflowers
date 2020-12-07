@@ -2,24 +2,29 @@ import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
 import { AuthContext } from '../../../../auth/Auth';
+import sunflowerIcon from "../../../../assets/img/sunflowerIcon.jpg";
 import { getLeaderboard, unsubscribe } from './getLeaderboard';
+import { updateReactions } from './updateReactions';
+import "./Leaderboard.css"
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
-  constructor(userName, score, reactions, currentUser) {
+  constructor(userName, email, score, reactions, currentUser) {
     this.userName = userName;
+    this.email = email;
     this.score = score;
     this.reactions = reactions;
     this.currentUser = currentUser;
   }
-
-  updateReactions() {
-    console.log(this.reactions);
-    if (this.reactions.indexOf(this.currentUser) === -1) {
-      this.reactions.push(this.currentUser);
-    } else {
-      this.reactions.pop(this.currentUser);
+  /*
+    updateReactions() {
+      console.log(this.reactions);
+      if (this.reactions.indexOf(this.currentUser) === -1) {
+        this.reactions.push(this.currentUser);
+      } else {
+        this.reactions.pop(this.currentUser);
+      }
     }
-  }
+    */
 }
 
 const Leaderboard = () => {
@@ -40,8 +45,9 @@ const Leaderboard = () => {
         console.log('print: ', current);
         var leaderBoardComponent = new LeaderBoardComponent(
           current.userName,
+          current.email,
           current.score,
-          [],
+          current.reactions,
           user.displayName
         );
         newLeaderBoardComponents.push(leaderBoardComponent);
@@ -50,9 +56,25 @@ const Leaderboard = () => {
     };
     getLeaderboard(user, setArray);
 
-    return unsubscribe;
+    //return unsubscribe;
   }, []);
+  const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
+    console.log("Friend Reacted to ", friendReactedTo);
+    console.log("Emoji Reacted on", keyReactedOn);
+    var copy = [...leaderBoardComponents];
+    var indexOffriend = copy.findIndex(friend => friend.email === friendReactedTo);
+    console.log(indexOffriend);
+    var reactionExists = copy[indexOffriend].reactions[keyReactedOn].indexOf(user.email);
 
+    //copy[indexOffriend].reactions[keyReactedOn].push(user.email);
+    updateReactions(user, friendReactedTo, reactionExists, keyReactedOn)
+
+
+    console.log(copy);
+    console.log(leaderBoardComponents);
+    setLBComponents(copy);
+  };
+  /*
   const updateLeaderBoard = (name) => {
     var nameReactedTo = name;
     console.log(nameReactedTo);
@@ -70,31 +92,47 @@ const Leaderboard = () => {
     }
     setLBComponents(copy);
   };
+  */
   var email = 'undefined';
   var userName = 'undefined';
   if (user) {
     email = user.email;
     userName = user.displayName;
   }
-
   var leaderboardRendered = leaderBoardComponents.map((friend) => (
     <div key={friend.userName}>
-      {friend.userName} Sunflowers = {friend.score}
-      <button
-        id={friend.userName}
-        onClick={() => updateLeaderBoard(friend.userName)}
-      >
-        <img
-          src={
-            friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon
-          }
-          style={{ width: 20, height: 20 }}
-        ></img>
-      </button>
-      {friend.reactions.length}
-    </div>
+      {friend.userName}
+      {" " + friend.score + "x"}
+      <img className="sunflower-icon" src={sunflowerIcon}>
+      </img>
+      {
+        Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+          <button key={key} value={friend.email} class={arrayOfReacts.indexOf(user.email) == -1 ? "unreacted" : "reacted"} onClick={e => updateLeaderBoard(e.target.value, key)}>
+            {String.fromCodePoint(key)} {arrayOfReacts.length}
+          </button>
+        ))
+      }
+    </div >
   ));
-
+  /*
+    var leaderboardRendered = leaderBoardComponents.map((friend) => (
+      <div key={friend.userName}>
+        {friend.userName} Sunflowers = {friend.score}
+        <button
+          id={friend.userName}
+          onClick={() => updateLeaderBoard(friend.userName)}
+        >
+          <img
+            src={
+              friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon
+            }
+            style={{ width: 20, height: 20 }}
+          ></img>
+        </button>
+        {friend.reactions.length}
+      </div>
+    ));
+  */
   return (
     <div>
       <h1> Leaderboard</h1>
