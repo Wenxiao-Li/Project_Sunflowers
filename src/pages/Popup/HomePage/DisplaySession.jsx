@@ -210,7 +210,8 @@ export default function DisplaySession() {
           You will get One Sunflower per 15 minutes{' '}
         </h4>
         <h4 className="statement" style={{ marginTop: '3vh' }}>
-          If you quit the session, no sunflower will be rewarded
+          If you quit the session, no sunflower will be rewarded.
+          You can only pause once! 
         </h4>
         <br />
         <div className="bt">
