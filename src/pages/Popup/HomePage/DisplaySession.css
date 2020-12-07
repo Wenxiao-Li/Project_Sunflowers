@@ -31,8 +31,8 @@
 .display-time {
   background-color: #b8c774;
   display: inline-block;
-  width: 100px;
-  height: 40px;
+  width: 150px;
+  height: 50px;
   margin-left: 10px;
   margin-right: 10px;
   border-radius: 25px;
@@ -42,7 +42,7 @@
 
 .display-time > span {
   color: black;
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
   font-style: normal;
 }
@@ -58,27 +58,29 @@
   border-bottom: 3px solid transparent;
 }
 
+.sfIcon {
+  width: 75px;
+  height: 85px;
+  padding-bottom: 15px;
+}
+
 #num-sunflower {
   margin-top: 15px;
 }
 
 #num-sunflower > span {
+  color: green;
   margin-top: 10px;
   bottom: 0px;
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .statement {
-  color: green;
+  color: black;
   font-family: Arial;
   font-size: 13px;
   font-weight: bold;
   text-align: center;
-}
-
-.sfIcon {
-  width: 50px;
-  padding-bottom: 15px;
 }
 
 .disSS {
