@@ -19,6 +19,8 @@ export default function DisplaySession() {
   const [seconds, setSeconds] = React.useState(0);
   const [status, setStatus] = React.useState(STATUS_NOT_STARTED);
   const [isBlocklist, setBlocklist] = React.useState(true);
+
+  const [pauseCount, setCount] = React.useState(0);
   /**
    * Callback function
    * @param {any} request the request object with messages
@@ -56,6 +58,7 @@ export default function DisplaySession() {
 
   React.useEffect(() => {
     if (status === STATUS_SUCCESS) {
+      setCount(0);
       var opt = {
         type: 'basic',
         title: 'Congratulations! You have completed your session!',
@@ -110,13 +113,25 @@ export default function DisplaySession() {
   };
 
   const postToggleSession = () => {
-    chrome.runtime.sendMessage({
-      msg: 'toggle-session',
-      data: {},
-    });
+
+    if(pauseCount >= 2){
+    }
+    else{
+
+      // increment the pause count
+      setCount(pauseCount + 1);
+      chrome.runtime.sendMessage({
+        msg: 'toggle-session',
+        data: {},
+      });
+
+    }
+
+    
   };
 
   const postQuitSession = () => {
+    setCount(0);
     if (
       window.confirm(
         'Are you sure you want to give up all sunflowers in this session?'
@@ -195,7 +210,8 @@ export default function DisplaySession() {
           You will get One Sunflower per 15 minutes{' '}
         </h4>
         <h4 className="statement" style={{ marginTop: '3vh' }}>
-          If you quit the session, no sunflower will be rewarded
+          If you quit the session, no sunflower will be rewarded.
+          You can only pause once! 
         </h4>
         <br />
         <div className="bt">
