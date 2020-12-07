@@ -1,0 +1,29 @@
+.leaderboard-entry {
+    width: auto;
+    height: auto;
+
+}
+
+.sunflower-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.reaction-image {
+    float: right;
+    height: 20px;
+    width: 20px;
+    align-self: right;
+}
+
+.unreacted {
+    background-color:white;
+    height: auto;
+    width: auto;
+}
+
+.reacted {
+    background-color: blue;
+    height: auto;
+    width: auto;
+}
