@@ -155,7 +155,7 @@ class SessionHistory extends Component {
       <div>
         <h3> Session History</h3>
         <Chart
-          width={400}
+          width={360}
           height={250}
           chartType="ColumnChart"
           loader={<div>Loading Chart</div>}
