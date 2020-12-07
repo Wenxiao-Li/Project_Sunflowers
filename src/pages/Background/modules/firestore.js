@@ -24,7 +24,10 @@ const setName = (userEmail, firstName, lastName, callback) => {
         allowlist: [],
         user_flower: 0,
         reactions: { "0x1F496": [], "0x1F525": [], "0x1F603": [] },
-        friends: []
+        friendname: [],
+        friendname2: [],
+        friends: [],
+        friend2: []
       }).then(() => {
         callback();
       }).catch((error) => {
