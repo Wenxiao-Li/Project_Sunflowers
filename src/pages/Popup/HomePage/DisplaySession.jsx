@@ -189,10 +189,6 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <div id="num-sunflower">
-          <img className="sfIcon" src={SunflowerIcon} width="50" />
-          <span> X {numSunflowers} </span>
-        </div>
         <h4 className="statement">
           {' '}
           You will get One Sunflower per 15 minutes{' '}
@@ -217,10 +213,6 @@ export default function DisplaySession() {
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
-        </div>
-        <div id="num-sunflower">
-          <img className="sfIcon" src={SunflowerIcon} width="50" />
-          <span> X {numSunflowers} </span>
         </div>
         <h4 className="statement">
           {' '}
