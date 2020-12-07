@@ -185,14 +185,18 @@ export default function DisplaySession() {
   const RunningView = () => {
     return (
       <div>
+        <div className="sentence">
+          There are
+          </div>
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <h4 className="statement">
+        <br />
+        <div className="sentence">
           {' '}
-          You will get One Sunflower per 15 minutes{' '}
-        </h4>
+          left fot your session{' '}
+        </div>
 
         <br />
         <div className="bt">
@@ -210,14 +214,17 @@ export default function DisplaySession() {
   const PausedView = () => {
     return (
       <div>
+        <div className="sentence">
+          There are
+          </div>
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <h4 className="statement">
+        <div className="sentence">
           {' '}
-          You will get One Sunflower per 15 minutes{' '}
-        </h4>
+          left fot your session{' '}
+        </div>
 
         <br />
         <div className="bt">

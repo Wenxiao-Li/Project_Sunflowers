@@ -28,11 +28,9 @@
   background-size: cover;
   background-position: center top;
   height: 25px;
-  width: 50px;
-  padding: 0px;
-  border-radius: 50%;
+  width: 80px;
+  padding-left: 30px;
   display: inline-block;
-  margin: 0px 60px 0px 0px;
 }
 
 .profile {
