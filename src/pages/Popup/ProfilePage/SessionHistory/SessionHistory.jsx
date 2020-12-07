@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase, { db } from '../../../Background/modules/firebaseconfig';
-
 import Chart from 'react-google-charts';
+import './SessionHistory.css';
+
 class SessionHistory extends Component {
   _isMounted = false;
 
@@ -153,7 +155,10 @@ class SessionHistory extends Component {
     }
     return (
       <div>
-        <h3> Session History</h3>
+        <div className="SsHis">
+          <strong> Session History in Past 7 Days </strong>
+        </div>
+
         <Chart
           width={360}
           height={250}
@@ -191,7 +196,7 @@ class SessionHistory extends Component {
             ],
           ]}
           options={{
-            title: this.state.user.displayName + ' Focus History',
+            title: this.state.user.displayName + '(history)',
             chartArea: { width: '40%' },
             hAxis: {
               title: 'Date',
@@ -203,7 +208,13 @@ class SessionHistory extends Component {
           }}
           legendToggle
         />
-        <button onClick={() => this.props.toProfile()}> Back </button>
+
+        <div className="back">
+          <Button variant="round" onClick={() => this.props.toProfile()}>
+            Back
+          </Button>
+        </div>
+
       </div>
     );
   }
