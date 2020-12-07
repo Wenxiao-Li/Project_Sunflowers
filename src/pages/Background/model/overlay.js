@@ -2,14 +2,13 @@ import { localBlockList, localAllowList } from '../modules/websiteLists';
 
 const extractHost = (url) => {
   var hostString = new URL(url).hostname;
-  var firstDotIndex = hostString.indexOf('.');
-  var lastDotIndex = hostString.lastIndexOf('.');
+  // var firstDotIndex = hostString.indexOf('.');
+  // var lastDotIndex = hostString.lastIndexOf('.');
 
-  if (firstDotIndex !== lastDotIndex) {
-    return hostString.substring(firstDotIndex + 1);
-  } else {
-    return hostString;
-  }
+  // if (firstDotIndex !== lastDotIndex) {
+  //   return hostString.substring(firstDotIndex + 1);
+  // }
+  return hostString;
 };
 
 const matchURLHost = (first, second) => {
