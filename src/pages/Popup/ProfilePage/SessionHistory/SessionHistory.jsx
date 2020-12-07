@@ -35,7 +35,7 @@ class SessionHistory extends Component {
     Today = Today.split(' ');
     let thisDay = Month.get(Today[1]) + '/' + Today[2];
 
-    console.log('load time zone is ' + loadTimeZone.toString());
+    //console.log('load time zone is ' + loadTimeZone.toString());
 
     var sessionRef = db
       .collection('user')
