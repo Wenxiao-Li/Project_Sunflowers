@@ -218,7 +218,7 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <div className="sentence"> left fot your session </div>
+        <div className="sentence"> left for your session </div>
 
         <br />
         <div className="bt">
