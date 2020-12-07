@@ -1,5 +1,6 @@
 // background countdown process
 import * as Status from './sessionStatus';
+import { updateCallback, completeCallback } from './sessionCallbacks';
 
 const MINUTES_STEP_SIZE = 15;
 const MIN_MINUTES = MINUTES_STEP_SIZE;
@@ -16,19 +17,19 @@ export let Session = {
   startDate: null,
   pastSeconds: 0,
   displaySeconds: 0,
-  completeCallback: null,
-  updateCallback: null,
+  onComplete: completeCallback,
+  onUpdate: updateCallback,
 
   updateInSessionTime: function () {
     const minutes = Math.floor(this.displaySeconds / MIN_TO_SEC);
     const seconds = parseInt(this.displaySeconds % MIN_TO_SEC);
-    this.updateCallback(minutes, seconds, this.status, this.isBlocklist);
+    this.onUpdate(minutes, seconds, this.status, this.isBlocklist);
   },
 
   updateUnStartedTime: function () {
     const minutes = this.startMinutes;
     const seconds = 0;
-    this.updateCallback(minutes, seconds, this.status, this.isBlocklist);
+    this.onUpdate(minutes, seconds, this.status, this.isBlocklist);
   },
 
   // start the session
@@ -39,7 +40,7 @@ export let Session = {
       self.pastSeconds += 1;
       self.displaySeconds = self.startSeconds - self.pastSeconds;
       if (self.displaySeconds === 0) {
-        self.completeSession(self.completeCallback);
+        self.completeSession(self.onComplete);
       } else {
         self.updateInSessionTime();
       }

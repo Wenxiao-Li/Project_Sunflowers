@@ -1,4 +1,5 @@
-var firebase = require('firebase').default;
+var firebase = require('firebase/app').default;
+require('firebase/auth');
 require('firebase/firestore');
 const firebaseConfig = {
   apiKey: 'AIzaSyCtWDsDR0wnBQdP-nx4YhRmMlUHozwPwJI',

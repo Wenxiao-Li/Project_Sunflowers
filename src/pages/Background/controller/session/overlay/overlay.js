@@ -1,4 +1,7 @@
-import { localBlockList, localAllowList } from '../modules/websiteLists';
+import {
+  localBlockList,
+  localAllowList,
+} from '../../websiteLists/websiteLists';
 
 const extractHost = (url) => {
   var hostString = new URL(url).hostname;
@@ -42,13 +45,10 @@ export const controlOverlay = (minutes, seconds, status, isBlocklist) => {
   chrome.tabs.query({}, function (tabs) {
     tabs.forEach(function (tab) {
       let block = shouldBlock(tab, isBlocklist);
-      console.log('block value: ', block);
       let sendStatus = 0;
       if (block === true) {
-        console.log('enter block');
         sendStatus = status;
       }
-      console.log(status, ': ', sendStatus);
       chrome.tabs.sendMessage(
         tab.id,
         {
@@ -61,7 +61,6 @@ export const controlOverlay = (minutes, seconds, status, isBlocklist) => {
         },
         () => {
           if (chrome.runtime.lastError) {
-            console.log('content script does not exist');
           }
         }
       );

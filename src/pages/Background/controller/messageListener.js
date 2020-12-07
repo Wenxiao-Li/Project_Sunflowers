@@ -3,10 +3,10 @@ const pairArrToListenerFunc = (actionPairArr) => {
   return function (request, sender, sendResponse) {
     actionPairArr.forEach((actionPair) => {
       if (request.msg === actionPair.msg) {
-        actionPair.action(request, sender, sendResponse, actionPair.callback);
+        actionPair.action(request, sender, sendResponse);
+        return true;
       }
     });
-    return true;
   };
 };
 

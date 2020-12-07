@@ -87,9 +87,10 @@
 }
 
 .statement {
-  color: black;
+  margin: 20px;
+  color: #ffffcc;
   font-family: Arial;
-  font-size: 13px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
 }
