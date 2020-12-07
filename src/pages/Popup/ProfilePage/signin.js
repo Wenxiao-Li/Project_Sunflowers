@@ -6,23 +6,10 @@ const ui = new firebaseui.auth.AuthUI(firebase.auth());
 const uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      chrome.runtime.sendMessage(
-        { message: 'sign_in', user: firebase.auth().currentUser },
-        (response) => {
-          if (response.message == 'success') {
-            window.location.replace('./popup.html');
-          }
-        }
-      );
-      return false;
-    },
-    uiShown: function () {
-      //document.getElementById('page-name').style.display = 'none';
-      //document.getElementById('sign_in').style.display = 'none';
+      window.location.reload();
     },
   },
   signInFlow: 'popup',
-  signInSuccessUrl: './home.html',
   signInOptions: [
     {
       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,

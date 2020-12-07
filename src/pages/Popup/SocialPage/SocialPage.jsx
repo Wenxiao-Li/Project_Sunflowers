@@ -1,55 +1,65 @@
-import React, { Component } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
+import React from 'react';
 import Leaderboard from './Leaderboard/Leaderboard.jsx';
 import Friends from './Friends/Friends.jsx';
 import Notifications from './Notifications/Notifications.jsx';
+import UnauthPage from './UnauthPage';
+import { AuthContext } from '../../../auth/Auth';
 
-class SocialPage extends Component {
-  _isMounted = false;
+import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
-  constructor(props) {
-    super(props);
+const SocialPage = () => {
+  const [pageName, setPage] = React.useState('Leaderboard');
 
-    this.state = {
-      displayedComponent: 'Leaderboard',
-    };
+  const { user } = React.useContext(AuthContext);
 
-    this.showComponent = this.showComponent.bind(this);
-  }
+  const components = {
+    Leaderboard: <Leaderboard />,
+    Friends: <Friends user={user} />,
+    Notifications: <Notifications user={user} />,
+  };
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  const showComponent = (componentName) => {
+    setPage(componentName);
+  };
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  showComponent(componentName) {
-    this.setState({ displayedComponent: componentName });
-  }
-
-  render() {
-    const components = {
-      Leaderboard: <Leaderboard user={this.props.user} />,
-      Friends: <Friends user={this.props.user} />,
-      Notifications: <Notifications user={this.props.user} />,
-    };
+  if (user) {
     return (
-      <div>
-        <img src={SunflowerBg} />
-        <br />
-        <button onClick={() => this.showComponent('Leaderboard')}>
-          Leaderboard
-        </button>
-        <button onClick={() => this.showComponent('Friends')}>Friends</button>
-        <button onClick={() => this.showComponent('Notifications')}>
-          Notifications
-        </button>
-        <div>{components[this.state.displayedComponent]}</div>
+      <div className="page">
+        <ToggleButtonGroup
+          type="radio"
+          name="value"
+          value={pageName}
+          onChange={setPage}
+          style={{ width: '100%' }}
+        >
+          <ToggleButton
+            variant="toggle"
+            value={'Leaderboard'}
+            style={{ width: '33%' }}
+          >
+            Leaderboard
+          </ToggleButton>
+          <ToggleButton
+            variant="toggle"
+            value={'Friends'}
+            style={{ width: '33%' }}
+          >
+            Friends
+          </ToggleButton>
+          <ToggleButton
+            variant="toggle"
+            value={'Notifications'}
+            style={{ width: '33%' }}
+          >
+            Notifications
+          </ToggleButton>
+        </ToggleButtonGroup>
+        <div>{components[pageName]}</div>
       </div>
     );
+  } else {
+    return <UnauthPage />;
   }
-}
+};
 
 export default SocialPage;
