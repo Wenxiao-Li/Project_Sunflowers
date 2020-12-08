@@ -135,13 +135,14 @@ export default function DisplaySession() {
   };
 
   const postQuitSession = () => {
-    pauseCountII = 0;
+    
 
     if (
       window.confirm(
         'Are you sure you want to give up all sunflowers in this session?'
       )
     ) {
+      pauseCountII = 0;
       chrome.runtime.sendMessage({
         msg: 'quit-session',
         data: {},
