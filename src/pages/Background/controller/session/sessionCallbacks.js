@@ -8,6 +8,8 @@ import { controlOverlay } from './overlay/overlay';
 import { incrementFlower } from '../../model/userflowerDispatch';
 const updateDisplayedTimeMsg = 'update-time';
 
+export var pauseCountII = 0;
+
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {
   chrome.runtime.sendMessage({
     msg: updateDisplayedTimeMsg,
@@ -37,6 +39,7 @@ export const completeCallback = function (sessionLength, startDate, endDate) {
 };
 
 export const pauseCallback = function () {
+
   console.log('pauseCallback');
   // Resume Pause Timer
 };
