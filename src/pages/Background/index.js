@@ -5,17 +5,19 @@ import '../../assets/img/icon128.png';
 import { dbHandle } from './modules/firestore';
 import { runListener } from './controller/messageListener';
 import { sessionPairArr } from './controller/sessionController';
-import { websiteListsArr } from './controller/websiteListsController';
 import { lbPairArr } from './controller/leaderboardController';
-import { startListenUserUpdates } from './controller/messageSender';
+import { userArr } from './controller/userSnapshotController';
+import { startListenUserUpdates } from './controller/usersnapshot/userUpdatesListener';
 
 console.log('This is the background page.');
 
 dbHandle();
 
-let pairArr = sessionPairArr.concat(websiteListsArr);
+let pairArr = sessionPairArr;
 
 pairArr = pairArr.concat(lbPairArr);
+
+pairArr = pairArr.concat(userArr);
 
 startListenUserUpdates();
 

@@ -3,7 +3,7 @@ import firebase, { db } from '../modules/firebaseconfig';
 import {
   defaultAllowlist,
   defaultBlocklist,
-} from '../controller/websiteLists/websiteLists';
+} from '../controller/usersnapshot/user';
 
 export const currentUserListenerHandle = (listener, callback) => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -52,8 +52,18 @@ export const userListener = (user, callback) => {
 export let unsubscriberLeaderboard;
 
 export const leaderboardListener = (user, callback) => {
-  var friendsQueryRef = db
-    .collection('user')
-    .where('friends', 'array-contains', user.email);
-  unsubscriberLeaderboard = friendsQueryRef.onSnapshot(callback);
+  db.collection('user')
+    .doc(user.email)
+    .get()
+    .then((docsnapshot) => {
+      let items = docsnapshot.data().friends;
+      items.push(user.email);
+      unsubscriberLeaderboard = db
+        .collection('user')
+        .where(firebase.firestore.FieldPath.documentId(), 'in', items)
+        .onSnapshot(callback);
+    })
+    .catch((error) => {
+      console.log('get error: ', error);
+    });
 };

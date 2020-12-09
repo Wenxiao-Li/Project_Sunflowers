@@ -6,7 +6,6 @@ import { signOutHandle } from '../signin.js';
 import './UserProfile.css';
 import firebase, { db } from '../../../Background/modules/firebaseconfig';
 
-
 class UserProfile extends Component {
   _isMounted = false;
 
@@ -14,19 +13,21 @@ class UserProfile extends Component {
     super(props);
 
     this.state = {
-      score : 0
-    }
-    
+      score: 0,
+    };
+
     var user = this.props.user;
     var profileRef = db.collection('user');
-    if(user){
+    if (user) {
       var num = 0;
-      profileRef.doc(user.email).onSnapshot(function (doc){
-        num = doc.data().user_flower;
-        //console.log(num);
-        this.setState({score : num});
-      }.bind(this));
-    } 
+      profileRef.doc(user.email).onSnapshot(
+        function (doc) {
+          num = doc.data().user_flower;
+          //console.log(num);
+          this.setState({ score: num });
+        }.bind(this)
+      );
+    }
   }
 
   componentDidMount() {
@@ -67,8 +68,8 @@ class UserProfile extends Component {
           {' '}
           View Total Sunflowers
           <img className="sunflower" src={SunflowerIcon} />
-          <span>{sunflower}</span>
-        <br />
+          <span>{this.props.numFlower}</span>
+          <br />
         </div>
         <div className="button">
           <button className="ui_button" onClick={() => this.props.toHistory()}>

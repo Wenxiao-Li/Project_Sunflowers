@@ -1,13 +1,23 @@
-import { startListenLBUpdates, endListenLBUpdates } from './messageSender';
+import { setLeaderboardStat } from './leaderboard/leaderboard';
+import {
+  endListenLBUpdates,
+  startListenLBUpdates,
+} from './leaderboard/lbUpdatesListener';
 
 const startLBListenPair = {
-  msg: 'start_lblisten',
-  action: startListenLBUpdates,
+  msg: 'enter_leaderboard',
+  action: () => {
+    setLeaderboardStat(true);
+    startListenLBUpdates();
+  },
 };
 
 const endLBListenPair = {
-  msg: 'close_lblisten',
-  action: endListenLBUpdates,
+  msg: 'exit_leaderboard',
+  action: () => {
+    setLeaderboardStat(false);
+    endListenLBUpdates();
+  },
 };
 
 export let lbPairArr = [startLBListenPair, endLBListenPair];

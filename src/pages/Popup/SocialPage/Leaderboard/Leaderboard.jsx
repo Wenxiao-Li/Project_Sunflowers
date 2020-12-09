@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
-import { AuthContext } from '../../../../auth/Auth';
+import { UserContext } from '../../User';
 import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
 import { getLeaderboard, unsubscribe } from './getLeaderboard';
 import { updateReactions } from './updateReactions';
@@ -30,7 +30,7 @@ class LeaderBoardComponent {
 const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
 
-  const { user } = React.useContext(AuthContext);
+  const { user, snapshotData } = React.useContext(UserContext);
 
   function getLBSnapshot(request, sender, senderResponse) {
     if (request.msg === 'query_snapshot') {
@@ -40,12 +40,12 @@ const Leaderboard = () => {
 
   React.useEffect(() => {
     chrome.runtime.sendMessage({
-      msg: 'start_lblisten',
+      msg: 'enter_leaderboard',
     });
     chrome.runtime.onMessage.addListener(getLBSnapshot);
     return () => {
       chrome.runtime.sendMessage({
-        msg: 'close_lblisten',
+        msg: 'exit_leaderboard',
       });
       chrome.runtime.onMessage.removeListener(getLBSnapshot);
     };

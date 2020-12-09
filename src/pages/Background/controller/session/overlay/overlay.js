@@ -1,7 +1,4 @@
-import {
-  localBlockList,
-  localAllowList,
-} from '../../websiteLists/websiteLists';
+import { getUserSnapshot } from '../../usersnapshot/user';
 
 const extractHost = (url) => {
   var hostString = new URL(url).hostname;
@@ -21,6 +18,13 @@ const matchURLHost = (first, second) => {
 };
 
 const shouldBlock = (tab, isBlocklist) => {
+  let localBlockList = [];
+  let localAllowList = [];
+  let userSnapshot = getUserSnapshot();
+  if (userSnapshot) {
+    localAllowList = userSnapshot.data().allowlist;
+    localBlockList = userSnapshot.data().blocklist;
+  }
   if (isBlocklist) {
     for (var i = 0; i < localBlockList.length; i++) {
       if (matchURLHost(tab.url, localBlockList[i])) {

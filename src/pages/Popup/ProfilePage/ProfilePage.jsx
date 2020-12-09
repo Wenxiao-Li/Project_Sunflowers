@@ -2,13 +2,12 @@ import React from 'react';
 import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
 import SigninPage from './SigninPage';
-import { AuthContext } from '../../../auth/Auth';
-
+import { UserContext } from '../User';
 
 const ProfilePage = () => {
   const [pageName, setPage] = React.useState('UserProfile');
 
-  const { user } = React.useContext(AuthContext);
+  const { user, snapshotData } = React.useContext(UserContext);
 
   const toHistory = () => {
     showComponent('SessionHistory');
@@ -23,7 +22,13 @@ const ProfilePage = () => {
   };
 
   const components = {
-    UserProfile: <UserProfile user={user} toHistory={toHistory} />,
+    UserProfile: (
+      <UserProfile
+        user={user}
+        numFlower={(snapshotData && snapshotData.user_flower) || 0}
+        toHistory={toHistory}
+      />
+    ),
     SessionHistory: <SessionHistory user={user} toProfile={toProfile} />,
   };
 

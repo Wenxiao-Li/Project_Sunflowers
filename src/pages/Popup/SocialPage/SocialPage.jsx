@@ -3,14 +3,14 @@ import Leaderboard from './Leaderboard/Leaderboard.jsx';
 import Friends from './Friends/Friends.jsx';
 import Notifications from './Notifications/Notifications.jsx';
 import UnauthPage from './UnauthPage';
-import { AuthContext } from '../../../auth/Auth';
+import { UserContext } from '../User';
 
 import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const SocialPage = () => {
   const [pageName, setPage] = React.useState('Leaderboard');
 
-  const { user } = React.useContext(AuthContext);
+  const { user, snapshotData } = React.useContext(UserContext);
 
   const components = {
     Leaderboard: <Leaderboard />,
