@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
   React.useEffect(() => {
     if (user) {
       chrome.runtime.sendMessage({
-        msg: 'get_snapshot',
+        msg: 'start_userlisten',
       });
       chrome.runtime.onMessage.addListener(getUserSnapshot);
     }

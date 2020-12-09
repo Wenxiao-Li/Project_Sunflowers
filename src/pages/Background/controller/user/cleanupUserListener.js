@@ -1,4 +1,4 @@
-import { endListenUserUpdates } from './userListenerHandle';
+import { endListenUserUpdates } from './userListenerManager';
 
 export function cleanupUserListener() {
   var interval = setInterval(checkPopupOpen, 5000);

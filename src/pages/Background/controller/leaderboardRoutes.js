@@ -2,7 +2,7 @@ import { setLeaderboardStat } from './leaderboard/leaderboard';
 import {
   endListenLBUpdates,
   startListenLBUpdates,
-} from './leaderboard/leaderboardListenerHandle';
+} from './leaderboard/leaderboardListenerManager';
 import { cleanupLBListener } from './leaderboard/cleanupLBListener';
 
 const startLBListenPair = {

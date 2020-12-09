@@ -1,8 +1,8 @@
-import { sendUserSnapshotAction } from './user/userAction';
+import { startListenUserAction } from './user/userAction';
 
-const getSnapshotPair = {
-  msg: 'get_snapshot',
-  action: sendUserSnapshotAction,
+const startListenUserPair = {
+  msg: 'start_userlisten',
+  action: startListenUserAction,
 };
 
-export const userRoutes = [getSnapshotPair];
+export const userRoutes = [startListenUserPair];
