@@ -49,7 +49,7 @@ const initFieldPair = {
   action: initFieldAction,
 };
 
-export let sessionPairArr = [
+export let sessionRoutes = [
   decreaseTimePair,
   increaseTimePair,
   toggleModePair,

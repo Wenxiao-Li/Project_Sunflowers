@@ -1,5 +1,5 @@
 import { Session } from './session';
-import * as Status from './sessionStatus';
+import * as Status from './sessionConstant';
 import {
   startCallback,
   pauseCallback,

@@ -4,18 +4,18 @@ import '../../assets/img/icon48.png';
 import '../../assets/img/icon128.png';
 import { dbHandle } from './modules/firestore';
 import { routerInclude, runMessageRouter } from './modules/router';
-import { sessionPairArr } from './controller/sessionController';
-import { lbPairArr } from './controller/leaderboardController';
-import { userArr } from './controller/userSnapshotController';
-import { startListenUserUpdates } from './controller/usersnapshot/userUpdatesListener';
+import { sessionRoutes } from './controller/sessionRoutes';
+import { lbRoutes } from './controller/leaderboardRoutes';
+import { userRoutes } from './controller/userRoutes';
+import { startListenUserUpdates } from './controller/user/userListenerHandle';
 
 console.log('This is the background page.');
 
 dbHandle();
 
-routerInclude(sessionPairArr);
-routerInclude(lbPairArr);
-routerInclude(userArr);
+routerInclude(sessionRoutes);
+routerInclude(lbRoutes);
+routerInclude(userRoutes);
 
 startListenUserUpdates();
 

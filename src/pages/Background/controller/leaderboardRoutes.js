@@ -2,7 +2,7 @@ import { setLeaderboardStat } from './leaderboard/leaderboard';
 import {
   endListenLBUpdates,
   startListenLBUpdates,
-} from './leaderboard/lbUpdatesListener';
+} from './leaderboard/leaderboardListenerHandle';
 
 const startLBListenPair = {
   msg: 'enter_leaderboard',
@@ -20,4 +20,4 @@ const endLBListenPair = {
   },
 };
 
-export let lbPairArr = [startLBListenPair, endLBListenPair];
+export let lbRoutes = [startLBListenPair, endLBListenPair];

@@ -1,4 +1,4 @@
-import { getUserSnapshot } from '../../usersnapshot/user';
+import { getUserSnapshot } from '../../user/user';
 
 const extractHost = (url) => {
   var hostString = new URL(url).hostname;

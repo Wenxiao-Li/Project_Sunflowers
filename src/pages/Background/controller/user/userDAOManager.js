@@ -1,5 +1,5 @@
-import firebase from '../modules/firebaseconfig';
-import * as userflowerDAO from './userflowerDAO';
+import firebase from '../../modules/firebaseconfig';
+import * as userflowerDAO from '../../model/userDAO';
 
 export const incrementFlower = (number) => {
   let user = firebase.auth().currentUser;

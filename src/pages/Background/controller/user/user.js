@@ -2,7 +2,7 @@ import { getLeaderboardStat } from '../leaderboard/leaderboard';
 import {
   startListenLBUpdates,
   endListenLBUpdates,
-} from '../leaderboard/lbUpdatesListener';
+} from '../leaderboard/leaderboardListenerHandle';
 
 let userSnapshot;
 

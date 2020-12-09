@@ -1,5 +1,5 @@
 import { getUserSnapshot, sendUserSnapshot } from './user';
 
-export const userAction = (request, sender, sendResponse) => {
+export const sendUserSnapshotAction = (request, sender, sendResponse) => {
   sendUserSnapshot(getUserSnapshot());
 };

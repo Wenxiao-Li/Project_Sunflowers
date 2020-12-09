@@ -3,11 +3,10 @@ import {
   startInjectionListener,
   removeInjectionListener,
 } from './overlay/scriptInjection';
-import { addSession } from '../../model/sessionDispatch';
+import { addSession } from './sessionDAOManager';
 import { controlOverlay } from './overlay/overlay';
-import { incrementFlower } from '../../model/userflowerDispatch';
+import { incrementFlower } from '../user/userDAOManager';
 const updateDisplayedTimeMsg = 'update-time';
-
 
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {
   chrome.runtime.sendMessage({
@@ -38,7 +37,6 @@ export const completeCallback = function (sessionLength, startDate, endDate) {
 };
 
 export const pauseCallback = function () {
-
   console.log('pauseCallback');
   // Resume Pause Timer
 };

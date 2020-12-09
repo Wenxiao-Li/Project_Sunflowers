@@ -1,13 +1,13 @@
+import { listenerAuthHandle } from '../listenerAuthHandle';
 import {
-  currentUserListenerHandle,
   unsubscriberLeaderboard,
   leaderboardListener,
-} from '../../model/dblistener';
+} from '../../model/leaderboardListener';
 import { sendLBFriendsSnapshot } from './leaderboard';
 
 export const startListenLBUpdates = () => {
   console.log('startLBListener');
-  currentUserListenerHandle(leaderboardListener, sendLBFriendsSnapshot);
+  listenerAuthHandle(leaderboardListener, sendLBFriendsSnapshot);
 };
 
 export const endListenLBUpdates = () => {
