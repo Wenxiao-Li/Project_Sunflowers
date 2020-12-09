@@ -15,10 +15,6 @@ const updateName = (userEmail, firstName, lastName, callback) => {
     });
 };
 
-const setName = (userEmail, firstName, lastName, callback) => {
-  callback();
-};
-
 const addBlocklist = (userEmail, blockList, callback) => {
   db.collection('user')
     .doc(userEmail)
@@ -73,33 +69,6 @@ const deleteAllowlist = (userEmail, allowList, callback) => {
     .catch((error) => {
       console.error('Error writing document: ', error);
     });
-};
-
-export const viewWebsite = (userEmail, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .get()
-    .then((doc) => {
-      callback(doc);
-    })
-    .catch((error) => {
-      console.log('Error getting document', error);
-    });
-};
-
-const viewFriend = (friendList, callback) => {
-  var nameList = [];
-  for (var i = 0; i < friendList.length; i++) {
-    viewWebsite(friendList[i], (doc) => {
-      var fn = doc.data().last_name;
-      var ln = doc.data().first_name;
-      var friendName = fn + ' ' + ln;
-      console.log(friendName);
-      nameList.push(friendName);
-      console.log(nameList);
-    });
-  }
-  callback(nameList);
 };
 
 const addRequest = (userEmail, friendemail, friendname, callback) => {
@@ -186,15 +155,6 @@ export let dbHandle = () => {
     } else if (request.command === 'delete_allowlist') {
       deleteAllowlist(request.useremail, request.allowlist, () => {
         sendResponse({ message: 'success' });
-      });
-      return true;
-    } else if (request.command === 'view_website') {
-      viewWebsite(request.useremail, (doc) => {
-        sendResponse({
-          message: 'success',
-          bl: doc.data().blocklist,
-          al: doc.data().allowlist,
-        });
       });
       return true;
     } else if (request.command === 'add_request') {
