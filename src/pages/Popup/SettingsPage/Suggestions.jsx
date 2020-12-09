@@ -2,14 +2,11 @@ import React from 'react';
 import { addBlocklist, addAllowlist } from './setting';
 import { ListGroup, Button } from 'react-bootstrap';
 import addIcon from '../../../assets/img/addIcon.png';
-import { UserContext } from '../User';
 
 const SuggestWebsite = ({ url, isBlockList }) => {
-  const { user } = React.useContext(UserContext);
-
   let operation = isBlockList
-    ? () => addBlocklist(user, url)
-    : () => addAllowlist(user, url);
+    ? () => addBlocklist(url)
+    : () => addAllowlist(url);
   return (
     <ListGroup.Item className="website">
       {url} <img src={addIcon} onClick={operation} className="icon-pin-right" />

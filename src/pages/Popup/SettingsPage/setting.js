@@ -1,91 +1,75 @@
-export function addBlocklist(user, blocklist) {
+export function addBlocklist(blocklist) {
   let bl = blocklist;
-  var email;
-  if (user) {
-    email = user.email;
 
-    chrome.runtime.sendMessage(
-      { command: 'add_blocklist', blocklist: bl, useremail: email },
-      (response) => {
-        var lastError = chrome.runtime.lastError;
-        if (lastError) {
-          console.log(lastError.message);
-          return;
-        }
-        if (response.message === 'success') {
-          //window.location.replace('./popup.html');
-          console.log('Add blocklist');
-        }
+  chrome.runtime.sendMessage(
+    { command: 'add_blocklist', blocklist: bl },
+    (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
       }
-    );
-  }
+      if (response.message === 'success') {
+        //window.location.replace('./popup.html');
+        console.log('Add blocklist');
+      }
+    }
+  );
 }
 
-export function addAllowlist(user, allowlist) {
+export function addAllowlist(allowlist) {
   let al = allowlist;
   console.log('al', al);
-  var email;
-  if (user) {
-    email = user.email;
 
-    chrome.runtime.sendMessage(
-      { command: 'add_allowlist', allowlist: al, useremail: email },
-      (response) => {
-        var lastError = chrome.runtime.lastError;
-        if (lastError) {
-          console.log(lastError.message);
-          return;
-        }
-        if (response.message === 'success') {
-          console.log('Add allowlist');
-        }
+  chrome.runtime.sendMessage(
+    { command: 'add_allowlist', allowlist: al },
+    (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
       }
-    );
-  }
+      if (response.message === 'success') {
+        console.log('Add allowlist');
+      }
+    }
+  );
 }
 
-export function deleteBlocklist(user, blocklist) {
+export function deleteBlocklist(blocklist) {
   let bl = blocklist;
-  var email;
-  if (user) {
-    email = user.email;
 
-    chrome.runtime.sendMessage(
-      { command: 'delete_blocklist', blocklist: bl, useremail: email },
-      (response) => {
-        var lastError = chrome.runtime.lastError;
-        if (lastError) {
-          console.log(lastError.message);
-          return;
-        }
-        if (response.message === 'success') {
-          //window.location.replace('./popup.html');
-          console.log('Delete blocklist');
-        }
+  chrome.runtime.sendMessage(
+    { command: 'delete_blocklist', blocklist: bl },
+    (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
       }
-    );
-  }
+      if (response.message === 'success') {
+        //window.location.replace('./popup.html');
+        console.log('Delete blocklist');
+      }
+    }
+  );
 }
 
-export function deleteAllowlist(user, allowlist) {
+export function deleteAllowlist(allowlist) {
   let al = allowlist;
   console.log('al', al);
-  var email;
-  if (user) {
-    email = user.email;
 
-    chrome.runtime.sendMessage(
-      { command: 'delete_allowlist', allowlist: al, useremail: email },
-      (response) => {
-        var lastError = chrome.runtime.lastError;
-        if (lastError) {
-          console.log(lastError.message);
-          return;
-        }
-        if (response.message === 'success') {
-          console.log('Delete allowlist');
-        }
+  chrome.runtime.sendMessage(
+    { command: 'delete_allowlist', allowlist: al },
+    (response) => {
+      var lastError = chrome.runtime.lastError;
+      if (lastError) {
+        console.log(lastError.message);
+        return;
       }
-    );
-  }
+      if (response.message === 'success') {
+        console.log('Delete allowlist');
+      }
+    }
+  );
 }

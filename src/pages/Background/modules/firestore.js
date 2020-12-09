@@ -132,28 +132,33 @@ const deleteFriend2 = (userEmail, friendemail, friendname, callback) => {
 };
 export let dbHandle = () => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    let user = firebase.auth().currentUser;
+    if (!user) {
+      return;
+    }
+    let useremail = user.email;
     if (request.command === 'set_name') {
-      updateName(request.useremail, request.firstname, request.lastname, () => {
+      updateName(useremail, request.firstname, request.lastname, () => {
         sendResponse({ message: 'success' });
       });
       return true;
     } else if (request.command === 'add_blocklist') {
-      addBlocklist(request.useremail, request.blocklist, () => {
+      addBlocklist(useremail, request.blocklist, () => {
         sendResponse({ message: 'success' });
       });
       return true;
     } else if (request.command === 'add_allowlist') {
-      addAllowlist(request.useremail, request.allowlist, () => {
+      addAllowlist(useremail, request.allowlist, () => {
         sendResponse({ message: 'success' });
       });
       return true;
     } else if (request.command === 'delete_blocklist') {
-      deleteBlocklist(request.useremail, request.blocklist, () => {
+      deleteBlocklist(useremail, request.blocklist, () => {
         sendResponse({ message: 'success' });
       });
       return true;
     } else if (request.command === 'delete_allowlist') {
-      deleteAllowlist(request.useremail, request.allowlist, () => {
+      deleteAllowlist(useremail, request.allowlist, () => {
         sendResponse({ message: 'success' });
       });
       return true;

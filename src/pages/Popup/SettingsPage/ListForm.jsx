@@ -4,18 +4,14 @@ import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 
 import { addBlocklist, addAllowlist } from './setting';
 
-import { UserContext } from '../User';
-
 const BlockListForm = () => {
-  const { user } = React.useContext(UserContext);
-
   const onSubmitBlocklist = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addBlockList;
     console.log(website);
-    addBlocklist(user, website);
+    addBlocklist(website);
   };
   return (
     <Form onSubmit={onSubmitBlocklist}>
@@ -37,15 +33,13 @@ const BlockListForm = () => {
 };
 
 const AllowListForm = () => {
-  const { user } = React.useContext(UserContext);
-
   const onSubmitAllowlist = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addAllowList;
     console.log(website);
-    addAllowlist(user, website);
+    addAllowlist(website);
   };
   return (
     <Form onSubmit={onSubmitAllowlist}>

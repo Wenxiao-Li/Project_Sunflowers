@@ -11,23 +11,6 @@ class UserProfile extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      score: 0,
-    };
-
-    var user = this.props.user;
-    var profileRef = db.collection('user');
-    if (user) {
-      var num = 0;
-      profileRef.doc(user.email).onSnapshot(
-        function (doc) {
-          num = doc.data().user_flower;
-          //console.log(num);
-          this.setState({ score: num });
-        }.bind(this)
-      );
-    }
   }
 
   componentDidMount() {

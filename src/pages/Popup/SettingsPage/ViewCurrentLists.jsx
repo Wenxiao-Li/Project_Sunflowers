@@ -6,11 +6,9 @@ import deleteIcon from '../../../assets/img/deleteIcon.png';
 import { UserContext } from '../User';
 
 const Website = ({ url, isBlockList }) => {
-  const { user } = React.useContext(UserContext);
-
   let operation = isBlockList
-    ? () => deleteBlocklist(user, url)
-    : () => deleteAllowlist(user, url);
+    ? () => deleteBlocklist(url)
+    : () => deleteAllowlist(url);
   return (
     <ListGroup.Item className="website">
       {' '}
