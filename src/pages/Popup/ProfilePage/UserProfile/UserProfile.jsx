@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import SunflowerBg from '../../../../assets/img/header.png';
 import profP from '../../../../assets/img/profile pic';
 import SunflowerIcon from '../../../../assets/img/profileSun';
 import { signOutHandle } from '../signin.js';
 import './UserProfile.css';
-import firebase, { db } from '../../../Background/modules/firebaseconfig';
 
 class UserProfile extends Component {
   _isMounted = false;
@@ -24,11 +22,9 @@ class UserProfile extends Component {
   render() {
     var email = 'undefined';
     var userName = 'undefined';
-    let sunflower = 0;
     if (this.props.user) {
       email = this.props.user.email;
       userName = this.props.user.displayName;
-      sunflower = this.state.score;
     }
     return (
       <div>
