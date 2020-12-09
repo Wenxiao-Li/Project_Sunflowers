@@ -7,7 +7,6 @@ import { routerInclude, runMessageRouter } from './modules/router';
 import { sessionRoutes } from './controller/sessionRoutes';
 import { lbRoutes } from './controller/leaderboardRoutes';
 import { userRoutes } from './controller/userRoutes';
-import { startListenUserUpdates } from './controller/user/userListenerHandle';
 
 console.log('This is the background page.');
 
@@ -16,7 +15,5 @@ dbHandle();
 routerInclude(sessionRoutes);
 routerInclude(lbRoutes);
 routerInclude(userRoutes);
-
-startListenUserUpdates();
 
 runMessageRouter();

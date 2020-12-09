@@ -1,6 +1,10 @@
 import { db } from '../modules/firebaseconfig';
 import { defaultAllowlist, defaultBlocklist } from '../controller/user/user';
+export let onListenUser = false;
 
+export const closeOnListenUser = () => {
+  onListenUser = false;
+};
 export let unsubscriberUser;
 export const userListener = (user, callback) => {
   var userColRef = db.collection('user');
@@ -8,6 +12,7 @@ export const userListener = (user, callback) => {
     (snapshot) => {
       if (snapshot.exists) {
         console.log('snapshot does exist');
+        onListenUser = true;
         callback(snapshot);
       } else {
         console.log('snapshot does not exist');

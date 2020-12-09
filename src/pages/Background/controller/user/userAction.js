@@ -1,5 +1,7 @@
-import { getUserSnapshot, sendUserSnapshot } from './user';
+import { cleanupUserListener } from './cleanupUserListener';
+import { startListenUserUpdates } from './userListenerHandle';
 
 export const sendUserSnapshotAction = (request, sender, sendResponse) => {
-  sendUserSnapshot(getUserSnapshot());
+  cleanupUserListener();
+  startListenUserUpdates();
 };

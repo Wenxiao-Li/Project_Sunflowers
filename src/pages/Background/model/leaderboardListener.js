@@ -1,6 +1,11 @@
 import firebase, { db } from '../modules/firebaseconfig';
 
 export let unsubscriberLeaderboard;
+export let onListenLB = false;
+
+export const closeOnListenLB = () => {
+  onListenLB = false;
+};
 
 export const leaderboardListener = (user, callback) => {
   db.collection('user')
@@ -12,7 +17,10 @@ export const leaderboardListener = (user, callback) => {
       unsubscriberLeaderboard = db
         .collection('user')
         .where(firebase.firestore.FieldPath.documentId(), 'in', items)
-        .onSnapshot(callback);
+        .onSnapshot((snapshot) => {
+          onListenLB = true;
+          callback(snapshot);
+        });
     })
     .catch((error) => {
       console.log('get error: ', error);
