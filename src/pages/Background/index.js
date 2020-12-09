@@ -3,7 +3,7 @@ import '../../assets/img/icon32.png';
 import '../../assets/img/icon48.png';
 import '../../assets/img/icon128.png';
 import { dbHandle } from './modules/firestore';
-import { runListener } from './controller/messageListener';
+import { routerInclude, runMessageRouter } from './modules/router';
 import { sessionPairArr } from './controller/sessionController';
 import { lbPairArr } from './controller/leaderboardController';
 import { userArr } from './controller/userSnapshotController';
@@ -13,12 +13,10 @@ console.log('This is the background page.');
 
 dbHandle();
 
-let pairArr = sessionPairArr;
-
-pairArr = pairArr.concat(lbPairArr);
-
-pairArr = pairArr.concat(userArr);
+routerInclude(sessionPairArr);
+routerInclude(lbPairArr);
+routerInclude(userArr);
 
 startListenUserUpdates();
 
-runListener(pairArr);
+runMessageRouter();
