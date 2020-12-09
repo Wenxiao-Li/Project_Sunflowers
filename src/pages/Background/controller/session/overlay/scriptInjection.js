@@ -24,19 +24,22 @@ export const insertScript = (tabId) => {
   });
 };
 
-export const injectToActiveTab = () => {
+function injectScriptToId(info) {
+  const tabId = info.tabId;
+  insertScript(tabId);
+}
+
+export const startInjectionListener = () => {
   // Will execute when tab is switched, this will not gurantee insertion in already active tabs
-  chrome.tabs.onActivated.addListener(function (activeInfo) {
-    // for the current tab, inject the "inject.js" file & execute it
-    const tabId = activeInfo.tabId;
-    insertScript(tabId);
-  });
+  chrome.tabs.onActivated.addListener(injectScriptToId);
 
   // Fires when create or reload a new tab, won't activate when switching tabs
-  chrome.webNavigation.onCommitted.addListener((details) => {
-    const tabId = details.tabId;
-    insertScript(tabId);
-  });
+  chrome.webNavigation.onCommitted.addListener(injectScriptToId);
+};
+
+export const removeInjectionListener = () => {
+  chrome.tabs.onActivated.removeListener(injectScriptToId);
+  chrome.webNavigation.onCommitted.removeListener(injectScriptToId);
 };
 
 export const injectToCurrentTabs = () => {

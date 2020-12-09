@@ -15,5 +15,11 @@ export const addSession = (
       is_complete: isComplete,
       start_time: firebase.firestore.Timestamp.fromDate(startTime),
       end_time: firebase.firestore.Timestamp.fromDate(endTime),
+    })
+    .then(() => {
+      console.log('session added');
+    })
+    .catch((error) => {
+      console.log('session adding failed: ', error);
     });
 };

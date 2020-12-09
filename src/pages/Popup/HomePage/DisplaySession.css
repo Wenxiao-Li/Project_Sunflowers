@@ -12,7 +12,7 @@
 }
 
 .bt {
-  padding-top: 45px;
+  padding-top: 25px;
 }
 
 .btn-round:focus {
@@ -83,12 +83,22 @@
   text-align: center;
 }
 
+.sentence {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: black;
+  font-family: Arial;
+  font-size: 22px;
+  font-weight: thin;
+  text-align: center;
+}
+
 .disSS {
   font-family: Arial;
   font-size: 18px;
   font-weight: bold;
   padding: 40px;
-  padding-top: 15vh;
+  padding-top: 5vh;
   padding-bottom: 10px;
   text-align: center;
 }
