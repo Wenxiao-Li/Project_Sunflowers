@@ -4,14 +4,18 @@ import { Button, Form, InputGroup, FormControl } from 'react-bootstrap';
 
 import { addBlocklist, addAllowlist } from './setting';
 
-const BlockListForm = ({ onViewWebsite }) => {
+import { UserContext } from '../User';
+
+const BlockListForm = () => {
+  const { user } = React.useContext(UserContext);
+
   const onSubmitBlocklist = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addBlockList;
     console.log(website);
-    addBlocklist(website, onViewWebsite);
+    addBlocklist(user, website);
   };
   return (
     <Form onSubmit={onSubmitBlocklist}>
@@ -32,14 +36,16 @@ const BlockListForm = ({ onViewWebsite }) => {
   );
 };
 
-const AllowListForm = ({ onViewWebsite }) => {
+const AllowListForm = () => {
+  const { user } = React.useContext(UserContext);
+
   const onSubmitAllowlist = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
     const website = formDataObj.addAllowList;
     console.log(website);
-    addAllowlist(website, onViewWebsite);
+    addAllowlist(user, website);
   };
   return (
     <Form onSubmit={onSubmitAllowlist}>
@@ -60,10 +66,10 @@ const AllowListForm = ({ onViewWebsite }) => {
   );
 };
 
-export const ListForm = ({ isBlockList, onViewWebsite }) => {
+export const ListForm = ({ isBlockList }) => {
   if (isBlockList) {
-    return <BlockListForm onViewWebsite={onViewWebsite} />;
+    return <BlockListForm />;
   } else {
-    return <AllowListForm onViewWebsite={onViewWebsite} />;
+    return <AllowListForm />;
   }
 };
