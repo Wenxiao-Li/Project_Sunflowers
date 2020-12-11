@@ -1,4 +1,4 @@
-import { endListenLBUpdates } from './leaderboardListenerManager';
+import { endListenLBUpdates } from './leaderboardListenerHandle';
 
 export function cleanupLBListener() {
   var interval = setInterval(checkPopupOpen, 5000);
