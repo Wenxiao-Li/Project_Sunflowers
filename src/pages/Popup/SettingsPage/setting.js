@@ -2,7 +2,7 @@ export function addBlocklist(blocklist) {
   let bl = blocklist;
 
   chrome.runtime.sendMessage(
-    { command: 'add_blocklist', blocklist: bl },
+    { msg: 'add_blocklist', blocklist: bl },
     (response) => {
       var lastError = chrome.runtime.lastError;
       if (lastError) {
@@ -22,7 +22,7 @@ export function addAllowlist(allowlist) {
   console.log('al', al);
 
   chrome.runtime.sendMessage(
-    { command: 'add_allowlist', allowlist: al },
+    { msg: 'add_allowlist', allowlist: al },
     (response) => {
       var lastError = chrome.runtime.lastError;
       if (lastError) {
@@ -40,7 +40,7 @@ export function deleteBlocklist(blocklist) {
   let bl = blocklist;
 
   chrome.runtime.sendMessage(
-    { command: 'delete_blocklist', blocklist: bl },
+    { msg: 'delete_blocklist', blocklist: bl },
     (response) => {
       var lastError = chrome.runtime.lastError;
       if (lastError) {
@@ -60,7 +60,7 @@ export function deleteAllowlist(allowlist) {
   console.log('al', al);
 
   chrome.runtime.sendMessage(
-    { command: 'delete_allowlist', allowlist: al },
+    { msg: 'delete_allowlist', allowlist: al },
     (response) => {
       var lastError = chrome.runtime.lastError;
       if (lastError) {

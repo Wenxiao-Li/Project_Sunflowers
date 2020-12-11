@@ -15,62 +15,6 @@ const updateName = (userEmail, firstName, lastName, callback) => {
     });
 };
 
-const addBlocklist = (userEmail, blockList, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .update({
-      blocklist: firebase.firestore.FieldValue.arrayUnion(blockList),
-    })
-    .then(() => {
-      callback();
-    })
-    .catch((error) => {
-      console.error('Error writing document: ', error);
-    });
-};
-
-const addAllowlist = (userEmail, allowList, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .update({
-      allowlist: firebase.firestore.FieldValue.arrayUnion(allowList),
-    })
-    .then(() => {
-      callback();
-    })
-    .catch((error) => {
-      console.error('Error writing document: ', error);
-    });
-};
-
-const deleteBlocklist = (userEmail, blockList, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .update({
-      blocklist: firebase.firestore.FieldValue.arrayRemove(blockList),
-    })
-    .then(() => {
-      callback();
-    })
-    .catch((error) => {
-      console.error('Error writing document: ', error);
-    });
-};
-
-const deleteAllowlist = (userEmail, allowList, callback) => {
-  db.collection('user')
-    .doc(userEmail)
-    .update({
-      allowlist: firebase.firestore.FieldValue.arrayRemove(allowList),
-    })
-    .then(() => {
-      callback();
-    })
-    .catch((error) => {
-      console.error('Error writing document: ', error);
-    });
-};
-
 const addRequest = (userEmail, friendemail, friendname, callback) => {
   db.collection('user')
     .doc(userEmail)
@@ -139,26 +83,6 @@ export let dbHandle = () => {
     let useremail = user.email;
     if (request.command === 'set_name') {
       updateName(useremail, request.firstname, request.lastname, () => {
-        sendResponse({ message: 'success' });
-      });
-      return true;
-    } else if (request.command === 'add_blocklist') {
-      addBlocklist(useremail, request.blocklist, () => {
-        sendResponse({ message: 'success' });
-      });
-      return true;
-    } else if (request.command === 'add_allowlist') {
-      addAllowlist(useremail, request.allowlist, () => {
-        sendResponse({ message: 'success' });
-      });
-      return true;
-    } else if (request.command === 'delete_blocklist') {
-      deleteBlocklist(useremail, request.blocklist, () => {
-        sendResponse({ message: 'success' });
-      });
-      return true;
-    } else if (request.command === 'delete_allowlist') {
-      deleteAllowlist(useremail, request.allowlist, () => {
         sendResponse({ message: 'success' });
       });
       return true;

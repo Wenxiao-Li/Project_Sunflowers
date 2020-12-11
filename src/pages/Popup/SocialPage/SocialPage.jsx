@@ -10,7 +10,7 @@ import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 const SocialPage = () => {
   const [pageName, setPage] = React.useState('Leaderboard');
 
-  const { user, snapshotData } = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
 
   const components = {
     Leaderboard: <Leaderboard />,
