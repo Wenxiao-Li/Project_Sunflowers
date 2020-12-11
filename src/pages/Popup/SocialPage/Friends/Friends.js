@@ -1,25 +1,24 @@
-import firebase, { db } from '../../../Background/modules/firebaseconfig';
+import firebase from '../../../Background/modules/firebaseconfig';
 
 function addFriend(friendemail, friendname) {
   var user = firebase.auth().currentUser;
   var useremail;
-  if (user != null) {
+  if (!user) {
     useremail = user.email;
-  }
-
-  chrome.runtime.sendMessage(
-    {
-      command: 'add_friend',
-      useremail: useremail,
-      friendemail: friendemail,
-      friendname: friendname,
-    },
-    (response) => {
-      if (response.message === 'success') {
-        console.log('Add friend');
+    chrome.runtime.sendMessage(
+      {
+        command: 'add_friend',
+        useremail: useremail,
+        friendemail: friendemail,
+        friendname: friendname,
+      },
+      (response) => {
+        if (response.message === 'success') {
+          console.log('Add friend to self');
+        }
       }
-    }
-  );
+    );
+  }
 }
 
 function deleteFriend(friendemail, friendname) {
@@ -30,7 +29,7 @@ function deleteFriend(friendemail, friendname) {
   }
   chrome.runtime.sendMessage(
     {
-      command: 'delete_friend',
+      msg: 'delete_friend',
       useremail: useremail,
       friendemail: friendemail,
       friendname: friendname,
@@ -51,7 +50,7 @@ function deleteFriendMutual(useremail) {
   }
   chrome.runtime.sendMessage(
     {
-      command: 'delete_friend',
+      msg: 'delete_friend',
       useremail: useremail,
       friendemail: friendemail,
       friendname: friendname,
@@ -75,7 +74,7 @@ function addRequest(useremail) {
   }
   chrome.runtime.sendMessage(
     {
-      command: 'add_request',
+      msg: 'add_request',
       useremail: useremail,
       friendemail: friendemail,
       friendname: friendname,
@@ -106,32 +105,12 @@ export const deleteFriendMutualHandle = (useremail) => {
   deleteFriendMutual(useremail);
 };
 
-export function viewFriendlistHandle(callback) {
-  var user = firebase.auth().currentUser;
-  var email;
-  var friendlist;
-  var friendname = [];
-  if (user != null) {
-    email = user.email;
-  }
-
-  chrome.runtime.sendMessage(
-    { command: 'view_friend', useremail: email },
-    (response) => {
-      if (response.message === 'success') {
-        friendlist = response.friend;
-        callback(friendlist);
-      }
-    }
-  );
-}
-
 export function ViewNameHandle(email, callback) {
   chrome.runtime.sendMessage(
-    { command: 'view_owner', email: email },
-    (response1) => {
-      var fn = response1.fn;
-      var ln = response1.ln;
+    { msg: 'view_owner', email: email },
+    (response) => {
+      var fn = response.fn;
+      var ln = response.ln;
       var name = fn + ' ' + ln;
       return callback(name);
     }

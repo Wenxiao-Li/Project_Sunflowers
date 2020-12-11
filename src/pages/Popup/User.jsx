@@ -16,6 +16,7 @@ export const UserProvider = ({ children }) => {
 
   React.useEffect(() => {
     if (user) {
+      console.log('try to retrieve for new snapshot');
       chrome.runtime.sendMessage({
         msg: 'get_snapshot',
       });

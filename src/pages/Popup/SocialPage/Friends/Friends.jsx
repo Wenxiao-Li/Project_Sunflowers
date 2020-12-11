@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap';
 import deleteIcon from '../../../../assets/img/deleteIcon.png';
 import {
-  addFriendHandle,
   deleteFriendHandle,
   deleteFriendMutualHandle,
   ViewNameHandle,
@@ -19,13 +18,18 @@ import {
 export default function FriendsPage() {
   const { snapshotData } = React.useContext(UserContext);
 
-  const friendEmailList = snapshotData.friends;
-  const friendNameList = snapshotData.friendname;
+  const [friendList, setFriendList] = React.useState([]);
 
-  const friendList = [];
-  friendEmailList.forEach((email, index) => {
-    friendList.push({ email: email, name: friendNameList[index] });
-  });
+  React.useEffect(() => {
+    const friendEmailList = snapshotData.friends;
+    const friendNameList = snapshotData.friendname;
+
+    const tempList = [];
+    friendEmailList.forEach((email, index) => {
+      tempList.push({ email: email, name: friendNameList[index] });
+    });
+    setFriendList(tempList);
+  }, [snapshotData]);
 
   const onSubmitAddFriends = (event) => {
     event.preventDefault();
@@ -34,7 +38,6 @@ export default function FriendsPage() {
     const friendEmail = formDataObj.addfriend;
     console.log(friendEmail);
     ViewNameHandle(friendEmail, function (response) {
-      //addFriendHandle(addfriendemail.current.value, response);
       friendRequestHandle(friendEmail);
     });
   };

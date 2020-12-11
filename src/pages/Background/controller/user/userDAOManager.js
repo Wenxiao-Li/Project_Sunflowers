@@ -10,38 +10,38 @@ export const incrementFlower = (number) => {
   }
 };
 
-export const addBlocklist = (blockList, callback) => {
+export const addBlocklist = (blockList, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
-    userflowerDAO.addBlocklist(user.email, blockList, callback);
+    userflowerDAO.addBlocklist(user.email, blockList, sendResponse);
   } else {
-    callback({ message: 'No user logged in' });
+    sendResponse({ message: 'No user logged in' });
   }
 };
 
-export const addAllowlist = (allowList, callback) => {
+export const addAllowlist = (allowList, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
-    userflowerDAO.addAllowlist(user.email, allowList, callback);
+    userflowerDAO.addAllowlist(user.email, allowList, sendResponse);
   } else {
-    callback({ message: 'No user logged in' });
+    sendResponse({ message: 'No user logged in' });
   }
 };
 
-export const deleteBlocklist = (blockList, callback) => {
+export const deleteBlocklist = (blockList, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
-    userflowerDAO.deleteBlocklist(user.email, blockList, callback);
+    userflowerDAO.deleteBlocklist(user.email, blockList, sendResponse);
   } else {
-    callback({ message: 'No user logged in' });
+    sendResponse({ message: 'No user logged in' });
   }
 };
 
-export const deleteAllowlist = (allowList, callback) => {
+export const deleteAllowlist = (allowList, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
-    userflowerDAO.deleteAllowlist(user.email, allowList, callback);
+    userflowerDAO.deleteAllowlist(user.email, allowList, sendResponse);
   } else {
-    callback({ message: 'No user logged in' });
+    sendResponse({ message: 'No user logged in' });
   }
 };

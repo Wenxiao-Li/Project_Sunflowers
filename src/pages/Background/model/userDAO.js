@@ -8,62 +8,62 @@ export const incrementFlower = (userEmail, number) => {
     });
 };
 
-export const addBlocklist = (userEmail, blockList, callback) => {
+export const addBlocklist = (userEmail, blockList, sendResponse) => {
   db.collection('user')
     .doc(userEmail)
     .update({
       blocklist: firebase.firestore.FieldValue.arrayUnion(blockList),
     })
     .then(() => {
-      callback({ message: 'success' });
+      sendResponse({ message: 'success' });
     })
     .catch((error) => {
       console.error('Error writing document: ', error);
-      callback({ message: 'failure at dao' });
+      sendResponse({ message: 'failure at dao' });
     });
 };
 
-export const addAllowlist = (userEmail, allowList, callback) => {
+export const addAllowlist = (userEmail, allowList, sendResponse) => {
   db.collection('user')
     .doc(userEmail)
     .update({
       allowlist: firebase.firestore.FieldValue.arrayUnion(allowList),
     })
     .then(() => {
-      callback({ message: 'success' });
+      sendResponse({ message: 'success' });
     })
     .catch((error) => {
       console.error('Error writing document: ', error);
-      callback({ message: 'failure at dao' });
+      sendResponse({ message: 'failure at dao' });
     });
 };
 
-export const deleteBlocklist = (userEmail, blockList, callback) => {
+export const deleteBlocklist = (userEmail, blockList, sendResponse) => {
   db.collection('user')
     .doc(userEmail)
     .update({
       blocklist: firebase.firestore.FieldValue.arrayRemove(blockList),
     })
     .then(() => {
-      callback({ message: 'success' });
+      sendResponse({ message: 'success' });
     })
     .catch((error) => {
       console.error('Error writing document: ', error);
-      callback({ message: 'failure at dao' });
+      sendResponse({ message: 'failure at dao' });
     });
 };
 
-export const deleteAllowlist = (userEmail, allowList, callback) => {
+export const deleteAllowlist = (userEmail, allowList, sendResponse) => {
   db.collection('user')
     .doc(userEmail)
     .update({
       allowlist: firebase.firestore.FieldValue.arrayRemove(allowList),
     })
     .then(() => {
-      callback({ message: 'success' });
+      sendResponse({ message: 'success' });
     })
     .catch((error) => {
       console.error('Error writing document: ', error);
-      callback({ message: 'failure at dao' });
+      sendResponse({ message: 'failure at dao' });
     });
 };
