@@ -28,6 +28,19 @@ function deleteFriend(friendemail, friendname) {
     });
 }
 
+function deleteFriendMutual(useremail) {
+    var user = firebase.auth().currentUser;
+    if (user != null) {
+        var friendemail = user.email;
+        var friendname = user.displayName;
+    }
+    chrome.runtime.sendMessage({ command: "delete_friend", useremail: useremail, friendemail: friendemail, friendname: friendname }, (response) => {
+        if (response.message === "success") {
+            console.log("Delete friend");
+        }
+    });
+}
+
 function addRequest(useremail) {
     var user = firebase.auth().currentUser;
     var friendname;
@@ -57,6 +70,10 @@ export const friendRequestHandle = (useremail) => {
 
 export const deleteFriendHandle = (friend, name) => {
     deleteFriend(friend, name);
+};
+
+export const deleteFriendMutualHandle = (useremail) => {
+    deleteFriendMutual(useremail);
 };
 
 export function viewFriendlistHandle(callback) {

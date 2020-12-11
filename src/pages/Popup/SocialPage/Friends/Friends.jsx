@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useEffect } from 'react';
 import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle, friendRequestHandle } from './Friends';
+import { addFriendHandle, deleteFriendHandle, deleteFriendMutualHandle, viewFriendlistHandle, ViewNameHandle, friendRequestHandle } from './Friends';
 /*
 class Friends extends Component {
   _isMounted = false;
@@ -83,6 +83,7 @@ export default function FriendsPage() {
   const onSubmitDeleteFriends = (event) => {
     event.preventDefault();
     ViewNameHandle(deletefriendemail.current.value, function (response) {
+      deleteFriendMutualHandle(deletefriendemail.current.value);
       deleteFriendHandle(deletefriendemail.current.value, response);
       viewFriendlistHandle(displayFriends);
     });
