@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import likedicon from '../../../../assets/img/liked.png';
-import unlikedicon from '../../../../assets/img/unliked.png';
 import { UserContext } from '../../User';
 import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
-import { getLeaderboard, unsubscribe } from './getLeaderboard';
 import { updateReactions } from './updateReactions';
 import './Leaderboard.css';
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
@@ -32,9 +29,12 @@ const Leaderboard = () => {
 
   const { user, snapshotData } = React.useContext(UserContext);
 
+  const [querySnapshot, setQS] = React.useState([]);
+
   function getLBSnapshot(request, sender, senderResponse) {
     if (request.msg === 'query_snapshot') {
       console.log(request.qsnapshot);
+      setQS(request.qsnapshot);
     }
   }
 
@@ -62,7 +62,7 @@ const Leaderboard = () => {
         var current = currentFriendsScoreArray[i];
         console.log('print: ', current);
         var leaderBoardComponent = new LeaderBoardComponent(
-          current.userName,
+          current.user_name,
           current.email,
           current.score,
           current.reactions,
@@ -72,10 +72,10 @@ const Leaderboard = () => {
       }
       setLBComponents(newLeaderBoardComponents);
     };
-    getLeaderboard(user, setArray);
+    setArray(querySnapshot);
 
     //return unsubscribe;
-  }, []);
+  }, [querySnapshot]);
   const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
     console.log('Friend Reacted to ', friendReactedTo);
     console.log('Emoji Reacted on', keyReactedOn);

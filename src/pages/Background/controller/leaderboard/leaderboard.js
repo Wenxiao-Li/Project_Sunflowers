@@ -17,6 +17,7 @@ export function sendLBFriendsSnapshot(querysnapshot) {
       user_name: docData.first_name + ' ' + docData.last_name,
       score: docData.user_flower,
       reactions: docData.reactions,
+      email: doc.id,
     };
     snapshotArr = snapshotArr.concat(data);
     size = size - 1;
