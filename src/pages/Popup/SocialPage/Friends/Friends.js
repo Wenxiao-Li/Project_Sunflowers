@@ -7,7 +7,7 @@ function addFriend(friendemail, friendname) {
     useremail = user.email;
     chrome.runtime.sendMessage(
       {
-        command: 'add_friend',
+        msg: 'add_friend',
         useremail: useremail,
         friendemail: friendemail,
         friendname: friendname,
@@ -109,10 +109,7 @@ export function ViewNameHandle(email, callback) {
   chrome.runtime.sendMessage(
     { msg: 'view_owner', email: email },
     (response) => {
-      var fn = response.fn;
-      var ln = response.ln;
-      var name = fn + ' ' + ln;
-      return callback(name);
+      callback();
     }
   );
 }

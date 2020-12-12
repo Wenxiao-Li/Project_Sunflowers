@@ -8,7 +8,13 @@ import { controlOverlay } from './overlay/overlay';
 import { incrementFlower } from '../user/userDAOManager';
 const updateDisplayedTimeMsg = 'update-time';
 
-export const updateCallback = function (minutes, seconds, status, isBlocklist) {
+export const updateCallback = function (
+  minutes,
+  seconds,
+  status,
+  isBlocklist,
+  pauseCounter
+) {
   chrome.runtime.sendMessage({
     msg: updateDisplayedTimeMsg,
     data: {
@@ -16,15 +22,15 @@ export const updateCallback = function (minutes, seconds, status, isBlocklist) {
       seconds: seconds,
       status: status,
       isBlocklist: isBlocklist,
+      pauseCounter: pauseCounter,
     },
   });
 
-  controlOverlay(minutes, seconds, status, isBlocklist);
+  controlOverlay(minutes, seconds, status, isBlocklist, pauseCounter);
 };
 
 export const startCallback = function (isBlocklist) {
   console.log('is blocklist mode: ', isBlocklist);
-
   injectToCurrentTabs();
   startInjectionListener();
 };

@@ -17,19 +17,40 @@ export let Session = {
   startDate: null,
   pastSeconds: 0,
   displaySeconds: 0,
+  pauseCounter: 0,
   onComplete: completeCallback,
   onUpdate: updateCallback,
 
   updateInSessionTime: function () {
     const minutes = Math.floor(this.displaySeconds / MIN_TO_SEC);
     const seconds = parseInt(this.displaySeconds % MIN_TO_SEC);
-    this.onUpdate(minutes, seconds, this.status, this.isBlocklist);
+    this.onUpdate(
+      minutes,
+      seconds,
+      this.status,
+      this.isBlocklist,
+      this.pauseCounter
+    );
   },
 
   updateUnStartedTime: function () {
     const minutes = this.startMinutes;
     const seconds = 0;
-    this.onUpdate(minutes, seconds, this.status, this.isBlocklist);
+    this.onUpdate(
+      minutes,
+      seconds,
+      this.status,
+      this.isBlocklist,
+      this.pauseCounter
+    );
+  },
+
+  incrementCounter: function () {
+    this.pauseCounter += 1;
+  },
+
+  resetCounter: function () {
+    this.pauseCounter = 0;
   },
 
   // start the session
@@ -105,6 +126,7 @@ export let Session = {
     ) {
       callback(this.startMinutes, this.startDate, new Date());
       this.reset();
+      this.resetCounter();
       this.status = Status.STATUS_SUCCESS;
       this.updateUnStartedTime();
     }
@@ -117,12 +139,14 @@ export let Session = {
     ) {
       callback(this.startMinutes, this.startDate, new Date());
       this.reset();
+      this.resetCounter();
       this.status = Status.STATUS_FAILURE;
       this.updateUnStartedTime();
     }
   },
 
   toggleSession: function (pauseCallback, resumeCallback) {
+    this.incrementCounter();
     if (this.status === Status.STATUS_RUNNING) {
       this.pause();
       this.status = Status.STATUS_PAUSED;
