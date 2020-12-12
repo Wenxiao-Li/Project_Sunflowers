@@ -10,6 +10,7 @@ export const addRequest = (
   let user = firebase.auth().currentUser;
   if (user) {
     friendDAO.addRequest(userEmail, friendemail, friendname, sendResponse);
+    sendResponse({ message: 'success' });
   } else {
     sendResponse({ message: 'No user logged in' });
   }
@@ -19,6 +20,7 @@ export const addFriend = (userEmail, friendemail, friendname, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
     friendDAO.addFriend(userEmail, friendemail, friendname, sendResponse);
+    sendResponse({ message: 'success' });
   } else {
     sendResponse({ message: 'No user logged in' });
   }
@@ -33,6 +35,7 @@ export const deleteFriend = (
   let user = firebase.auth().currentUser;
   if (user) {
     friendDAO.deleteFriend(userEmail, friendemail, friendname, sendResponse);
+    sendResponse({ message: 'success' });
   } else {
     sendResponse({ message: 'No user logged in' });
   }
@@ -52,6 +55,7 @@ export const deleteRequest = (
       friendname,
       sendResponse
     );
+    sendResponse({ message: 'success' });
   } else {
     sendResponse({ message: 'No user logged in' });
   }
@@ -59,11 +63,13 @@ export const deleteRequest = (
 
 export const validateEmail = (email, sendResponse) => {
   friendDAO.validateEmail(email, sendResponse);
+  sendResponse({ message: 'success' });
 };
 
 export const acceptRequest = (email, name, sendResponse) => {
   let user = firebase.auth().currentUser;
   if (user) {
     friendDAO.acceptRequest(user, email, name, sendResponse);
+    sendResponse({ message: 'success' });
   }
 };

@@ -11,9 +11,6 @@
   font-weight: thin;
 }
 
-.bt {
-  padding-top: 25px;
-}
 
 .btn-round:focus {
   background-color: lightgray;
@@ -38,30 +35,35 @@
   border-radius: 25px;
   box-shadow: -1px 0px 5px slategray inset;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 .display-time > span {
   color: black;
-  font-size: 30px;
+  font-size: 35px;
   text-align: center;
   font-style: normal;
 }
-
+.tab{
+  padding-top: 40%;
+}
 .op-icons {
   width: 30px;
-  height: 40px;
+  height: 45px;
   margin: 5px;
   border: 3px solid transparent;
+  padding-bottom: 10px;
 }
+
 
 .op-icons:active {
   border-bottom: 3px solid transparent;
 }
 
 .sfIcon {
-  width: 75px;
-  height: 85px;
-  padding-bottom: 15px;
+  width: 50px;
+  height: 70px;
+  padding-bottom: 25px;
 }
 
 #num-sunflower {
@@ -78,17 +80,27 @@
 .statement {
   color: black;
   font-family: Arial;
-  font-size: 13px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
-}
-
-.sentence {
   padding-bottom: 10px;
   padding-top: 10px;
+}
+
+.pause{
   color: black;
   font-family: Arial;
-  font-size: 22px;
+  font-size: 5px;
+  font-weight: thin;
+  text-align: center;
+  padding-top: 10px;
+
+}
+.sentence {
+  padding-top: 10px;
+  color: rgb(61, 131, 197);
+  font-family: Arial;
+  font-size: 5px;
   font-weight: thin;
   text-align: center;
 }

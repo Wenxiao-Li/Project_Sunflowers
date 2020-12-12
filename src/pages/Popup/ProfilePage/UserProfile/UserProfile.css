@@ -28,8 +28,8 @@
   background-size: cover;
   background-position: center top;
   height: 25px;
-  width: 80px;
-  padding-left: 30px;
+  width: 90px;
+  padding-left: 40px;
   display: inline-block;
 }
 
@@ -98,8 +98,7 @@
   justify-content: space-between;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 15px;
   text-align: center;
 }
 .button {
@@ -108,13 +107,19 @@
   border-bottom: 1px solid rgb(238, 238, 238);
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: 15px;
   width: 100%;
-  padding: 16px;
+  padding: 8px;
   overflow: hidden;
   flex-wrap: wrap;
   line-height: 22px;
   justify-content: space-between;
+}
+
+.button::after{
+  content: "Past 7 days";
+  color: grey;
+  padding-inline-end: 10%;
 }
 
 .so {
@@ -123,14 +128,15 @@
   border-bottom: 1px solid rgb(238, 238, 238);
   display: flex;
   justify-content: space-between;
+  font-size: 15px;
   width: 100%;
-  padding: 16px;
-  font-size: 20px;
+  padding: 8px;
   overflow: hidden;
   flex-wrap: wrap;
   line-height: 22px;
   justify-content: space-between;
 }
+
 
 .ui_button {
   background-color: transparent;

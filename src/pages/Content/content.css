@@ -14,17 +14,15 @@
   border-radius: 25px !important;
   box-shadow: 0px 2px 5px grey;
   margin: 10px;
-  width: 110px;
-  height: 39px;
+  width: 150px;
+  height: 50px;
   padding: 8px;
   color: black;
-  font-size: 15px;
+  font-size: 25px;
+  font-family: Arial;
   font-weight: thin;
 }
 
-.bt {
-  padding-top: 150px;
-}
 
 .btn-round:focus {
   background-color: lightgray;
@@ -39,10 +37,20 @@
   outline-offset: none !important;
 }
 
+
+.display-time::before{
+  content:"There are";
+  color: #FFFFFF;
+  font-size: 50px;
+  text-align: center;
+  font-style: normal;
+  display:block;
+
+}
 .display-time {
   display: inline-block;
-  width: 150px;
-  height: 50px;
+  width: 600px;
+  height: 100px;
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
@@ -50,52 +58,46 @@
 
 .display-time > span {
   color: #faf4c7;
-  font-size: 50px;
+  font-size: 100px;
   text-align: center;
   font-style: normal;
 }
 
-.op-icons {
-  width: 30px;
-  height: 40px;
-  margin: 5px;
-  border: 3px solid transparent;
+
+.display-time::after{
+  content:"left for your session";
+  color: #FFFFFF;
+  font-size: 50px;
+  text-align: center;
+  font-style: normal;
+  display:block;
+
 }
 
-.op-icons:active {
-  border-bottom: 3px solid transparent;
-}
-
-.sfIcon {
-  width: 75px;
-  height: 85px;
-  padding-bottom: 15px;
-}
-
-#num-sunflower {
-  margin-top: 15px;
-}
-
-#num-sunflower > span {
-  color: green;
-  margin-top: 10px;
-  bottom: 0px;
-  font-size: 40px;
-}
 
 .statement {
   margin: 20px;
-  color: #ffffcc;
+  color: #FFFFFF;
   font-family: Arial;
   font-size: 30px;
   font-weight: bold;
   text-align: center;
+  padding-bottom: 0.5%;
+}
+
+.pause{
+  color: #faf4c7;
+  font-family: Arial;
+  font-size: 22px;
+  font-weight: thin;
+  text-align: center;
+
 }
 
 .sentence {
   padding-bottom: 10px;
   padding-top: 10px;
-  color: black;
+  color: rgb(61, 131, 197);
   font-family: Arial;
   font-size: 22px;
   font-weight: thin;
