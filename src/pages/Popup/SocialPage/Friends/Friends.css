@@ -1,0 +1,27 @@
+.friends {
+    color: #62754a;
+    font-family: Arial;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3px;
+}
+
+.addfriends {
+    background-color: #baccb4;
+    color: #62754a;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    margin-bottom: 1px;
+}
+
+.sendadd {
+    margin-top: 1px;
+}
+
+.list {
+    background-color: #baccb4;
+    color: #62754a;
+    margin-top: 10px;
+    text-align: left;
+}
