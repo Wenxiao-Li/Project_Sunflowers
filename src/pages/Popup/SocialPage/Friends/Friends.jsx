@@ -43,6 +43,7 @@ export default function FriendsPage() {
     // ViewNameHandle(friendEmail, function (response) {
     //   friendRequestHandle(friendEmail);
     // });
+    window.alert("Friend request successfully sent to " + friendEmail);
   };
 
   const Friends = ({ name, email }) => {
