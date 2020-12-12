@@ -4,15 +4,14 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-import { counter, incrementCounter, resetCounter } from '../../Background/controller/session/sessionCallbacks'
+// import {pauseCountII} from '../../Background/controller/session/sessionCallbacks'
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
 const STATUS_PAUSED = 2;
 const STATUS_SUCCESS = 3;
 const STATUS_FAILURE = 4;
-
-
+var pauseCountII = 0;
 /**
  * Functional Component for rendering session
  */
@@ -61,7 +60,7 @@ export default function DisplaySession() {
 
   React.useEffect(() => {
     if (status === STATUS_SUCCESS) {
-      resetCounter();
+      pauseCountII = 0;
       var opt = {
         type: 'basic',
         title: 'Congratulations! You have completed your session!',
@@ -117,28 +116,13 @@ export default function DisplaySession() {
 
   const postToggleSession = () => {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (pauseCountII >= 4) {
-=======
-    if (counter >= 4) {
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
-=======
-    if (counter >= 4) {
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
     }
     else {
 
+      // console.log(pauseCountII);
       // increment the pause count
-<<<<<<< HEAD
-<<<<<<< HEAD
       pauseCountII = pauseCountII + 1;
-=======
-      incrementCounter();
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
-=======
-      incrementCounter();
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
 
       chrome.runtime.sendMessage({
         msg: 'toggle-session',
@@ -158,7 +142,7 @@ export default function DisplaySession() {
         'Are you sure you want to give up all sunflowers in this session?'
       )
     ) {
-      resetCounter();
+      pauseCountII = 0;
       chrome.runtime.sendMessage({
         msg: 'quit-session',
         data: {},
@@ -228,27 +212,14 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <div className="statement" style={{ marginTop: '8vh' }}>
+        <h4 className="statement" style={{ marginTop: '8vh' }}>
           {' '}
-<<<<<<< HEAD
           You will get One Sunflower
           <br />
           per 15 minutes{' '}
-        </div>
+        </h4>
         <h4 className="pause" style={{ marginTop: '0vh' }}>
           Remaining Number of Pauses: {2 - pauseCountII / 2}
-=======
-          You will get One Sunflower per 15 minutes{' '}
-        </h4>
-        <h4 className="statement" style={{ marginTop: '3vh' }}>
-          If you quit the session, no sunflower will be rewarded.
-        </h4>
-        <h4 className="statement" style={{ marginTop: '0vh' }}>
-          Remaining number of pauses: {2 - counter / 2}
-<<<<<<< HEAD
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
-=======
->>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
         </h4 >
         <br />
         <div className="bt">
@@ -259,10 +230,10 @@ export default function DisplaySession() {
             Quit
           </Button>
         </div>
-        <h4 className="sentence">
+        <div className="sentence">
           If you Quit the Session,
           <br />No Sunflower will be Rewarded.
-        </h4>
+        </div>
       </div>
     );
   };
@@ -281,9 +252,9 @@ export default function DisplaySession() {
           <br />
           per 15 minutes{' '}
         </h4>
-        <div className="pause" style={{ marginTop: '0vh' }}>
+        <h4 className="pause" style={{ marginTop: '0vh' }}>
           Remaining Number of Pauses: {2 - pauseCountII / 2}
-        </div >
+        </h4 >
 
         <br />
         <div className="bt">
