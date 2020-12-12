@@ -42,7 +42,13 @@ const shouldBlock = (tab, isBlocklist) => {
   }
 };
 
-export const controlOverlay = (minutes, seconds, status, isBlocklist) => {
+export const controlOverlay = (
+  minutes,
+  seconds,
+  status,
+  isBlocklist,
+  pauseCounter
+) => {
   // broadcasting to every tab to update the session info
   // TODO add avoiding non-web tabs
   const updateDisplayedTimeMsg = 'update-time';
@@ -61,6 +67,8 @@ export const controlOverlay = (minutes, seconds, status, isBlocklist) => {
             minutes: minutes,
             seconds: seconds,
             status: sendStatus,
+            isBlocklist: isBlocklist,
+            pauseCounter: pauseCounter,
           },
         },
         () => {

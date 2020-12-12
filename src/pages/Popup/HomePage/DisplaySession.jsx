@@ -4,14 +4,13 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-import { counter, incrementCounter, resetCounter } from '../../Background/controller/session/sessionCallbacks'
+//import { counter } from '../../Background/controller/session/sessionCallbacks';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
 const STATUS_PAUSED = 2;
 const STATUS_SUCCESS = 3;
 const STATUS_FAILURE = 4;
-
 
 /**
  * Functional Component for rendering session
@@ -34,6 +33,7 @@ export default function DisplaySession() {
       setSeconds(request.data.seconds);
       setStatus(request.data.status);
       setBlocklist(request.data.isBlocklist);
+      setCount(request.data.pauseCounter);
     }
     return true;
   }
@@ -61,7 +61,6 @@ export default function DisplaySession() {
 
   React.useEffect(() => {
     if (status === STATUS_SUCCESS) {
-      resetCounter();
       var opt = {
         type: 'basic',
         title: 'Congratulations! You have completed your session!',
@@ -116,33 +115,21 @@ export default function DisplaySession() {
   };
 
   const postToggleSession = () => {
-
-    if (counter >= 4) {
-    }
-    else {
-
-      // increment the pause count
-      incrementCounter();
-
+    if (pauseCount >= 4) {
+    } else {
       chrome.runtime.sendMessage({
         msg: 'toggle-session',
         data: {},
       });
-
     }
-
-
   };
 
   const postQuitSession = () => {
-
-
     if (
       window.confirm(
         'Are you sure you want to give up all sunflowers in this session?'
       )
     ) {
-      resetCounter();
       chrome.runtime.sendMessage({
         msg: 'quit-session',
         data: {},
@@ -206,7 +193,6 @@ export default function DisplaySession() {
   const RunningView = () => {
     return (
       <div>
-
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
@@ -219,8 +205,8 @@ export default function DisplaySession() {
           If you quit the session, no sunflower will be rewarded.
         </h4>
         <h4 className="statement" style={{ marginTop: '0vh' }}>
-          Remaining number of pauses: {2 - counter / 2}
-        </h4 >
+          Remaining number of pauses: {2 - pauseCount / 2}
+        </h4>
         <br />
         <div className="bt">
           <Button variant="round" onClick={postToggleSession}>
@@ -237,7 +223,6 @@ export default function DisplaySession() {
   const PausedView = () => {
     return (
       <div>
-
         <div className="display-time">
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
