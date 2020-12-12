@@ -4,14 +4,15 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-// import {pauseCountII} from '../../Background/controller/session/sessionCallbacks'
+import { counter, incrementCounter, resetCounter } from '../../Background/controller/session/sessionCallbacks'
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
 const STATUS_PAUSED = 2;
 const STATUS_SUCCESS = 3;
 const STATUS_FAILURE = 4;
-var pauseCountII = 0;
+
+
 /**
  * Functional Component for rendering session
  */
@@ -60,7 +61,7 @@ export default function DisplaySession() {
 
   React.useEffect(() => {
     if (status === STATUS_SUCCESS) {
-      pauseCountII = 0;
+      resetCounter();
       var opt = {
         type: 'basic',
         title: 'Congratulations! You have completed your session!',
@@ -116,13 +117,12 @@ export default function DisplaySession() {
 
   const postToggleSession = () => {
 
-    if(pauseCountII >= 4){
+    if (counter >= 4) {
     }
-    else{
+    else {
 
-      // console.log(pauseCountII);
       // increment the pause count
-      pauseCountII =  pauseCountII + 1;
+      incrementCounter();
 
       chrome.runtime.sendMessage({
         msg: 'toggle-session',
@@ -131,18 +131,18 @@ export default function DisplaySession() {
 
     }
 
-    
+
   };
 
   const postQuitSession = () => {
-    
+
 
     if (
       window.confirm(
         'Are you sure you want to give up all sunflowers in this session?'
       )
     ) {
-      pauseCountII = 0;
+      resetCounter();
       chrome.runtime.sendMessage({
         msg: 'quit-session',
         data: {},
@@ -219,7 +219,7 @@ export default function DisplaySession() {
           If you quit the session, no sunflower will be rewarded.
         </h4>
         <h4 className="statement" style={{ marginTop: '0vh' }}>
-          Remaining number of pauses: { 2 - pauseCountII / 2}
+          Remaining number of pauses: {2 - counter / 2}
         </h4 >
         <br />
         <div className="bt">

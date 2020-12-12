@@ -8,6 +8,18 @@ import { controlOverlay } from './overlay/overlay';
 import { incrementFlower } from '../user/userDAOManager';
 const updateDisplayedTimeMsg = 'update-time';
 
+
+export let counter = localStorage.counter || 0;
+
+export const incrementCounter = function () {
+  counter = localStorage.counter = parseInt(counter) + 1;
+}
+
+export const resetCounter = function () {
+  localStorage.counter = 0;
+  counter = 0;
+}
+
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {
   chrome.runtime.sendMessage({
     msg: updateDisplayedTimeMsg,
