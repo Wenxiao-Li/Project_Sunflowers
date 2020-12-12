@@ -109,10 +109,7 @@ export function ViewNameHandle(email, callback) {
   chrome.runtime.sendMessage(
     { msg: 'view_owner', email: email },
     (response) => {
-      var fn = response.fn;
-      var ln = response.ln;
-      var name = fn + ' ' + ln;
-      return callback(name);
+      callback();
     }
   );
 }
