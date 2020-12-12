@@ -122,21 +122,29 @@ const Leaderboard = () => {
   }
   var leaderboardRendered = leaderBoardComponents.map((friend) => (
     <div key={friend.userName}>
-      {friend.userName}
-      {' ' + friend.score + 'x'}
-      <img className="sunflower-icon" src={sunflowerIcon}></img>
-      {Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
-        <button
-          key={key}
-          value={friend.email}
-          className={
-            arrayOfReacts.indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
-          }
-          onClick={(e) => updateLeaderBoard(e.target.value, key)}
-        >
-          {String.fromCodePoint(key)} {arrayOfReacts.length}
-        </button>
-      ))}
+      <div className="leaderboard-entry">
+        <div className="user-name">
+          {friend.userName}
+        </div>
+        <div className="sunflower-entry">
+          Sunflower: {' ' + friend.score}
+          <img className="sunflower-icon" src={sunflowerIcon}></img>
+        </div>
+        <div className="button-right">
+          {Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+            <button
+              key={key}
+              value={friend.email}
+              className={
+                arrayOfReacts.indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
+              }
+              onClick={(e) => updateLeaderBoard(e.target.value, key)}
+            >
+              {String.fromCodePoint(key)} {arrayOfReacts.length}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   ));
   /*
@@ -160,11 +168,14 @@ const Leaderboard = () => {
   */
   return (
     <div>
-      <h1> Leaderboard</h1>
-      {leaderboardRendered}
-      <span>User Name: {userName}</span>
+      <h1 className="h1">Leaderboard</h1>
+      <div className="user-info">
+        <span>User Name: {userName}</span>
+        <br />
+        <span>Email: {email}</span>
+      </div>
       <br />
-      <span>Email: {email}</span>
+      {leaderboardRendered}
     </div>
   );
 };
