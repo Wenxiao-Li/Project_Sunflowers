@@ -7,7 +7,7 @@ function addFriend(friendemail, friendname) {
     useremail = user.email;
     chrome.runtime.sendMessage(
       {
-        command: 'add_friend',
+        msg: 'add_friend',
         useremail: useremail,
         friendemail: friendemail,
         friendname: friendname,
