@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 import SunflowerIcon from '../../../assets/img/sunflowerIcon.jpg';
 import DecreaseIcon from '../../../assets/img/decrease.png';
 import IncreaseIcon from '../../../assets/img/increase.png';
-//import { counter } from '../../Background/controller/session/sessionCallbacks';
 
 const STATUS_NOT_STARTED = 0;
 const STATUS_RUNNING = 1;
@@ -205,7 +204,7 @@ export default function DisplaySession() {
           per 15 minutes{' '}
         </h4>
         <h4 className="pause" style={{ marginTop: '0vh' }}>
-          Remaining Number of Pauses: {2 - pauseCount / 2}
+          Remaining Number of Pauses: {2 - Math.ceil(pauseCount / 2)}
         </h4>
         <br />
         <div className="bt">
@@ -239,7 +238,7 @@ export default function DisplaySession() {
           per 15 minutes{' '}
         </h4>
         <h4 className="pause" style={{ marginTop: '0vh' }}>
-          Remaining Number of Pauses: {2 - pauseCountII / 2}
+          Remaining Number of Pauses: {2 - Math.ceil(pauseCount / 2)}
         </h4>
 
         <br />
