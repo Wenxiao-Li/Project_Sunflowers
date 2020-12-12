@@ -1,10 +1,14 @@
-import { injectToCurrentTabs } from './scriptInjection';
-import { addSession } from '../model/sessionDispatch';
-import { controlOverlay } from '../model/overlay';
+import { injectToCurrentTabs } from './overlay/scriptInjection';
+import {
+  startInjectionListener,
+  removeInjectionListener,
+} from './overlay/scriptInjection';
+import { addSession } from '../../model/sessionDispatch';
+import { controlOverlay } from './overlay/overlay';
+import { incrementFlower } from '../../model/userflowerDispatch';
 const updateDisplayedTimeMsg = 'update-time';
 
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {
-  console.log('update');
   chrome.runtime.sendMessage({
     msg: updateDisplayedTimeMsg,
     data: {
@@ -22,11 +26,14 @@ export const startCallback = function (isBlocklist) {
   console.log('is blocklist mode: ', isBlocklist);
 
   injectToCurrentTabs();
+  startInjectionListener();
 };
 
 export const completeCallback = function (sessionLength, startDate, endDate) {
   // Update Database
+  removeInjectionListener();
   addSession(sessionLength, true, startDate, endDate);
+  incrementFlower(Math.floor(sessionLength / 15));
 };
 
 export const pauseCallback = function () {
@@ -42,4 +49,5 @@ export const resumeCallback = function () {
 export const quitCallback = function (sessionLength, startDate, endDate) {
   // Update database
   addSession(sessionLength, false, startDate, endDate);
+  removeInjectionListener();
 };
