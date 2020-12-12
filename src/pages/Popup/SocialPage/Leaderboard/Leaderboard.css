@@ -8,6 +8,7 @@
     width: auto;
     height: 65px;
     font-family: Arial, sans-serif;
+    position: relative;
 }
 
 .sunflower-icon {
@@ -52,7 +53,7 @@
     height: 50px;
 }
 
-.sunflower-entry {
+.leaderboard-entry .sunflower-entry {
     position: absolute;
     left: 25px;
     font-family: Arial, sans-serif;
