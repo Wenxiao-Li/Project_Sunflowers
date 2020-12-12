@@ -11,7 +11,6 @@ const STATUS_RUNNING = 1;
 const STATUS_PAUSED = 2;
 const STATUS_SUCCESS = 3;
 const STATUS_FAILURE = 4;
-
 /**
  * Functional Component for rendering session
  */
@@ -171,12 +170,14 @@ export default function DisplaySession() {
           />
         </div>
         <div id="num-sunflower">
-          <img className="sfIcon" src={SunflowerIcon} width="50" />
+          <img className="sfIcon" src={SunflowerIcon} width="" />
           <span> X {numSunflowers} </span>
         </div>
         <h4 className="statement">
           {' '}
-          You will get One Sunflower per 15 minutes{' '}
+          You will get One Sunflower
+          <br />
+          per 15 minutes{' '}
         </h4>
 
         <Button variant="round" onClick={changeMode}>
@@ -199,13 +200,12 @@ export default function DisplaySession() {
         </div>
         <h4 className="statement" style={{ marginTop: '8vh' }}>
           {' '}
-          You will get One Sunflower per 15 minutes{' '}
+          You will get One Sunflower
+          <br />
+          per 15 minutes{' '}
         </h4>
-        <h4 className="statement" style={{ marginTop: '3vh' }}>
-          If you quit the session, no sunflower will be rewarded.
-        </h4>
-        <h4 className="statement" style={{ marginTop: '0vh' }}>
-          Remaining number of pauses: {2 - pauseCount / 2}
+        <h4 className="pause" style={{ marginTop: '0vh' }}>
+          Remaining Number of Pauses: {2 - pauseCount / 2}
         </h4>
         <br />
         <div className="bt">
@@ -215,6 +215,11 @@ export default function DisplaySession() {
           <Button variant="round" onClick={postQuitSession}>
             Quit
           </Button>
+        </div>
+        <div className="sentence">
+          If you Quit the Session,
+          <br />
+          No Sunflower will be Rewarded.
         </div>
       </div>
     );
@@ -227,12 +232,14 @@ export default function DisplaySession() {
           <span> {minutes} : </span>
           <span> {String(seconds).padStart(2, '0')} </span>
         </div>
-        <h4 className="statement" style={{ marginTop: '10vh' }}>
+        <h4 className="statement" style={{ marginTop: '8vh' }}>
           {' '}
-          You will get One Sunflower per 15 minutes{' '}
+          You will get One Sunflower
+          <br />
+          per 15 minutes{' '}
         </h4>
-        <h4 className="statement" style={{ marginTop: '3vh' }}>
-          If you quit the session, no sunflower will be rewarded
+        <h4 className="pause" style={{ marginTop: '0vh' }}>
+          Remaining Number of Pauses: {2 - pauseCountII / 2}
         </h4>
 
         <br />
@@ -243,6 +250,11 @@ export default function DisplaySession() {
           <Button variant="round" onClick={postQuitSession}>
             Quit
           </Button>
+        </div>
+        <div className="sentence">
+          If you quit the session,
+          <br />
+          no sunflower will be rewarded.
         </div>
       </div>
     );
