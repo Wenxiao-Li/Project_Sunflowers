@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../User';
 import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
-import { updateReactions } from './updateReactions';
+import { updateReactionHandle } from './updateReactions';
 import './Leaderboard.css';
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
 class LeaderBoardComponent {
@@ -94,7 +94,7 @@ const Leaderboard = () => {
     );
 
     //copy[indexOffriend].reactions[keyReactedOn].push(user.email);
-    updateReactions(user, friendReactedTo, reactionExists, keyReactedOn);
+    updateReactionHandle(user, friendReactedTo, reactionExists, keyReactedOn);
 
     console.log(copy);
     console.log(leaderBoardComponents);

@@ -1,47 +1,26 @@
-import firebase, { db } from '../../../Background/modules/firebaseconfig';
-var leaderboardRef = db.collection('user');
-export function updateReactions(user, friendReactedTo, reactionExists, keyReactedOn) {
-  if (reactionExists == -1) {
-    //let reference = "reactions." + keyReactedOn;
-    if (keyReactedOn == "0x1F496") {
-      leaderboardRef.doc(friendReactedTo).update({
+//import firebase, { db } from '../../../Background/modules/firebaseconfig';
+//var leaderboardRef = db.collection('user');
+function updateReactions(user, friendReactedTo, reactionExists, keyReactedOn) {
+  if (user != null) {
+    chrome.runtime.sendMessage(
+      {
+        msg: 'update_Reaction',
+        user: user,
+        friendReactedTo: friendReactedTo,
+        reactionExists: reactionExists,
+        keyReactedOn: keyReactedOn,
 
-        "reactions.0x1F496": firebase.firestore.FieldValue.arrayUnion(user.email),
-      })
-    }
-    else if (keyReactedOn == "0x1F525") {
-      leaderboardRef.doc(friendReactedTo).update({
-
-        "reactions.0x1F525": firebase.firestore.FieldValue.arrayUnion(user.email),
-      })
-    }
-    else {
-      leaderboardRef.doc(friendReactedTo).update({
-
-        "reactions.0x1F603": firebase.firestore.FieldValue.arrayUnion(user.email),
-      })
-    }
+      },
+      (response) => {
+        if (response.message === 'success') {
+          console.log('Update reaction');
+        }
+      }
+    );
   }
-  else {
-    //let reference = "reactions." + keyReactedOn;
-    if (keyReactedOn == "0x1F496") {
-      leaderboardRef.doc(friendReactedTo).update({
+}
 
-        "reactions.0x1F496": firebase.firestore.FieldValue.arrayRemove(user.email),
-      })
-    }
-    else if (keyReactedOn == "0x1F525") {
-      leaderboardRef.doc(friendReactedTo).update({
-
-        "reactions.0x1F525": firebase.firestore.FieldValue.arrayRemove(user.email),
-      })
-    }
-    else {
-      leaderboardRef.doc(friendReactedTo).update({
-
-        "reactions.0x1F603": firebase.firestore.FieldValue.arrayRemove(user.email),
-      })
-    }
-  }
-
+export const updateReactionHandle = (user, friendReactedTo,
+  reactionExists, keyReactedOn) => {
+  updateReactions(user, friendReactedTo, reactionExists, keyReactedOn);
 }
