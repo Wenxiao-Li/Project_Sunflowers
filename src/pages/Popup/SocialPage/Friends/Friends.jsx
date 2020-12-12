@@ -76,7 +76,7 @@ export default function FriendsPage() {
       </div>
 
       <div className="addfriends">
-        <span> Add Friends </span>
+        <span> Add Friends: </span>
       </div>
 
       <div className="sendadd">
@@ -96,7 +96,7 @@ export default function FriendsPage() {
       </div>
 
       <div className="list">
-        <span font-weight="bold"> Friend List </span>
+        <span font-weight="bold"> Friend List: </span>
         <ListGroup>
           {friendList.map((friend) => (
             <Friends key={friend} name={friend.name} email={friend.email} />
