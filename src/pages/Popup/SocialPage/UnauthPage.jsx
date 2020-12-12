@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 
 class UnauthPage extends Component {
   _isMounted = false;
