@@ -1,0 +1,60 @@
+.h1 {
+    font-family: "Monaco", monospace;
+    color: #7c945d;
+    text-align: center;
+}
+
+.leaderboard-entry {
+    width: auto;
+    height: 65px;
+    font-family: "Monaco", monospace;
+}
+
+.sunflower-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.reaction-image {
+    float: right;
+    height: 20px;
+    width: 20px;
+    align-self: right;
+}
+
+.unreacted {
+    background-color: #e7ebd1;
+    border: none;
+    height: auto;
+    width: auto;
+}
+
+.reacted {
+    background-color: #E0FFFF;
+    color: #688e9c;
+    border: 2px solid#80afc0;
+    height: auto;
+    width: auto;
+}
+
+.button-right {
+    background-color: #f2f5db;
+    text-align: right;
+}
+
+.user-info {
+    background-color: #f2f5db;
+    color: #688e9c;
+    font-family: "Monaco", monospace;
+}
+
+.sunflower-entry {
+    position: absolute;
+    left: 25px;
+    font-family: "Monaco", monospace;
+}
+
+.user-name {
+    color: #49646e;
+    background-color: #baccb4;
+}
