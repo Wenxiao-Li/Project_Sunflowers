@@ -1,13 +1,13 @@
 .h1 {
-    font-family: "Monaco", monospace;
-    color: #7c945d;
+    font-family: Arial, sans-serif;
+    color: #62754a;
     text-align: center;
 }
 
 .leaderboard-entry {
     width: auto;
     height: 65px;
-    font-family: "Monaco", monospace;
+    font-family: Arial, sans-serif;
 }
 
 .sunflower-icon {
@@ -27,6 +27,7 @@
     border: none;
     height: auto;
     width: auto;
+    border-radius: 8px;
 }
 
 .reacted {
@@ -35,6 +36,7 @@
     border: 2px solid#80afc0;
     height: auto;
     width: auto;
+    border-radius: 8px;
 }
 
 .button-right {
@@ -44,17 +46,21 @@
 
 .user-info {
     background-color: #f2f5db;
-    color: #688e9c;
-    font-family: "Monaco", monospace;
+    color: #576e49;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    height: 50px;
 }
 
 .sunflower-entry {
     position: absolute;
     left: 25px;
-    font-family: "Monaco", monospace;
+    font-family: Arial, sans-serif;
+    color: #576e49;
 }
 
 .user-name {
     color: #49646e;
     background-color: #baccb4;
+    height: 25px;
 }

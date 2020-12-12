@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import likedicon from '../../../../assets/img/liked.png';
 import unlikedicon from '../../../../assets/img/unliked.png';
-import { UserContext } from '../../User';
+import { AuthContext } from '../../../../auth/Auth';
 import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
 import { getLeaderboard, unsubscribe } from './getLeaderboard';
 import { updateReactions } from './updateReactions';
@@ -30,7 +30,7 @@ class LeaderBoardComponent {
 const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
 
-  const { user, snapshotData } = React.useContext(UserContext);
+  const { user } = React.useContext(AuthContext);
 
   function getLBSnapshot(request, sender, senderResponse) {
     if (request.msg === 'query_snapshot') {
@@ -40,12 +40,12 @@ const Leaderboard = () => {
 
   React.useEffect(() => {
     chrome.runtime.sendMessage({
-      msg: 'enter_leaderboard',
+      msg: 'start_lblisten',
     });
     chrome.runtime.onMessage.addListener(getLBSnapshot);
     return () => {
       chrome.runtime.sendMessage({
-        msg: 'exit_leaderboard',
+        msg: 'close_lblisten',
       });
       chrome.runtime.onMessage.removeListener(getLBSnapshot);
     };
@@ -127,7 +127,7 @@ const Leaderboard = () => {
           {friend.userName}
         </div>
         <div className="sunflower-entry">
-          {' ' + friend.score + 'x'}
+          Sunflower: {' ' + friend.score}
           <img className="sunflower-icon" src={sunflowerIcon}></img>
         </div>
         <div className="button-right">
@@ -168,13 +168,14 @@ const Leaderboard = () => {
   */
   return (
     <div>
-      <h1 className="h1"> Leaderboard</h1>
-      {leaderboardRendered}
+      <h1 className="h1">Leaderboard</h1>
       <div className="user-info">
         <span>User Name: {userName}</span>
         <br />
         <span>Email: {email}</span>
       </div>
+      <br />
+      {leaderboardRendered}
     </div>
   );
 };
