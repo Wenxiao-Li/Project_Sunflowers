@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import likedicon from '../../../../assets/img/liked.png';
-import unlikedicon from '../../../../assets/img/unliked.png';
-import { AuthContext } from '../../../../auth/Auth';
+import { UserContext } from '../../User';
 import sunflowerIcon from '../../../../assets/img/sunflowerIcon.jpg';
-import { getLeaderboard, unsubscribe } from './getLeaderboard';
 import { updateReactions } from './updateReactions';
 import './Leaderboard.css';
 // A leaderboard entry consists of userName, score, and reactions. (Child of Leaderboard)
@@ -30,23 +27,25 @@ class LeaderBoardComponent {
 const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
 
-  const { user } = React.useContext(AuthContext);
-  const reactionsAvailable = ['0x1F603', '0x1F525', '0x1F496'];
+  const { user, snapshotData } = React.useContext(UserContext);
+
+  const [querySnapshot, setQS] = React.useState([]);
 
   function getLBSnapshot(request, sender, senderResponse) {
     if (request.msg === 'query_snapshot') {
       console.log(request.qsnapshot);
+      setQS(request.qsnapshot);
     }
   }
 
   React.useEffect(() => {
     chrome.runtime.sendMessage({
-      msg: 'start_lblisten',
+      msg: 'enter_leaderboard',
     });
     chrome.runtime.onMessage.addListener(getLBSnapshot);
     return () => {
       chrome.runtime.sendMessage({
-        msg: 'close_lblisten',
+        msg: 'exit_leaderboard',
       });
       chrome.runtime.onMessage.removeListener(getLBSnapshot);
     };
@@ -63,7 +62,7 @@ const Leaderboard = () => {
         var current = currentFriendsScoreArray[i];
         console.log('print: ', current);
         var leaderBoardComponent = new LeaderBoardComponent(
-          current.userName,
+          current.user_name,
           current.email,
           current.score,
           current.reactions,
@@ -73,11 +72,10 @@ const Leaderboard = () => {
       }
       setLBComponents(newLeaderBoardComponents);
     };
-    getLeaderboard(user, setArray);
+    setArray(querySnapshot);
 
     //return unsubscribe;
-  }, []);
-
+  }, [querySnapshot]);
   const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
     console.log('Friend Reacted to ', friendReactedTo);
     console.log('Emoji Reacted on', keyReactedOn);

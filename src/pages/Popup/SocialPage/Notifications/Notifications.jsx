@@ -1,115 +1,74 @@
-import React, { Component } from 'react';
-import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
-import { addFriendHandle, viewFriendlistHandle, ViewNameHandle } from '../Friends/Friends.js';
-import { viewFriendRequestHandle, deleteFriend2Handle, friendSuccessHandle } from './notif'
-/*
-class Notifications extends Component {
-  _isMounted = false;
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-    this._isMounted = true;
-  }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-  render() {
-    var email = 'undefined';
-    var userName = 'undefined';
-    if (this.props.user) {
-      email = this.props.user.email;
-      userName = this.props.user.displayName;
-    }
-    return (
-      <div>
-        <h1> Notifications</h1>
-        <span>User Name: {userName}</span>
-        <br />
-        <span>Email: {email}</span>
-      </div>
-    );
-  }
-}
-export default Notifications;
-*/
+import React from 'react';
+import { ListGroup } from 'react-bootstrap';
+import { UserContext } from '../../User';
+import { addFriendHandle, ViewNameHandle } from '../Friends/Friends.js';
+import {
+  acceptFriendRequestHandle,
+  deleteFriend2Handle,
+  friendSuccessHandle,
+} from './notif';
+import addIcon from '../../../../assets/img/addIcon.png';
+import deleteIcon from '../../../../assets/img/deleteIcon.png';
+
 export default function NotificationPage() {
-  // Set States goes here
-  const addfriendemail = React.useRef(null);
-  const deletefriendemail = React.useRef(null);
-  //const friendList = React.useRef(null);
-  const acceptRequest = React.useRef(null);
-  const rejectRequest = React.useRef(null);
-  const [nameList, setFriendList] = React.useState([]);
+  const { snapshotData } = React.useContext(UserContext);
 
-  /**
-   * Description: Initializing States, do not pass function into useState
-   * isBlockList: state
-   * setBlockListBoolean: setState for isBlockList, this is async so be careful
-   * param: initial value
-   */
-  //const [isBlockList, setBlockListBoolean] = React.useState(true);
+  const [requestList, setRequestList] = React.useState([]);
 
-  // use the return of useEffect for componentWillUnmount
+  React.useEffect(() => {
+    const requestEmailList = snapshotData.friend2;
+    const requestNameList = snapshotData.friendname2;
 
-  // Run after every re-render
-  // React.useEffect(() => {});
-
-  // Equivalent to componentDidMount and return = componentWillUnMount
-  // React.useEffect(() => {}, []);
-
-  const onSubmitAcceptRequest = (event) => {
-    event.preventDefault();
-    ViewNameHandle(acceptRequest.current.value, function (response) {
-      deleteFriend2Handle(acceptRequest.current.value, response);
-      addFriendHandle(acceptRequest.current.value, response);
-      friendSuccessHandle(acceptRequest.current.value);
-      viewFriendRequestHandle(displayFriends);
+    const tempList = [];
+    requestEmailList.forEach((email, index) => {
+      tempList.push({ email: email, name: requestNameList[index] });
     });
-    viewFriendRequestHandle(displayFriends);
-  };
+    setRequestList(tempList);
+  }, [snapshotData]);
 
-  const onSubmitRejectRequest = (event) => {
-    event.preventDefault();
-    ViewNameHandle(rejectRequest.current.value, function (response) {
-      deleteFriend2Handle(rejectRequest.current.value, response);
-      viewFriendRequestHandle(displayFriends);
-    });
-    viewFriendRequestHandle(displayFriends);
-  };
-
-  const showFriendRequests = (event) => {
-    viewFriendRequestHandle(displayFriends);
-  };
-
-  const displayFriends = (friendList) => {
-    setFriendList(friendList);
-  };
-
-  const Email = (props) => {
-    return <li> {props.text}</li>;
+  const FriendRequests = ({ name, email }) => {
+    let accept = () => {
+      if (
+        window.confirm(
+          'If accepted, both of you will be able to see each other' +
+            "'s ranking on leaderboard and are able to give reactions to each other."
+        )
+      ) {
+        acceptFriendRequestHandle(email, name);
+      }
+    };
+    let reject = () => {
+      if (
+        window.confirm('You are trying to reject this friend request, confirm?')
+      ) {
+        ViewNameHandle(email, function (response) {
+          deleteFriend2Handle(email, name, () => {});
+        });
+      }
+    };
+    return (
+      <ListGroup.Item>
+        {name} : {email}
+        <img src={addIcon} onClick={accept} className="icon-pin-right" />
+        <img src={deleteIcon} onClick={reject} className="icon-pin-right" />
+      </ListGroup.Item>
+    );
   };
 
   return (
     <div className="Friends">
       <h1> Friend Requests </h1>
       <br />
-      <button onClick={showFriendRequests}> showFriendRequests </button>
-      <br />
-      <form onSubmit={onSubmitAcceptRequest}>
-        <input type="text" name="acceptRequest" ref={acceptRequest} required />
-        <button type="submit"> Accept Request </button>
-      </form>
-      <form onSubmit={onSubmitRejectRequest}>
-        <input type="text" name="rejectRequest" ref={rejectRequest} required />
-        <button type="submit"> Reject Request </button>
-      </form>
       <span> Requests: </span>
-      <ul>
-        {nameList.map(email => (
-          <Email key={email} text={email} />
+      <ListGroup>
+        {requestList.map((request) => (
+          <FriendRequests
+            key={request}
+            name={request.name}
+            email={request.email}
+          />
         ))}
-      </ul>
-    </div >
+      </ListGroup>
+    </div>
   );
 }

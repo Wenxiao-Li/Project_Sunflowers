@@ -3,9 +3,9 @@ import {
   startInjectionListener,
   removeInjectionListener,
 } from './overlay/scriptInjection';
-import { addSession } from '../../model/sessionDispatch';
+import { addSession } from './sessionDAOManager';
 import { controlOverlay } from './overlay/overlay';
-import { incrementFlower } from '../../model/userflowerDispatch';
+import { incrementFlower } from '../user/userDAOManager';
 const updateDisplayedTimeMsg = 'update-time';
 
 export const updateCallback = function (minutes, seconds, status, isBlocklist) {

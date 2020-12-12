@@ -4,7 +4,6 @@ import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 import './SettingsPage.css';
 
-import { viewWebsitelistHandle } from './setting';
 import { ViewCurrentLists } from './ViewCurrentLists';
 import { ListForm } from './ListForm';
 import { Suggestions } from './Suggestions';
@@ -22,25 +21,10 @@ export default function SettingsPage() {
    * param: initial value
    */
   const [isBlockList, setBlockListBoolean] = React.useState(true);
-  const [blockList, setBlockList] = React.useState([]);
-  const [allowList, setAllowList] = React.useState([]);
 
   const setMode = (val) => {
     setBlockListBoolean(val);
   };
-
-  const onViewWebsite = () => {
-    viewWebsitelistHandle(displayLists);
-  };
-
-  const displayLists = (blockList, allowList) => {
-    setBlockList(blockList);
-    setAllowList(allowList);
-  };
-
-  React.useEffect(() => {
-    onViewWebsite();
-  }, []);
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
   return (
@@ -68,14 +52,9 @@ export default function SettingsPage() {
         </span>
       </div>
       <div className="scroll-view">
-        <ListForm isBlockList={isBlockList} onViewWebsite={onViewWebsite} />
-        <ViewCurrentLists
-          isBlockList={isBlockList}
-          onViewWebsite={onViewWebsite}
-          blockList={blockList}
-          allowList={allowList}
-        />
-        <Suggestions isBlockList={isBlockList} onViewWebsite={onViewWebsite} />
+        <ListForm isBlockList={isBlockList} />
+        <ViewCurrentLists isBlockList={isBlockList} />
+        <Suggestions isBlockList={isBlockList} />
       </div>
     </div>
   );

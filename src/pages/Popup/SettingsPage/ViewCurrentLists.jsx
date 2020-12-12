@@ -3,10 +3,12 @@ import { deleteBlocklist, deleteAllowlist } from './setting';
 import { Button, ListGroup } from 'react-bootstrap';
 import deleteIcon from '../../../assets/img/deleteIcon.png';
 
-const Website = ({ url, isBlockList, onViewWebsite }) => {
+import { UserContext } from '../User';
+
+const Website = ({ url, isBlockList }) => {
   let operation = isBlockList
-    ? () => deleteBlocklist(url, onViewWebsite)
-    : () => deleteAllowlist(url, onViewWebsite);
+    ? () => deleteBlocklist(url)
+    : () => deleteAllowlist(url);
   return (
     <ListGroup.Item className="website">
       {' '}
@@ -16,39 +18,26 @@ const Website = ({ url, isBlockList, onViewWebsite }) => {
   );
 };
 
-export const ViewCurrentLists = ({
-  isBlockList,
-  onViewWebsite,
-  blockList,
-  allowList,
-}) => {
+export const ViewCurrentLists = ({ isBlockList }) => {
+  const { snapshotData } = React.useContext(UserContext);
+
   let list = [];
   let headerText = '';
 
   if (isBlockList) {
-    list = blockList;
+    list = (snapshotData && snapshotData.blocklist) || [];
     headerText = 'BlockList';
   } else {
-    list = allowList;
+    list = (snapshotData && snapshotData.allowlist) || [];
     headerText = 'AllowList';
   }
 
   return (
     <div>
       <span> {headerText} </span>
-      <Button variant="light" onClick={onViewWebsite}>
-        {' '}
-        refresh{' '}
-      </Button>
-
       <ListGroup>
         {list.map((site) => (
-          <Website
-            key={site}
-            url={site}
-            isBlockList={isBlockList}
-            onViewWebsite={onViewWebsite}
-          />
+          <Website key={site} url={site} isBlockList={isBlockList} />
         ))}
       </ListGroup>
     </div>
