@@ -118,7 +118,11 @@ export default function DisplaySession() {
   const postToggleSession = () => {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (pauseCountII >= 4) {
+=======
+    if (counter >= 4) {
+>>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
 =======
     if (counter >= 4) {
 >>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
@@ -127,7 +131,11 @@ export default function DisplaySession() {
 
       // increment the pause count
 <<<<<<< HEAD
+<<<<<<< HEAD
       pauseCountII = pauseCountII + 1;
+=======
+      incrementCounter();
+>>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
 =======
       incrementCounter();
 >>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
@@ -237,6 +245,9 @@ export default function DisplaySession() {
         </h4>
         <h4 className="statement" style={{ marginTop: '0vh' }}>
           Remaining number of pauses: {2 - counter / 2}
+<<<<<<< HEAD
+>>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
+=======
 >>>>>>> 93f3e857f49443e5643af33f3feaca5299a99e63
         </h4 >
         <br />
