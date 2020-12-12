@@ -8,6 +8,7 @@
     width: auto;
     height: 65px;
     font-family: Arial, sans-serif;
+    position: relative;
 }
 
 .sunflower-icon {
@@ -52,7 +53,7 @@
     height: 50px;
 }
 
-.sunflower-entry {
+.leaderboard-entry .sunflower-entry {
     position: absolute;
     left: 25px;
     font-family: Arial, sans-serif;
@@ -62,5 +63,6 @@
 .user-name {
     color: #49646e;
     background-color: #baccb4;
-    height: 25px;
+    height: 30px;
+    font-size: 20px;
 }
