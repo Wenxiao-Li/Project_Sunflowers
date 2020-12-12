@@ -44,7 +44,9 @@
   text-align: center;
   font-style: normal;
 }
-
+.tab{
+  padding-top: 40%;
+}
 .op-icons {
   width: 30px;
   height: 45px;

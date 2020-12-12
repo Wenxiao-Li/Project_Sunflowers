@@ -275,10 +275,12 @@ export default function DisplaySession() {
 
   const SuccessView = () => {
     return (
-      <div>
-        <span>
+      <div className="tab">
+        <span >
           {' '}
-          Congratulations! You have successfully planted many sunflowers{' '}
+          Congratulations!
+          <br />
+          You have successfully planted many sunflowers{' '}
         </span>
         <Button variant="round" onClick={postBackSession}>
           {' '}
@@ -290,10 +292,12 @@ export default function DisplaySession() {
 
   const FailureView = () => {
     return (
-      <div>
+      <div className="tab">
         <span>
           {' '}
-          Unfortunately, all of your sunflowers planted in this session are
+          Unfortunately,
+          <br />
+          All of your sunflowers planted in this session are
           gone.{' '}
         </span>
         <br />
