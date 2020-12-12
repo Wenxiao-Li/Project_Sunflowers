@@ -26,7 +26,7 @@ class LeaderBoardComponent {
 
 const Leaderboard = () => {
   const [leaderBoardComponents, setLBComponents] = React.useState([]);
-
+  const [reactionsAvailable, setReactionsAvailable] = React.useState([]);
   const { user, snapshotData } = React.useContext(UserContext);
 
   const [querySnapshot, setQS] = React.useState([]);
@@ -53,6 +53,7 @@ const Leaderboard = () => {
 
   React.useEffect(() => {
     const setArray = (inputArray) => {
+      var currentReactionsAvailable = [];
       var currentFriendsScoreArray = [];
       currentFriendsScoreArray = inputArray;
       currentFriendsScoreArray.sort((a, b) => b.score - a.score);
@@ -68,9 +69,13 @@ const Leaderboard = () => {
           current.reactions,
           user.displayName
         );
+        currentReactionsAvailable = Object.keys(current.reactions);
         newLeaderBoardComponents.push(leaderBoardComponent);
       }
+
+      currentReactionsAvailable.sort();
       setLBComponents(newLeaderBoardComponents);
+      setReactionsAvailable(currentReactionsAvailable);
     };
     setArray(querySnapshot);
 
@@ -95,25 +100,7 @@ const Leaderboard = () => {
     console.log(leaderBoardComponents);
     setLBComponents(copy);
   };
-  /*
-  const updateLeaderBoard = (name) => {
-    var nameReactedTo = name;
-    console.log(nameReactedTo);
-    var copy = leaderBoardComponents.slice();
-    for (var i = 0; i < copy.length; i++) {
-      if (copy[i].userName === nameReactedTo) {
-        if (copy[i].reactions.indexOf(copy[i].currentUser) === -1) {
-          console.log('Reaction added for user', nameReactedTo);
-          copy[i].reactions.push(copy[i].currentUser);
-        } else {
-          console.log('Reaction removed for user', nameReactedTo);
-          copy[i].reactions.pop(copy[i].currentUser);
-        }
-      }
-    }
-    setLBComponents(copy);
-  };
-  */
+
   var email = 'undefined';
   var userName = 'undefined';
   if (user) {
@@ -131,16 +118,16 @@ const Leaderboard = () => {
           <img className="sunflower-icon" src={sunflowerIcon}></img>
         </div>
         <div className="button-right">
-          {Object.entries(friend.reactions).map(([key, arrayOfReacts]) => (
+          {reactionsAvailable.map((key) => (
             <button
               key={key}
               value={friend.email}
               className={
-                arrayOfReacts.indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
+                friend.reactions[key].indexOf(user.email) == -1 ? 'unreacted' : 'reacted'
               }
               onClick={(e) => updateLeaderBoard(e.target.value, key)}
             >
-              {String.fromCodePoint(key)} {arrayOfReacts.length}
+              {String.fromCodePoint(key)} {friend.reactions[key].length}
             </button>
           ))}
         </div>
