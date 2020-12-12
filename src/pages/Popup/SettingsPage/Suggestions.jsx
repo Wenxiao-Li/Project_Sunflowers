@@ -3,10 +3,10 @@ import { addBlocklist, addAllowlist } from './setting';
 import { ListGroup, Button } from 'react-bootstrap';
 import addIcon from '../../../assets/img/addIcon.png';
 
-const SuggestWebsite = ({ url, isBlockList, onViewWebsite }) => {
+const SuggestWebsite = ({ url, isBlockList }) => {
   let operation = isBlockList
-    ? () => addBlocklist(url, onViewWebsite)
-    : () => addAllowlist(url, onViewWebsite);
+    ? () => addBlocklist(url)
+    : () => addAllowlist(url);
   return (
     <ListGroup.Item className="website">
       {url} <img src={addIcon} onClick={operation} className="icon-pin-right" />
@@ -25,7 +25,7 @@ const allowListSuggestions = [
   'https://canvas.ucsd.edu',
 ];
 
-export const Suggestions = ({ isBlockList, onViewWebsite }) => {
+export const Suggestions = ({ isBlockList }) => {
   let suggestionList = [];
   if (isBlockList) {
     suggestionList = blockListSuggestions;
@@ -40,12 +40,7 @@ export const Suggestions = ({ isBlockList, onViewWebsite }) => {
       </div>
       <ListGroup>
         {suggestionList.map((site) => (
-          <SuggestWebsite
-            key={site}
-            url={site}
-            isBlockList={isBlockList}
-            onViewWebsite={onViewWebsite}
-          />
+          <SuggestWebsite key={site} url={site} isBlockList={isBlockList} />
         ))}
       </ListGroup>
     </div>

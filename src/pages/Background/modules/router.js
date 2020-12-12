@@ -1,3 +1,9 @@
+let router = [];
+
+export function routerInclude(pairArr) {
+  router = router.concat(pairArr);
+}
+
 // This method would take an actionArr and convert it into an chrome Listener function
 const pairArrToListenerFunc = (actionPairArr) => {
   return function (request, sender, sendResponse) {
@@ -10,6 +16,6 @@ const pairArrToListenerFunc = (actionPairArr) => {
   };
 };
 
-export const runListener = (pairArr) => {
-  chrome.runtime.onMessage.addListener(pairArrToListenerFunc(pairArr));
+export const runMessageRouter = () => {
+  chrome.runtime.onMessage.addListener(pairArrToListenerFunc(router));
 };

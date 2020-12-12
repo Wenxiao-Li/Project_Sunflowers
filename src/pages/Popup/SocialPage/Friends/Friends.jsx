@@ -1,119 +1,94 @@
-import React, { Component } from 'react';
-import { useEffect } from 'react';
-import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
-import firebase from '../../../Background/modules/firebaseconfig';
-import { addFriendHandle, deleteFriendHandle, viewFriendlistHandle, ViewNameHandle, friendRequestHandle } from './Friends';
-/*
-class Friends extends Component {
-  _isMounted = false;
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: ''
-    };
-  }
-  componentDidMount() {
-    this._isMounted = true;
-  }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-  render() {
-    var useremail = 'undefined';
-    var userName = 'undefined';
-    var friends = 'undefined';
-    if (this.props.user) {
-      useremail = this.props.user.email;
-      userName = this.props.user.displayName;
-    }
-    return (
-      <div>
-        <span>User Name: {userName}</span>
-        <br />
-        <span>Email: {useremail}</span>
-      </div>
-    );
-  }
-}
-export default Friends;
-*/
+import React from 'react';
+import { UserContext } from '../../User';
+import {
+  Button,
+  Form,
+  InputGroup,
+  FormControl,
+  ListGroup,
+} from 'react-bootstrap';
+import deleteIcon from '../../../../assets/img/deleteIcon.png';
+import {
+  deleteFriendHandle,
+  deleteFriendMutualHandle,
+  ViewNameHandle,
+  friendRequestHandle,
+} from './Friends';
 
 export default function FriendsPage() {
-  // Set States goes here
-  const addfriendemail = React.useRef(null);
-  const deletefriendemail = React.useRef(null);
-  //const friendList = React.useRef(null);
-  const [nameList, setFriendList] = React.useState([]);
+  const { snapshotData } = React.useContext(UserContext);
 
-  /**
-   * Description: Initializing States, do not pass function into useState
-   * isBlockList: state
-   * setBlockListBoolean: setState for isBlockList, this is async so be careful
-   * param: initial value
-   */
-  //const [isBlockList, setBlockListBoolean] = React.useState(true);
+  const [friendList, setFriendList] = React.useState([]);
 
-  // use the return of useEffect for componentWillUnmount
+  React.useEffect(() => {
+    const friendEmailList = snapshotData.friends;
+    const friendNameList = snapshotData.friendname;
 
-  // Run after every re-render
-  // React.useEffect(() => {});
-
-  // Equivalent to componentDidMount and return = componentWillUnMount
-  // React.useEffect(() => {}, []);
+    const tempList = [];
+    friendEmailList.forEach((email, index) => {
+      tempList.push({ email: email, name: friendNameList[index] });
+    });
+    setFriendList(tempList);
+  }, [snapshotData]);
 
   const onSubmitAddFriends = (event) => {
     event.preventDefault();
-    ViewNameHandle(addfriendemail.current.value, function (response) {
-      //addFriendHandle(addfriendemail.current.value, response);
-      friendRequestHandle(addfriendemail.current.value);
-      viewFriendlistHandle(displayFriends);
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    const friendEmail = formDataObj.addfriend;
+    console.log(friendEmail);
+    ViewNameHandle(friendEmail, function (response) {
+      friendRequestHandle(friendEmail);
     });
-    viewFriendlistHandle(displayFriends);
   };
 
-  const onSubmitDeleteFriends = (event) => {
-    event.preventDefault();
-    ViewNameHandle(deletefriendemail.current.value, function (response) {
-      deleteFriendHandle(deletefriendemail.current.value, response);
-      viewFriendlistHandle(displayFriends);
-    });
-    viewFriendlistHandle(displayFriends);
-  };
-
-  const showFriends = (event) => {
-    viewFriendlistHandle(displayFriends);
-  };
-
-  const displayFriends = (friendList) => {
-    setFriendList(friendList);
-  };
-
-  const Email = (props) => {
-    return <li> {props.text}</li>;
+  const Friends = ({ name, email }) => {
+    let operation = () => {
+      if (
+        window.confirm(
+          'Are you sure you want to unfriend with ' +
+            name +
+            ' with email: ' +
+            email +
+            '?'
+        )
+      ) {
+        deleteFriendHandle(email, name);
+        deleteFriendMutualHandle(email);
+      }
+    };
+    return (
+      <ListGroup.Item>
+        {name} : {email}
+        <img src={deleteIcon} onClick={operation} className="icon-pin-right" />
+      </ListGroup.Item>
+    );
   };
 
   return (
-    <div className="Friends">
-      <h1> Friends </h1>
+    <div className="friends">
+      <h3> Friends </h3>
+      <label> Add friends </label>
+      <Form onSubmit={onSubmitAddFriends}>
+        <InputGroup>
+          <FormControl
+            placeholder="Enter the email to send friend request"
+            name="addfriend"
+          />
+          <InputGroup.Append>
+            <Button variant="light" type="submit">
+              Send
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </Form>
       <br />
-      <form onSubmit={onSubmitAddFriends}>
-        <label>Add Friends</label>
-        <input type="text" name="addfriend" ref={addfriendemail} required />
-        <button type="submit"> Add </button>
-      </form>
-      <form onSubmit={onSubmitDeleteFriends}>
-        <label>Delete Friends</label>
-        <input type="text" name="addfriend" ref={deletefriendemail} required />
-        <button type="submit"> Delete </button>
-      </form>
-      <br />
-      <button onClick={showFriends}> showFriends </button>
-      <span> friends: </span>
-      <ul>
-        {nameList.map(email => (
-          <Email key={email} text={email} />
+      <span> Your friend list: </span>
+      <ListGroup>
+        {friendList.map((friend) => (
+          <Friends key={friend} name={friend.name} email={friend.email} />
         ))}
-      </ul>
-    </div >
+      </ListGroup>
+    </div>
   );
 }

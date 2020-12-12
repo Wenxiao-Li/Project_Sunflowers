@@ -3,7 +3,7 @@ import HomePage from './HomePage/HomePage.jsx';
 import ProfilePage from './ProfilePage/ProfilePage.jsx';
 import SettingsPage from './SettingsPage/SettingsPage.jsx';
 import SocialPage from './SocialPage/SocialPage.jsx';
-import { AuthProvider } from '../../auth/Auth';
+import { UserProvider } from './User';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Popup.css';
 import SunflowerBg from '../../assets/img/header.png';
@@ -22,25 +22,12 @@ const Popup = () => {
     ProfilePage: <ProfilePage />,
   };
 
-  function getUserSnapshot(request, sender, senderResponse) {
-    if (request.msg === 'user_snapshot') {
-      console.log(request.snapshotdata);
-    }
-  }
-
-  React.useEffect(() => {
-    chrome.runtime.onMessage.addListener(getUserSnapshot);
-    return () => {
-      chrome.runtime.onMessage.removeListener(getUserSnapshot);
-    };
-  }, []);
-
   const showComponent = (componentName) => {
     setPage(componentName);
   };
 
   return (
-    <AuthProvider>
+    <UserProvider>
       <img id="logo" src={SunflowerBg}></img>
       <div>{components[pageName]}</div>
       <Container>
@@ -75,7 +62,7 @@ const Popup = () => {
           </Col>
         </Row>
       </Container>
-    </AuthProvider>
+    </UserProvider>
   );
 };
 

@@ -1,18 +1,10 @@
-import firebase, { db } from '../modules/firebaseconfig';
+import { db } from '../modules/firebaseconfig';
+import { defaultAllowlist, defaultBlocklist } from '../controller/user/user';
+export let onListenUser = false;
 
-import {
-  defaultAllowlist,
-  defaultBlocklist,
-} from '../controller/websiteLists/websiteLists';
-
-export const currentUserListenerHandle = (listener, callback) => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      listener(user, callback);
-    }
-  });
+export const closeOnListenUser = () => {
+  onListenUser = false;
 };
-
 export let unsubscriberUser;
 export const userListener = (user, callback) => {
   var userColRef = db.collection('user');
@@ -20,6 +12,7 @@ export const userListener = (user, callback) => {
     (snapshot) => {
       if (snapshot.exists) {
         console.log('snapshot does exist');
+        onListenUser = true;
         callback(snapshot);
       } else {
         console.log('snapshot does not exist');
@@ -47,13 +40,4 @@ export const userListener = (user, callback) => {
       console.log('error with snapshot: ', error);
     }
   );
-};
-
-export let unsubscriberLeaderboard;
-
-export const leaderboardListener = (user, callback) => {
-  var friendsQueryRef = db
-    .collection('user')
-    .where('friends', 'array-contains', user.email);
-  unsubscriberLeaderboard = friendsQueryRef.onSnapshot(callback);
 };

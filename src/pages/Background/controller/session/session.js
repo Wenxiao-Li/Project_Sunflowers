@@ -1,5 +1,5 @@
 // background countdown process
-import * as Status from './sessionStatus';
+import * as Status from './sessionConstant';
 import { updateCallback, completeCallback } from './sessionCallbacks';
 
 const MINUTES_STEP_SIZE = 15;
