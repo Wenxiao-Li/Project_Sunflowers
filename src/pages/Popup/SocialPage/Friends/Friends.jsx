@@ -71,9 +71,8 @@ export default function FriendsPage() {
 
   return (
     <div >
-
       <div className="friends">
-        <p> Friends </p>
+        <span> Friends </span>
       </div>
 
       <div className="addfriends">
