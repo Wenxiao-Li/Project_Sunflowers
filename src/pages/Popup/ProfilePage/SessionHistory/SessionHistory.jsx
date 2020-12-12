@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import SunflowerBg from '../../../../assets/img/IMG_1277.jpg';
 import firebase, { db } from '../../../Background/modules/firebaseconfig';
 import Chart from 'react-google-charts';
 import './SessionHistory.css';
@@ -214,7 +213,6 @@ class SessionHistory extends Component {
             Back
           </Button>
         </div>
-
       </div>
     );
   }

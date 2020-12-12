@@ -1,5 +1,5 @@
 import React from 'react';
-import db from '../Background/modules/firebaseconfig';
+import firebase from '../Background/modules/firebaseconfig';
 
 export const UserContext = React.createContext();
 
@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   React.useEffect(() => {
-    db.auth().onAuthStateChanged(setUser);
+    firebase.auth().onAuthStateChanged(setUser);
   }, []);
 
   return (
