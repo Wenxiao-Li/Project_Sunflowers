@@ -21,14 +21,16 @@ export default function FriendsPage() {
   const [friendList, setFriendList] = React.useState([]);
 
   React.useEffect(() => {
-    const friendEmailList = snapshotData.friends;
-    const friendNameList = snapshotData.friendname;
+    if (snapshotData) {
+      const friendEmailList = snapshotData.friends;
+      const friendNameList = snapshotData.friendname;
 
-    const tempList = [];
-    friendEmailList.forEach((email, index) => {
-      tempList.push({ email: email, name: friendNameList[index] });
-    });
-    setFriendList(tempList);
+      const tempList = [];
+      friendEmailList.forEach((email, index) => {
+        tempList.push({ email: email, name: friendNameList[index] });
+      });
+      setFriendList(tempList);
+    }
   }, [snapshotData]);
 
   const onSubmitAddFriends = (event) => {
@@ -37,9 +39,10 @@ export default function FriendsPage() {
     const formDataObj = Object.fromEntries(formData.entries());
     const friendEmail = formDataObj.addfriend;
     console.log(friendEmail);
-    ViewNameHandle(friendEmail, function (response) {
-      friendRequestHandle(friendEmail);
-    });
+    friendRequestHandle(friendEmail);
+    // ViewNameHandle(friendEmail, function (response) {
+    //   friendRequestHandle(friendEmail);
+    // });
   };
 
   const Friends = ({ name, email }) => {

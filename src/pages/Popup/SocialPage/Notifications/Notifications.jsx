@@ -16,14 +16,16 @@ export default function NotificationPage() {
   const [requestList, setRequestList] = React.useState([]);
 
   React.useEffect(() => {
-    const requestEmailList = snapshotData.friend2;
-    const requestNameList = snapshotData.friendname2;
+    if (snapshotData) {
+      const requestEmailList = snapshotData.friend2;
+      const requestNameList = snapshotData.friendname2;
 
-    const tempList = [];
-    requestEmailList.forEach((email, index) => {
-      tempList.push({ email: email, name: requestNameList[index] });
-    });
-    setRequestList(tempList);
+      const tempList = [];
+      requestEmailList.forEach((email, index) => {
+        tempList.push({ email: email, name: requestNameList[index] });
+      });
+      setRequestList(tempList);
+    }
   }, [snapshotData]);
 
   const FriendRequests = ({ name, email }) => {
@@ -41,9 +43,9 @@ export default function NotificationPage() {
       if (
         window.confirm('You are trying to reject this friend request, confirm?')
       ) {
-        ViewNameHandle(email, function (response) {
-          deleteFriend2Handle(email, name, () => {});
-        });
+        deleteFriend2Handle(email, name, () => {});
+        // ViewNameHandle(email, function (response) {
+        // });
       }
     };
     return (
