@@ -155,11 +155,14 @@ const Leaderboard = () => {
   */
   return (
     <div>
-      <h1> Leaderboard</h1>
-      {leaderboardRendered}
-      <span>User Name: {userName}</span>
+      <h1 className="h1">Leaderboard</h1>
+      <div className="user-info">
+        <span>User Name: {userName}</span>
+        <br />
+        <span>Email: {email}</span>
+      </div>
       <br />
-      <span>Email: {email}</span>
+      {leaderboardRendered}
     </div>
   );
 };

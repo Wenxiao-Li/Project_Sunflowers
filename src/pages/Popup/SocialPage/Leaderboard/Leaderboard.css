@@ -1,7 +1,14 @@
+.h1 {
+    font-family: Arial, sans-serif;
+    color: #62754a;
+    text-align: center;
+}
+
 .leaderboard-entry {
     width: auto;
-    height: auto;
-
+    height: 65px;
+    font-family: Arial, sans-serif;
+    position: relative;
 }
 
 .sunflower-icon {
@@ -17,13 +24,45 @@
 }
 
 .unreacted {
-    background-color:white;
+    background-color: #e7ebd1;
+    border: none;
     height: auto;
     width: auto;
+    border-radius: 8px;
 }
 
 .reacted {
-    background-color: blue;
+    background-color: #E0FFFF;
+    color: #688e9c;
+    border: 2px solid#80afc0;
     height: auto;
     width: auto;
+    border-radius: 8px;
+}
+
+.button-right {
+    background-color: #f2f5db;
+    text-align: right;
+}
+
+.user-info {
+    background-color: #f2f5db;
+    color: #576e49;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    height: 50px;
+}
+
+.leaderboard-entry .sunflower-entry {
+    position: absolute;
+    left: 25px;
+    font-family: Arial, sans-serif;
+    color: #576e49;
+}
+
+.user-name {
+    color: #49646e;
+    background-color: #baccb4;
+    height: 30px;
+    font-size: 20px;
 }
