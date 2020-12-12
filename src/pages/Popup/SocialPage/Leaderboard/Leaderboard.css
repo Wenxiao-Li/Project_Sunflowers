@@ -63,5 +63,6 @@
 .user-name {
     color: #49646e;
     background-color: #baccb4;
-    height: 25px;
+    height: 30px;
+    font-size: 20px;
 }
