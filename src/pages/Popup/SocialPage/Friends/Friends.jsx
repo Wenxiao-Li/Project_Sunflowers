@@ -43,7 +43,7 @@ export default function FriendsPage() {
     // ViewNameHandle(friendEmail, function (response) {
     //   friendRequestHandle(friendEmail);
     // });
-    window.alert("Friend request successfully sent to " + friendEmail);
+    window.alert('Friend request successfully sent to ' + friendEmail);
   };
 
   const Friends = ({ name, email }) => {
@@ -90,7 +90,7 @@ export default function FriendsPage() {
       <span> Your friend list: </span>
       <ListGroup>
         {friendList.map((friend) => (
-          <Friends key={friend} name={friend.name} email={friend.email} />
+          <Friends key={friend.email} name={friend.name} email={friend.email} />
         ))}
       </ListGroup>
     </div>
