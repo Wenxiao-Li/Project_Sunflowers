@@ -2,7 +2,7 @@ import React from 'react';
 import Leaderboard from './Leaderboard/Leaderboard.jsx';
 import Friends from './Friends/Friends.jsx';
 import Notifications from './Notifications/Notifications.jsx';
-import UnauthPage from './UnauthPage';
+import UnauthPage from '../UnauthPage';
 import { UserContext } from '../User';
 
 import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';

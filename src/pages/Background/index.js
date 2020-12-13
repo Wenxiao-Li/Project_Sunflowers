@@ -7,7 +7,9 @@ import { sessionRoutes } from './controller/sessionRoutes';
 import { lbRoutes } from './controller/leaderboardRoutes';
 import { userRoutes } from './controller/userRoutes';
 import { friendRoutes } from './controller/friendRoutes';
+import { historyRoutes } from './controller/historyRoutes';
 import { reactionRoutes } from './controller/reactionRoutes';
+
 
 console.log('This is the background page.');
 
@@ -16,5 +18,6 @@ routerInclude(lbRoutes);
 routerInclude(reactionRoutes);
 routerInclude(userRoutes);
 routerInclude(friendRoutes);
+routerInclude(historyRoutes);
 
 runMessageRouter();
