@@ -7,11 +7,14 @@ import './SettingsPage.css';
 import { ViewCurrentLists } from './ViewCurrentLists';
 import { ListForm } from './ListForm';
 import { Suggestions } from './Suggestions';
+import UnauthPage from '../UnauthPage'
+import { UserContext } from '../User'
 
 /**
  * Render Settings Page inside Popup
  */
 export default function SettingsPage() {
+  const { user } = React.useContext(UserContext)
   // Set States goes here
 
   /**
@@ -27,35 +30,40 @@ export default function SettingsPage() {
   };
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
-  return (
-    <div className="page" id="settings">
-      <div id="toggle-list-group">
-        <ToggleButtonGroup
-          type="radio"
-          name="value"
-          value={isBlockList}
-          onChange={setMode}
-        >
-          <ToggleButton variant="toggle" value={true}>
-            {' '}
-            BlockList{' '}
-          </ToggleButton>
-          <ToggleButton variant="toggle" value={false}>
-            {' '}
-            AllowList{' '}
-          </ToggleButton>
-        </ToggleButtonGroup>
+
+  if (user) {
+    return (
+      <div className="page" id="settings">
+        <div id="toggle-list-group">
+          <ToggleButtonGroup
+            type="radio"
+            name="value"
+            value={isBlockList}
+            onChange={setMode}
+          >
+            <ToggleButton variant="toggle" value={true}>
+              {' '}
+              BlockList{' '}
+            </ToggleButton>
+            <ToggleButton variant="toggle" value={false}>
+              {' '}
+              AllowList{' '}
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <div id="toggle-list-description">
+          <span>
+            Add {currentMode} websites for {currentMode} mode
+          </span>
+        </div>
+        <div className="scroll-view">
+          <ListForm isBlockList={isBlockList} />
+          <ViewCurrentLists isBlockList={isBlockList} />
+          <Suggestions isBlockList={isBlockList} />
+        </div>
       </div>
-      <div id="toggle-list-description">
-        <span>
-          Add {currentMode} websites for {currentMode} mode
-        </span>
-      </div>
-      <div className="scroll-view">
-        <ListForm isBlockList={isBlockList} />
-        <ViewCurrentLists isBlockList={isBlockList} />
-        <Suggestions isBlockList={isBlockList} />
-      </div>
-    </div>
-  );
-}
+    );
+  } else {
+    return <UnauthPage />;
+  }
+};

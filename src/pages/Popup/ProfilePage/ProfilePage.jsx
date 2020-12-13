@@ -3,11 +3,16 @@ import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
 import SigninPage from './SigninPage';
 import { UserContext } from '../User';
+import { viewHistory } from './profile.js';
 
 const ProfilePage = () => {
   const [pageName, setPage] = React.useState('UserProfile');
 
   const { user, snapshotData } = React.useContext(UserContext);
+
+  React.useEffect(() => {
+    viewHistory(user);
+  }, []);
 
   const toHistory = () => {
     showComponent('SessionHistory');
