@@ -1,10 +1,20 @@
-import React, { Component } from 'react';
-import { useEffect } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
-import firebase from '../../Background/modules/firebaseconfig';
+import React from 'react';
 
-// The 2020 way of using react: use functional components
+import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+
+import './SettingsPage.css';
+
+import { ViewCurrentLists } from './ViewCurrentLists';
+import { ListForm } from './ListForm';
+import { Suggestions } from './Suggestions';
+import UnauthPage from '../UnauthPage'
+import { UserContext } from '../User'
+
+/**
+ * Render Settings Page inside Popup
+ */
 export default function SettingsPage() {
+  const { user } = React.useContext(UserContext)
   // Set States goes here
 
   /**
@@ -15,31 +25,45 @@ export default function SettingsPage() {
    */
   const [isBlockList, setBlockListBoolean] = React.useState(true);
 
-  // use the return of useEffect for componentWillUnmount
-
-  // Run after every re-render
-  // React.useEffect(() => {});
-
-  // Equivalent to componentDidMount and return = componentWillUnMount
-  // React.useEffect(() => {}, []);
-
-  const setBlockListMode = () => {
-    setBlockListBoolean(true);
-  };
-
-  const setAllowListMode = () => {
-    setBlockListBoolean(false);
+  const setMode = (val) => {
+    setBlockListBoolean(val);
   };
 
   const currentMode = isBlockList ? 'BlockList' : 'AllowList';
-  return (
-    <div className="Settings">
-      <h1>This is SettingsPage</h1>
-      <button onClick={setBlockListMode}> BlockList Mode </button>
-      <button onClick={setAllowListMode}> AllowList Mode </button>
-      <img src={SunflowerBg} />
-      <br />
-      <span>{currentMode}</span>
-    </div>
-  );
-}
+
+  if (user) {
+    return (
+      <div className="page" id="settings">
+        <div id="toggle-list-group">
+          <ToggleButtonGroup
+            type="radio"
+            name="value"
+            value={isBlockList}
+            onChange={setMode}
+          >
+            <ToggleButton variant="toggle" value={true}>
+              {' '}
+              BlockList{' '}
+            </ToggleButton>
+            <ToggleButton variant="toggle" value={false}>
+              {' '}
+              AllowList{' '}
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <div id="toggle-list-description">
+          <span>
+            Add {currentMode} websites for {currentMode} mode
+          </span>
+        </div>
+        <div className="scroll-view">
+          <ListForm isBlockList={isBlockList} />
+          <ViewCurrentLists isBlockList={isBlockList} />
+          <Suggestions isBlockList={isBlockList} />
+        </div>
+      </div>
+    );
+  } else {
+    return <UnauthPage />;
+  }
+};

@@ -1,0 +1,77 @@
+.title {
+  background: white;
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  box-shadow: 3px 3px 5px lightslategray;
+}
+
+.page#settings {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#toggle-list-group {
+  background: white;
+  margin: 0px;
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  box-shadow: 3px 3px 5px lightslategray;
+}
+
+#toggle-list-description {
+  background: white;
+  margin: 0px;
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.title-text {
+  margin-left: 5px;
+}
+
+.website {
+  background: white;
+  margin-right: 5px;
+}
+
+.scroll-view {
+  height: 290px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  overflow-y: auto;
+}
+
+.scroll-view::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll-view::-webkit-scrollbar-track {
+  background: #fffded;
+  border-radius: 10px;
+}
+
+.scroll-view::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border-radius: 10px;
+}
+
+.scroll-view::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7;
+}
+
+.icon-pin-right {
+  height: 24px;
+  width: 24px;
+  float: right;
+}
+
+.icon-pin-right:active {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-right: 2px;
+}

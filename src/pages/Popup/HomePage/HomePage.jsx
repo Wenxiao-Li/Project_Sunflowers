@@ -1,15 +1,24 @@
 import React from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
 import DisplaySession from './DisplaySession.jsx';
+import './DisplaySession.css';
+import UnauthPage from '../UnauthPage'
+import { UserContext } from '../User'
 
 const HomePage = () => {
-  return (
-    <div className="Home">
-      <h1>Project Sunflower!</h1>
-      <img src={SunflowerBg} />
-      <DisplaySession />
-    </div>
-  );
+  const { user } = React.useContext(UserContext)
+  if (user) {
+    return (
+      <div className="page">
+        <div>
+          {' '}
+          <DisplaySession />{' '}
+        </div>
+      </div>
+    );
+  }
+  else {
+    return <UnauthPage />;
+  }
 };
 
 export default HomePage;

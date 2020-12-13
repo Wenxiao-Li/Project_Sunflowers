@@ -1,59 +1,51 @@
-import React, { Component } from 'react';
-import SunflowerBg from '../../../assets/img/IMG_1277.jpg';
+import React from 'react';
 import UserProfile from './UserProfile/UserProfile.jsx';
 import SessionHistory from './SessionHistory/SessionHistory.jsx';
+import SigninPage from './SigninPage';
+import { UserContext } from '../User';
+import { viewHistory } from './profile.js';
 
-class ProfilePage extends Component {
-  _isMounted = false;
+const ProfilePage = () => {
+  const [pageName, setPage] = React.useState('UserProfile');
 
-  constructor(props) {
-    super(props);
+  const { user, snapshotData } = React.useContext(UserContext);
 
-    this.state = {
-      displayedComponent: 'UserProfile',
-    };
+  React.useEffect(() => {
+    viewHistory(user);
+  }, []);
 
-    this.showComponent = this.showComponent.bind(this);
-    this.toHistory = this.toHistory.bind(this);
-    this.toProfile = this.toProfile.bind(this);
-  }
+  const toHistory = () => {
+    showComponent('SessionHistory');
+  };
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
+  const toProfile = () => {
+    showComponent('UserProfile');
+  };
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  const showComponent = (componentName) => {
+    setPage(componentName);
+  };
 
-  showComponent(componentName) {
-    console.log(componentName);
-    this.setState({ displayedComponent: componentName });
-  }
+  const components = {
+    UserProfile: (
+      <UserProfile
+        user={user}
+        numFlower={(snapshotData && snapshotData.user_flower) || 0}
+        toHistory={toHistory}
+      />
+    ),
+    SessionHistory: <SessionHistory user={user} toProfile={toProfile} />,
+  };
 
-  toHistory() {
-    this.showComponent('SessionHistory');
-  }
-
-  toProfile() {
-    this.showComponent('UserProfile');
-  }
-
-  render() {
-    const components = {
-      UserProfile: (
-        <UserProfile user={this.props.user} toHistory={this.toHistory} />
-      ),
-      SessionHistory: (
-        <SessionHistory user={this.props.user} toProfile={this.toProfile} />
-      ),
-    };
+  if (user) {
     return (
-      <div>
-        <div>{components[this.state.displayedComponent]}</div>
+      <div className="page">
+        <div>{components[pageName]}</div>
       </div>
     );
+  } else {
+    return <SigninPage />;
   }
-}
+};
 
 export default ProfilePage;
