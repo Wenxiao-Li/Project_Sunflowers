@@ -1,5 +1,3 @@
-//import firebase, { db } from '../../../Background/modules/firebaseconfig';
-//var leaderboardRef = db.collection('user');
 function updateReactions(user, friendReactedTo, reactionExists, keyReactedOn) {
   if (user != null) {
     chrome.runtime.sendMessage(

@@ -12,16 +12,7 @@ class LeaderBoardComponent {
     this.reactions = reactions;
     this.currentUser = currentUser;
   }
-  /*
-    updateReactions() {
-      console.log(this.reactions);
-      if (this.reactions.indexOf(this.currentUser) === -1) {
-        this.reactions.push(this.currentUser);
-      } else {
-        this.reactions.pop(this.currentUser);
-      }
-    }
-    */
+
 }
 
 const Leaderboard = () => {
@@ -33,7 +24,7 @@ const Leaderboard = () => {
 
   function getLBSnapshot(request, sender, senderResponse) {
     if (request.msg === 'query_snapshot') {
-      console.log(request.qsnapshot);
+      //console.log(request.qsnapshot);
       setQS(request.qsnapshot);
     }
   }
@@ -61,7 +52,7 @@ const Leaderboard = () => {
       var newLeaderBoardComponents = [];
       for (var i = 0; i < currentFriendsScoreArray.length; i++) {
         var current = currentFriendsScoreArray[i];
-        console.log('print: ', current);
+
         var leaderBoardComponent = new LeaderBoardComponent(
           current.user_name,
           current.email,
@@ -69,8 +60,14 @@ const Leaderboard = () => {
           current.reactions,
           user.displayName
         );
-        currentReactionsAvailable = Object.keys(current.reactions);
-        newLeaderBoardComponents.push(leaderBoardComponent);
+        if (current.reactions && current.user_name && current.email && current.score
+        ) {
+          currentReactionsAvailable = Object.keys(current.reactions);
+          newLeaderBoardComponents.push(leaderBoardComponent);
+        }
+        else {
+          console.log("missing fields");
+        }
       }
 
       currentReactionsAvailable.sort();
@@ -82,22 +79,18 @@ const Leaderboard = () => {
     //return unsubscribe;
   }, [querySnapshot]);
   const updateLeaderBoard = (friendReactedTo, keyReactedOn) => {
-    console.log('Friend Reacted to ', friendReactedTo);
-    console.log('Emoji Reacted on', keyReactedOn);
     var copy = [...leaderBoardComponents];
     var indexOffriend = copy.findIndex(
       (friend) => friend.email === friendReactedTo
     );
-    console.log(indexOffriend);
     var reactionExists = copy[indexOffriend].reactions[keyReactedOn].indexOf(
       user.email
     );
 
-    //copy[indexOffriend].reactions[keyReactedOn].push(user.email);
+
     updateReactionHandle(user, friendReactedTo, reactionExists, keyReactedOn);
 
-    console.log(copy);
-    console.log(leaderBoardComponents);
+
     setLBComponents(copy);
   };
 
@@ -134,25 +127,7 @@ const Leaderboard = () => {
       </div>
     </div>
   ));
-  /*
-    var leaderboardRendered = leaderBoardComponents.map((friend) => (
-      <div key={friend.userName}>
-        {friend.userName} Sunflowers = {friend.score}
-        <button
-          id={friend.userName}
-          onClick={() => updateLeaderBoard(friend.userName)}
-        >
-          <img
-            src={
-              friend.reactions.indexOf(userName) === -1 ? unlikedicon : likedicon
-            }
-            style={{ width: 20, height: 20 }}
-          ></img>
-        </button>
-        {friend.reactions.length}
-      </div>
-    ));
-  */
+
   return (
     <div>
       <h1 className="h1">Leaderboard</h1>
