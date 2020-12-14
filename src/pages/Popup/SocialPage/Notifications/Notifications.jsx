@@ -9,6 +9,8 @@ import {
 } from './notif';
 import addIcon from '../../../../assets/img/addIcon.png';
 import deleteIcon from '../../../../assets/img/deleteIcon.png';
+import './Notifications.css';
+
 
 export default function NotificationPage() {
   const { snapshotData } = React.useContext(UserContext);
@@ -33,7 +35,7 @@ export default function NotificationPage() {
       if (
         window.confirm(
           'If accepted, both of you will be able to see each other' +
-            "'s ranking on leaderboard and are able to give reactions to each other."
+          "'s ranking on leaderboard and are able to give reactions to each other."
         )
       ) {
         acceptFriendRequestHandle(email, name);
@@ -43,7 +45,7 @@ export default function NotificationPage() {
       if (
         window.confirm('You are trying to reject this friend request, confirm?')
       ) {
-        deleteFriend2Handle(email, name, () => {});
+        deleteFriend2Handle(email, name, () => { });
         // ViewNameHandle(email, function (response) {
         // });
       }
@@ -58,19 +60,24 @@ export default function NotificationPage() {
   };
 
   return (
-    <div className="Friends">
-      <h1> Friend Requests </h1>
-      <br />
-      <span> Requests: </span>
-      <ListGroup>
-        {requestList.map((request) => (
-          <FriendRequests
-            key={request}
-            name={request.name}
-            email={request.email}
-          />
-        ))}
-      </ListGroup>
-    </div>
+    <div>
+      <div className="friendsrequest">
+        <span> Friend Requests </span>
+      </div>
+
+      <div className="request">
+        <span> Requests: </span>
+        <ListGroup>
+          {requestList.map((request) => (
+            <FriendRequests
+              key={request}
+              name={request.name}
+              email={request.email}
+            />
+          ))}
+        </ListGroup>
+      </div>
+
+    </div >
   );
 }

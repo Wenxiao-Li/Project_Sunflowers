@@ -218,7 +218,7 @@ export default function DisplaySession() {
         <div className="sentence">
           If you Quit the Session,
           <br />
-          No Sunflower will be Rewarded.
+          No Sunflower will be Awarded.
         </div>
       </div>
     );
@@ -251,9 +251,9 @@ export default function DisplaySession() {
           </Button>
         </div>
         <div className="sentence">
-          If you quit the session,
+          If you Quit the Session,
           <br />
-          no sunflower will be rewarded.
+          No Sunflower will be Awarded.
         </div>
       </div>
     );
@@ -262,7 +262,7 @@ export default function DisplaySession() {
   const SuccessView = () => {
     return (
       <div className="tab">
-        <span >
+        <span>
           {' '}
           Congratulations!
           <br />
@@ -283,8 +283,7 @@ export default function DisplaySession() {
           {' '}
           Unfortunately,
           <br />
-          All of your sunflowers planted in this session are
-          gone.{' '}
+          All of your sunflowers planted in this session are gone.{' '}
         </span>
         <br />
         <Button variant="round" onClick={postBackSession}>

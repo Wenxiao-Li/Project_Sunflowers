@@ -14,6 +14,7 @@ import {
   ViewNameHandle,
   friendRequestHandle,
 } from './Friends';
+import './Friends.css';
 
 export default function FriendsPage() {
   const { snapshotData } = React.useContext(UserContext);
@@ -43,7 +44,6 @@ export default function FriendsPage() {
     // ViewNameHandle(friendEmail, function (response) {
     //   friendRequestHandle(friendEmail);
     // });
-    window.alert("Friend request successfully sent to " + friendEmail);
   };
 
   const Friends = ({ name, email }) => {
@@ -51,10 +51,10 @@ export default function FriendsPage() {
       if (
         window.confirm(
           'Are you sure you want to unfriend with ' +
-            name +
-            ' with email: ' +
-            email +
-            '?'
+          name +
+          ' with email: ' +
+          email +
+          '?'
         )
       ) {
         deleteFriendHandle(email, name);
@@ -70,29 +70,40 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="friends">
-      <h3> Friends </h3>
-      <label> Add friends </label>
-      <Form onSubmit={onSubmitAddFriends}>
-        <InputGroup>
-          <FormControl
-            placeholder="Enter the email to send friend request"
-            name="addfriend"
-          />
-          <InputGroup.Append>
-            <Button variant="light" type="submit">
-              Send
+    <div >
+      <div className="friends">
+        <span> Friends </span>
+      </div>
+
+      <div className="addfriends">
+        <span> Add Friends: </span>
+      </div>
+
+      <div className="sendadd">
+        <Form onSubmit={onSubmitAddFriends}>
+          <InputGroup>
+            <FormControl
+              placeholder="Enter the email to send friend request"
+              name="addfriend"
+            />
+            <InputGroup.Append>
+              <Button variant="info" type="submit">
+                Send
             </Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </Form>
-      <br />
-      <span> Your friend list: </span>
-      <ListGroup>
-        {friendList.map((friend) => (
-          <Friends key={friend} name={friend.name} email={friend.email} />
-        ))}
-      </ListGroup>
+            </InputGroup.Append>
+          </InputGroup>
+        </Form>
+      </div>
+
+      <div className="list">
+        <span font-weight="bold"> Friend List: </span>
+        <ListGroup>
+          {friendList.map((friend) => (
+            <Friends key={friend} name={friend.name} email={friend.email} />
+          ))}
+        </ListGroup>
+      </div>
+
     </div>
   );
 }
